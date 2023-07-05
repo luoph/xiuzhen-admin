@@ -70,9 +70,9 @@
         :scroll="{ x: 'max-content' }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -83,10 +83,9 @@
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
-            <span class="large-text">{{ text || '--' }}</span>
+            <span class="large-text" @click="copyText(text)">{{ text || '--' }}</span>
           </div>
         </template>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
@@ -103,6 +102,8 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="keyTitle">键 <a-icon type="copy" /></span>
+        <span slot="valueTitle">值 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -143,16 +144,19 @@ export default {
           dataIndex: 'id'
         },
         {
-          title: 'key',
+          // title: 'key',
           align: 'left',
           width: 320,
-          dataIndex: 'dictKey'
+          dataIndex: 'dictKey',
+          slots: { title: 'keyTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: 'value',
+          // title: 'value',
           align: 'left',
           width: 480,
           dataIndex: 'dictValue',
+          slots: { title: 'valueTitle' },
           scopedSlots: { customRender: 'largeText' }
         },
         {
@@ -188,13 +192,17 @@ export default {
     initDictConfig() {},
     refresh() {
       this.handleConfrimRequest(this.url.refresh, {}, '是否刷新配置？', '点击确定刷新');
-    },
+    }
   }
 };
 </script>
 
 <style scoped>
 @import '~@assets/less/common.less';
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
 
 .large-text-container {
   display: flex;
@@ -207,4 +215,5 @@ export default {
   white-space: normal;
   word-break: break-word;
 }
+
 </style>

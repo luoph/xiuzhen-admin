@@ -113,9 +113,9 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="status">
-          <div v-html="status"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text, record">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无图片</span>
           <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt="" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -124,7 +124,6 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadFile(text)"> 下载 </a-button>
         </template>
-
         <span slot="action" slot-scope="text, record">
           <a-button type="danger" size="small" @click="forbidTalk(record)"> 禁言 </a-button>
           <a-divider type="vertical" />
@@ -136,6 +135,12 @@
           <a-divider type="vertical" />
           <a-button type="primary" size="small" @click="undoForbidLogin(record)"> 封号撤回 </a-button>
         </span>
+        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="accountTitle">账号 <a-icon type="copy" /></span>
+        <span slot="senderIdTitle">发送者id <a-icon type="copy" /></span>
+        <span slot="senderNameTitle">发送者名称 <a-icon type="copy" /></span>
+        <span slot="receiverIdTitle">接收者id <a-icon type="copy" /></span>
+        <span slot="receiverNameTitle">接收者名称 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -178,37 +183,48 @@ export default {
           }
         },
         {
-          title: '区服id',
+          // title: '区服id',
+          align: 'center',
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
+        },
+        {
+          // title: '账号',
           align: 'center',
           width: 80,
-          dataIndex: 'serverId'
+          dataIndex: 'account',
+          slots: { title: 'accountTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '账号',
+          // title: '发送者id',
           align: 'center',
-          width: 80,
-          dataIndex: 'account'
+          dataIndex: 'senderId',
+          slots: { title: 'senderIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '发送者id',
+          // title: '发送者名称',
           align: 'center',
-          dataIndex: 'senderId'
+          dataIndex: 'senderName',
+          slots: { title: 'senderNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '发送者名称',
-          align: 'center',
-          dataIndex: 'senderName'
-        },
-        {
-          title: '接收者id',
+          // title: '接收者id',
           align: 'center',
           width: 100,
-          dataIndex: 'receiverId'
+          dataIndex: 'receiverId',
+          slots: { title: 'receiverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '接收者名称',
+          // title: '接收者名称',
           align: 'center',
-          dataIndex: 'receiverName'
+          dataIndex: 'receiverName',
+          slots: { title: 'receiverNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '聊天类型',
@@ -385,6 +401,11 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
 
 .ant-divider-horizontal {
   margin: 6px 0 6px 0;

@@ -76,9 +76,9 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -87,21 +87,11 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
-
-        <!-- <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">编辑</a>
-                    <a-divider type="vertical" />
-                    <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown>
-                </span> -->
+        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="playerNameTitle">玩家名 <a-icon type="copy" /></span>
+        <span slot="goodsIdTitle">商品id <a-icon type="copy" /></span>
+        <span slot="goodsNameTitle">商品名称 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -138,51 +128,58 @@ export default {
           }
         },
         {
-          title: '区服id',
+          // title: '区服id',
           align: 'center',
-          width: 80,
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '玩家id',
+          // title: '玩家id',
           align: 'center',
-          width: 80,
-          dataIndex: 'playerId'
+          dataIndex: 'playerId',
+          slots: { title: 'playerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '玩家名',
+          // title: '玩家名',
           align: 'center',
-          width: 120,
-          dataIndex: 'playerName'
+          dataIndex: 'playerName',
+          slots: { title: 'playerNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '商品id',
+          // title: '商品id',
           align: 'center',
-          width: 80,
-          dataIndex: 'goodsId'
+          dataIndex: 'goodsId',
+          slots: { title: 'goodsIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
+        },
+        {
+          // title: '商品名称',
+          align: 'center',
+          dataIndex: 'goodsName',
+          slots: { title: 'goodsNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '状态',
           align: 'center',
-          width: 80,
           dataIndex: 'status'
         },
         {
           title: '备注',
           align: 'center',
-          width: 80,
           dataIndex: 'remark'
         },
         {
           title: '创建人',
           align: 'center',
-          width: 80,
           dataIndex: 'createBy'
         },
         {
           title: '创建时间',
           align: 'center',
-          width: 120,
           dataIndex: 'createTime'
         }
         // {
@@ -227,4 +224,9 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
 </style>

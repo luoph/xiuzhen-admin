@@ -86,9 +86,9 @@
             </div> -->
 
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -97,7 +97,6 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">查看详情</a>
           <!-- <a-divider type="vertical" />
@@ -112,6 +111,13 @@
                         </a-menu>
                     </a-dropdown> -->
         </span>
+        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="nameTitle">角色名 <a-icon type="copy" /></span>
+        <span slot="accountTitle">帐号 <a-icon type="copy" /></span>
+        <span slot="ipTitle">注册IP <a-icon type="copy" /></span>
+        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -152,40 +158,53 @@ export default {
           }
         },
         {
-          title: '区服id',
+          // title: '区服id',
           align: 'center',
-          width: 100,
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '玩家id',
+          // title: '玩家id',
           align: 'center',
-          dataIndex: 'playerId'
+          dataIndex: 'playerId',
+          slots: { title: 'playerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '角色名',
+          // title: '角色名',
           align: 'center',
-          dataIndex: 'name'
+          dataIndex: 'name',
+          slots: { title: 'nameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '帐号',
+          // title: '帐号',
           align: 'center',
-          dataIndex: 'account'
+          dataIndex: 'account',
+          slots: { title: 'accountTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '注册IP',
+          // title: '注册IP',
           align: 'center',
-          dataIndex: 'ip'
+          dataIndex: 'ip',
+          slots: { title: 'ipTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '渠道',
+          // title: '渠道',
           align: 'center',
-          dataIndex: 'channel'
+          dataIndex: 'channel',
+          slots: { title: 'channelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: 'Sdk渠道',
+          // title: 'Sdk渠道',
           align: 'center',
-          dataIndex: 'sdkChannel'
+          dataIndex: 'sdkChannel',
+          slots: { title: 'sdkChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '手机品牌',
@@ -289,4 +308,10 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
 </style>

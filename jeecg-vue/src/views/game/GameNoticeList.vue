@@ -6,33 +6,33 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="公告类型">
-              <j-dict-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type"/>
+              <j-dict-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="公告ID">
-              <a-input placeholder="请输入ID" v-model="queryParam.id"/>
+              <a-input placeholder="请输入ID" v-model="queryParam.id" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="标题">
-              <j-input placeholder="请输入标题" v-model="queryParam.title"/>
+              <j-input placeholder="请输入标题" v-model="queryParam.title" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="开始时间">
-                <a-input placeholder="请输入开始时间" v-model="queryParam.beginTime"/>
+                <a-input placeholder="请输入开始时间" v-model="queryParam.beginTime" />
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="结束时间">
-                <a-input placeholder="请输入结束时间" v-model="queryParam.endTime"/>
+                <a-input placeholder="请输入结束时间" v-model="queryParam.endTime" />
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="公告内容">
-                <a-input placeholder="请输入公告内容" v-model="queryParam.content"/>
+                <a-input placeholder="请输入公告内容" v-model="queryParam.content" />
               </a-form-item>
             </a-col>
           </template>
@@ -42,7 +42,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -63,13 +63,13 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -77,9 +77,8 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a
-      >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -96,33 +95,31 @@
         @change="handleTableChange"
       >
         <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text" class="noticeContent"></div>
+          <div v-html="text" class="large-text-container" />
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="100px" alt="图片不存在"
-               style="max-width: 280px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width: 280px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="statusSlot" slot-scope="text, record">
-          <a-tag v-if="0" color="red">无效</a-tag>
-          <a-tag v-else color="green">有效</a-tag>
+          <a-tag v-if="0" color="red" class="ant-tag-no-margin">无效</a-tag>
+          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="handlePreview(record)">公告预览</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="refreshNotice(record)">刷新公告</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -137,19 +134,19 @@
     <!-- table区域-end -->
 
     <!-- 表单区域 -->
-    <game-notice-modal ref="modalForm" @ok="modalFormOk"/>
+    <game-notice-modal ref="modalForm" @ok="modalFormOk" />
     <!-- html预览 -->
-    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"/>
+    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk" />
   </a-card>
 </template>
 
 <script>
 import JInput from '@/components/jeecg/JInput';
-import {getAction} from '@/api/manage';
+import { getAction } from '@/api/manage';
 import GameHtmlPreviewModal from './modules/GameHtmlPreviewModal';
 
 import GameNoticeModal from './modules/GameNoticeModal';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 
 export default {
   name: 'GameNoticeList',
@@ -200,26 +197,25 @@ export default {
           title: '公告内容',
           align: 'left',
           dataIndex: 'content',
-          scopedSlots: {customRender: 'htmlSlot'}
+          scopedSlots: { customRender: 'htmlSlot' }
         },
         {
           title: '开始时间',
           align: 'center',
-          width: 180,
+          width: 120,
           dataIndex: 'beginTime'
         },
         {
           title: '结束时间',
           align: 'center',
-          width: 180,
+          width: 120,
           dataIndex: 'endTime'
         },
         {
           title: '状态',
           align: 'center',
-          width: 80,
           dataIndex: 'status',
-          scopedSlots: {customRender: 'statusSlot'}
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '滚动公告间隔(秒)',
@@ -232,7 +228,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 140,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -266,7 +262,7 @@ export default {
     },
     // 刷新公告
     refreshNotice(record) {
-      this.handleConfrimRequest(this.url.noticeRefresh, {id: record.id}, `是否刷新${record.title}？`, '点击确定刷新');
+      this.handleConfrimRequest(this.url.noticeRefresh, { id: record.id }, `是否刷新${record.title}？`, '点击确定刷新');
     },
     // 预览渠道公告
     handlePreview(record) {
@@ -280,9 +276,13 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.noticeContent {
+.large-text-container {
   max-height: 240px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
 }
 </style>

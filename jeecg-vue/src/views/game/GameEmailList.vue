@@ -6,17 +6,17 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="标题">
-              <j-input placeholder="请输入标题模糊查询" v-model="queryParam.title"/>
+              <j-input placeholder="请输入标题模糊查询" v-model="queryParam.title" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="描述">
-              <j-input placeholder="请输入描述模糊查询" v-model="queryParam.describe"/>
+              <j-input placeholder="请输入描述模糊查询" v-model="queryParam.describe" />
             </a-form-item>
           </a-col>
           <a-col :md="5" :sm="8">
             <a-form-item label="目标主体">
-              <j-input placeholder="请输入玩家id/区服id模糊查询" v-model="queryParam.receiverIds"/>
+              <j-input placeholder="请输入玩家id/区服id模糊查询" v-model="queryParam.receiverIds" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -37,20 +37,17 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="创建人">
-              <j-search-select-tag placeholder="请选择创建人" v-model="queryParam.createBy"
-                                   dict="sys_user,realname,username"/>
+              <j-search-select-tag placeholder="请选择创建人" v-model="queryParam.createBy" dict="sys_user,realname,username" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="审核人">
-              <j-search-select-tag placeholder="请选择审核人" v-model="queryParam.reviewBy"
-                                   dict="sys_user,realname,username"/>
+              <j-search-select-tag placeholder="请选择审核人" v-model="queryParam.reviewBy" dict="sys_user,realname,username" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange" />
             </a-form-item>
           </a-col>
           <!--          <template v-if="toggleSearchStatus">-->
@@ -91,50 +88,57 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: 'max-content' }"
-        @change="handleTableChange">
-        <template slot="largeText" slot-scope="text">
-          <div class="large-text-container">
-            <span class="large-text">{{ text || '--' }}</span>
-          </div>
-        </template>
-
+        @change="handleTableChange"
+      >
         <span slot="action" slot-scope="text, record">
           <a-button type="primary" size="small" @click="handleCopy(record)"> 复制 </a-button>
-          <a-divider/>
+          <a-divider />
           <a-button size="small" v-if="record.state === 0" @click="handleEdit(record)"> 编辑 </a-button>
           <a-button size="small" v-if="record.state === 1"> 已发送 </a-button>
-          <a-divider v-if="record.state === 0" v-has="'game:email:review'"/>
+          <a-divider v-if="record.state === 0" v-has="'game:email:review'" />
           <a-button type="danger" size="small" v-if="record.state === 0" v-has="'game:email:review'">
             <a-popconfirm title="确定发送吗?" @confirm="() => handleReview(record.id)"><a>审核</a></a-popconfirm>
           </a-button>
-          <a-divider v-has="'game:email:review'"/>
+          <a-divider v-has="'game:email:review'" />
           <a-button type="danger" size="small" v-has="'game:email:review'">
             <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)"><a>删除</a></a-popconfirm>
           </a-button>
         </span>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
+        <template slot="largeText" slot-scope="text">
+          <div class="large-text-container">
+            <span class="large-text" @click="copyText(text)">{{ text || '--' }}</span>
+          </div>
+        </template>
         <span slot="stateSlot" slot-scope="text, record">
-          <a-tag v-if="record.state === 0" color="red">待审核</a-tag>
-          <a-tag v-else-if="record.state === 1" color="green">已发送</a-tag>
+          <a-tag v-if="record.state === 0" color="red" class="ant-tag-no-margin">待审核</a-tag>
+          <a-tag v-else-if="record.state === 1" color="green" class="ant-tag-no-margin">已发送</a-tag>
         </span>
         <span slot="receiverTypeSlot" slot-scope="text, record">
-          <a-tag v-if="record.receiverType === 1" color="blue">玩家</a-tag>
-          <a-tag v-else-if="record.receiverType === 2" color="green">区服</a-tag>
+          <a-tag v-if="record.receiverType === 1" color="blue" class="ant-tag-no-margin">玩家</a-tag>
+          <a-tag v-else-if="record.receiverType === 2" color="green" class="ant-tag-no-margin">区服</a-tag>
         </span>
+        <span slot="titleTitle">标题 <a-icon type="copy" /></span>
+        <span slot="describeTitle">描述 <a-icon type="copy" /></span>
+        <span slot="contentTitle">附件 <a-icon type="copy" /></span>
+        <span slot="receiverIdsTitle">目标主体 <a-icon type="copy" /></span>
       </a-table>
     </div>
-    <game-email-modal ref="modalForm" @ok="modalFormOk"/>
+    <game-email-modal ref="modalForm" @ok="modalFormOk" />
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameEmailModal from './modules/GameEmailModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import ServerSelect from '@/components/gameserver/ServerSelect';
 import MultipleServerSelect from '@/components/gameserver/MultipleServerSelect';
 import JInput from '@/components/jeecg/JInput';
-import {getAction} from '@api/manage';
-import {filterObj} from "@/utils/util";
+import { getAction } from '@api/manage';
+import { filterObj } from '@/utils/util';
 
 export default {
   name: 'GameEmailList',
@@ -178,18 +182,18 @@ export default {
           dataIndex: 'id'
         },
         {
-          title: '标题',
-          align: 'left',
+          // title: '标题',
           width: 200,
           dataIndex: 'title',
-          scopedSlots: {customRender: 'largeText'}
+          slots: { title: 'titleTitle' },
+          scopedSlots: { customRender: 'largeText' }
         },
         {
-          title: '描述',
-          align: 'left',
+          // title: '描述',
           width: 240,
           dataIndex: 'describe',
-          scopedSlots: {customRender: 'largeText'}
+          slots: { title: 'describeTitle' },
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '类型',
@@ -201,32 +205,32 @@ export default {
           }
         },
         {
-          title: '附件',
-          align: 'center',
+          // title: '附件',
           width: 240,
           dataIndex: 'content',
-          scopedSlots: {customRender: 'largeText'}
+          slots: { title: 'contentTitle' },
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '状态',
           align: 'center',
           width: 100,
           dataIndex: 'state',
-          scopedSlots: {customRender: 'stateSlot'}
+          scopedSlots: { customRender: 'stateSlot' }
         },
         {
           title: '目标类型',
           align: 'center',
           width: 100,
           dataIndex: 'receiverType',
-          scopedSlots: {customRender: 'receiverTypeSlot'}
+          scopedSlots: { customRender: 'receiverTypeSlot' }
         },
         {
-          title: '目标主体',
-          align: 'left',
+          // title: '目标主体',
           width: 240,
           dataIndex: 'receiverIds',
-          scopedSlots: {customRender: 'largeText'}
+          slots: { title: 'receiverIdsTitle' },
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '生效时间',
@@ -256,6 +260,7 @@ export default {
           title: '创建时间',
           align: 'center',
           fixed: 'right',
+          width: 120,
           dataIndex: 'createTime',
           customRender: (value) => {
             return value || '--';
@@ -264,7 +269,6 @@ export default {
         {
           title: '创建人',
           align: 'center',
-          width: 120,
           fixed: 'right',
           dataIndex: 'createBy',
           customRender: (value) => {
@@ -274,7 +278,6 @@ export default {
         {
           title: '审核人',
           align: 'center',
-          width: 120,
           fixed: 'right',
           dataIndex: 'reviewBy',
           customRender: (value) => {
@@ -287,7 +290,7 @@ export default {
           fixed: 'right',
           align: 'center',
           width: 120,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
 
@@ -300,8 +303,7 @@ export default {
     };
   },
   computed: {},
-  mounted() {
-  },
+  mounted() {},
   methods: {
     getQueryParams() {
       // console.log(this.queryParam.createTimeRange);
@@ -319,7 +321,7 @@ export default {
     },
     handleReview: function (id) {
       const that = this;
-      getAction(that.url.review, {id: id})
+      getAction(that.url.review, { id: id })
         .then((res) => {
           if (res.success) {
             that.$message.success(res.message);
@@ -337,6 +339,15 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 
 .large-text-container {
   display: flex;

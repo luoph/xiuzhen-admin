@@ -139,39 +139,46 @@
           <!--            </a-menu>-->
           <!--          </a-dropdown>-->
         </span>
-        <span slot="tagSlot" slot-scope="text, record">
-          <a-tag color="orange">{{ text }}</a-tag>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <span slot="serverIdSlot" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未设置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        <span slot="tagSlot" slot-scope="text, record">
+          <a-tag color="orange" class="ant-tag-no-margin">{{ text }}</a-tag>
+        </span>
+        <span slot="channelSlot" slot-scope="text, record">
+          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue" class="ant-tag-no-margin">{{ tag }}</a-tag>
         </span>
         <span slot="versionTypeSlot" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
           <!-- <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag> -->
           <span v-else v-for="tag in text.split(',').sort()" :key="tag">
-            <a-tag v-if="tag == 1" color="blue">{{ tag }}-普通服</a-tag>
-            <a-tag v-if="tag == 2" color="blue">{{ tag }}-BT服</a-tag>
+            <a-tag v-if="tag == 1" color="blue" class="ant-tag-no-margin">{{ tag }}-普通服</a-tag>
+            <a-tag v-if="tag == 2" color="blue" class="ant-tag-no-margin">{{ tag }}-BT服</a-tag>
           </span>
         </span>
         <span slot="maintainSlot" slot-scope="text, record">
-          <a-tag v-if="record.isMaintain === 1" color="red">维护中</a-tag>
-          <a-tag v-else color="green">运行中</a-tag>
+          <a-tag v-if="record.isMaintain === 1" color="red" class="ant-tag-no-margin">维护中</a-tag>
+          <a-tag v-else color="green" class="ant-tag-no-margin">运行中</a-tag>
         </span>
         <span slot="switchSlot" slot-scope="text, record">
           <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
         <span slot="statusSlot" slot-scope="text, record">
-          <a-tag v-if="record.status === 0" color="blue">正常</a-tag>
-          <a-tag v-else-if="record.status === 1" color="green">流畅</a-tag>
-          <a-tag v-else-if="record.status === 2" color="red">火爆</a-tag>
-          <a-tag v-else-if="record.status === 3" color="gray">维护</a-tag>
+          <a-tag v-if="record.status === 0" color="blue" class="ant-tag-no-margin">正常</a-tag>
+          <a-tag v-else-if="record.status === 1" color="green" class="ant-tag-no-margin">流畅</a-tag>
+          <a-tag v-else-if="record.status === 2" color="red" class="ant-tag-no-margin">火爆</a-tag>
+          <a-tag v-else-if="record.status === 3" color="gray" class="ant-tag-no-margin">维护</a-tag>
         </span>
         <span slot="outdatedSlot" slot-scope="text, record">
-          <a-tag v-if="record.outdated === 0" color="green">上线中</a-tag>
-          <a-tag v-else-if="record.outdated === 1" color="red">已合并</a-tag>
-          <a-tag v-else-if="record.outdated === 2" color="red">已下线</a-tag>
+          <a-tag v-if="record.outdated === 0" color="green" class="ant-tag-no-margin">上线中</a-tag>
+          <a-tag v-else-if="record.outdated === 1" color="red" class="ant-tag-no-margin">已合并</a-tag>
+          <a-tag v-else-if="record.outdated === 2" color="red" class="ant-tag-no-margin">已下线</a-tag>
         </span>
+        <span slot="idTitle">区服id <a-icon type="copy" /></span>
+        <span slot="hostTitle">服务器ip <a-icon type="copy" /></span>
+        <span slot="loginUrlTitle">连接地址 <a-icon type="copy" /></span>
+        <span slot="gmUrlTitle">GM地址 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -217,35 +224,38 @@ export default {
           }
         },
         {
-          title: '区服id',
-          align: 'center',
+          // title: '区服id',
           fixed: 'left',
-          width: 80,
-          dataIndex: 'id'
+          align: 'center',
+          dataIndex: 'id',
+          slots: { title: 'idTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '名字',
-          align: 'left',
           fixed: 'left',
-          width: 100,
+          align: 'center',
           dataIndex: 'name'
         },
         {
           title: '标签',
           align: 'center',
-          width: 100,
           dataIndex: 'tag',
           scopedSlots: { customRender: 'tagSlot' }
         },
         {
-          title: '服务器ip',
+          // title: '服务器ip',
           align: 'left',
-          dataIndex: 'host'
+          dataIndex: 'host',
+          slots: { title: 'hostTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '连接地址',
+          // title: '连接地址',
           align: 'left',
-          dataIndex: 'loginUrl'
+          dataIndex: 'loginUrl',
+          slots: { title: 'loginUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '在线玩家',
@@ -258,21 +268,18 @@ export default {
         {
           title: '运行状态',
           align: 'center',
-          width: 60,
           dataIndex: 'outdated',
           scopedSlots: { customRender: 'outdatedSlot' }
         },
         {
           title: '状态',
           align: 'center',
-          width: 80,
           dataIndex: 'status',
           scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '维护状态',
           align: 'center',
-          width: 80,
           dataIndex: 'isMaintain',
           scopedSlots: { customRender: 'maintainSlot' }
         },
@@ -306,18 +313,18 @@ export default {
           scopedSlots: { customRender: 'switchSlot' }
         },
         {
-          title: '删档返还的渠道',
+          title: '删档返还渠道',
           align: 'center',
           width: 80,
           dataIndex: 'stopServerRefundChannel',
-          scopedSlots: {customRender: 'serverIdSlot'}
+          scopedSlots: { customRender: 'channelSlot' }
         },
         {
-          title: '删档返还的区服版本',
+          title: '删档返还版本',
           align: 'center',
           width: 80,
           dataIndex: 'stopServerRefundVersionType',
-          scopedSlots: {customRender: 'versionTypeSlot'}
+          scopedSlots: { customRender: 'versionTypeSlot' }
         },
         {
           title: '版本类型',
@@ -335,9 +342,11 @@ export default {
           scopedSlots: { customRender: 'switchSlot' }
         },
         {
-          title: 'GM地址',
+          // title: 'GM地址',
           align: 'left',
-          dataIndex: 'gmUrl'
+          dataIndex: 'gmUrl',
+          slots: { title: 'gmUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         // {
         //   title: '客户端GM',
@@ -468,4 +477,13 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 </style>

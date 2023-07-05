@@ -78,9 +78,9 @@
             </div> -->
 
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -89,7 +89,6 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">详情</a>
           <a-divider type="vertical" />
@@ -104,9 +103,15 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="codeTitle">激活码 <a-icon type="copy" /></span>
+        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">角色昵称 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="ipTitle">兑换IP <a-icon type="copy" /></span>
       </a-table>
     </div>
-
     <redeemCodeRecord-modal ref="modalForm" @ok="modalFormOk"></redeemCodeRecord-modal>
   </a-card>
 </template>
@@ -146,30 +151,32 @@ export default {
           dataIndex: 'id'
         },
         {
-          title: '兑换码',
+          // title: '兑换码',
           align: 'center',
-          dataIndex: 'code'
+          dataIndex: 'code',
+          slots: { title: 'codeTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '渠道',
+          // title: '渠道',
           align: 'center',
           dataIndex: 'channel',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'channelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: 'Sdk渠道',
+          // title: 'Sdk渠道',
           align: 'center',
           dataIndex: 'sdkChannel',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'sdkChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '玩家id',
+          // title: '玩家id',
           align: 'center',
-          dataIndex: 'playerId'
+          dataIndex: 'playerId',
+          slots: { title: 'playerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '分组id',
@@ -177,17 +184,18 @@ export default {
           dataIndex: 'groupId'
         },
         {
-          title: '区服id',
+          // title: '区服id',
           align: 'center',
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '兑换IP',
           align: 'center',
           dataIndex: 'remoteIp',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'ipTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '创建时间',
@@ -237,4 +245,15 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
+
 </style>

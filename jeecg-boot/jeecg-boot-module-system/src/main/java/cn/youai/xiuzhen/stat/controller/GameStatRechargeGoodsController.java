@@ -38,9 +38,6 @@ public class GameStatRechargeGoodsController {
     @Autowired
     private IGameOrderService orderStatService;
 
-    @Autowired
-    private IGameRechargeGoodsService rechargeGoodsService;
-
     @AutoLog(value = "直充道具统计-列表查询")
     @RequestMapping("/list")
     public Result<?> list(GameStatRechargeGoods entity,

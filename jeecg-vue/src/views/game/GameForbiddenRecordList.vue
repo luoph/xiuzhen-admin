@@ -109,9 +109,9 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -122,24 +122,15 @@
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
-            <span class="large-text">{{ text || '--' }}</span>
+            <span @click="copyText(text)" class="large-text">{{ text || '--' }}</span>
           </div>
         </template>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <!-- <a-divider type="vertical" /> -->
-          <!-- <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown> -->
         </span>
+        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="banValueTitle">封禁值 <a-icon type="copy" /></span>
+        <span slot="reasonTitle">封禁原因 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -196,9 +187,12 @@ export default {
           dataIndex: 'forbiddenId'
         },
         {
-          title: '服务器id',
+          // title: '区服id',
           align: 'center',
-          dataIndex: 'serverId'
+          width: 80,
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '封禁功能',
@@ -231,9 +225,11 @@ export default {
           }
         },
         {
-          title: '封禁值',
+          // title: '封禁值',
           align: 'center',
-          dataIndex: 'banValue'
+          dataIndex: 'banValue',
+          slots: { title: 'banValueTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '封禁期限',
@@ -250,10 +246,10 @@ export default {
           }
         },
         {
-          title: '封禁原因',
-          align: 'center',
+          // title: '封禁原因',
+          width: 280,
           dataIndex: 'reason',
-          width: 240,
+          slots: { title: 'reasonTitle' },
           scopedSlots: { customRender: 'largeText' }
         },
         {
@@ -306,6 +302,11 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
 
 .large-text-container {
   display: flex;

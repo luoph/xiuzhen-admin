@@ -130,9 +130,9 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -143,19 +143,18 @@
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
-            <span class="large-text">{{ text || '--' }}</span>
+            <span class="large-text" @click="copyText(text)">{{ text || '--' }}</span>
           </div>
         </template>
         <span slot="buyTypeSlot" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <a-tag v-if="!text" color="red" class="ant-tag-no-margin">未设置</a-tag>
           <!-- <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag> -->
           <span v-else v-for="tag in text.split(',').sort()" :key="tag">
-            <a-tag v-if="tag == 1" color="blue">{{ tag }}-真实充值</a-tag>
-            <a-tag v-if="tag == 2" color="blue">{{ tag }}-GM额度</a-tag>
-            <a-tag v-if="tag == 3" color="blue">{{ tag }}-代金券</a-tag>
+            <a-tag v-if="tag == 1" color="blue" class="ant-tag-no-margin">{{ tag }}-真实充值</a-tag>
+            <a-tag v-if="tag == 2" color="blue" class="ant-tag-no-margin">{{ tag }}-GM额度</a-tag>
+            <a-tag v-if="tag == 3" color="blue" class="ant-tag-no-margin">{{ tag }}-代金券</a-tag>
           </span>
         </span>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
@@ -172,6 +171,10 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="goodsIdTitle">商品id <a-icon type="copy" /></span>
+        <span slot="nameTitle">商品名称 <a-icon type="copy" /></span>
+        <span slot="skuTitle">内购SKU <a-icon type="copy" /></span>
+        <span slot="webSkuTitle">网页支付SKU <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -199,7 +202,7 @@ export default {
       /* 排序参数 */
       isorter: {
         column: 'id',
-        order: 'asc',
+        order: 'asc'
       },
       // 表头
       columns: [
@@ -215,24 +218,28 @@ export default {
         //   }
         // },
         {
-          title:'id',
-          align:"center",
+          title: 'id',
+          align: 'center',
           fixed: 'left',
           width: 80,
           dataIndex: 'id'
         },
         {
-          title: '商品Id',
+          // title: '商品Id',
           align: 'center',
           fixed: 'left',
           width: 80,
-          dataIndex: 'goodsId'
+          dataIndex: 'goodsId',
+          slots: { title: 'goodsIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '商品名称',
+          // title: '商品名称',
           align: 'center',
           fixed: 'left',
-          dataIndex: 'name'
+          dataIndex: 'name',
+          slots: { title: 'nameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '备注',
@@ -328,7 +335,7 @@ export default {
           align: 'center',
           width: 90,
           dataIndex: 'buyType',
-          scopedSlots: {customRender: 'buyTypeSlot'}
+          scopedSlots: { customRender: 'buyTypeSlot' }
         },
         {
           title: 'gm额度',
@@ -343,22 +350,20 @@ export default {
           dataIndex: 'cashCoupon'
         },
         {
-          title: '内购SKU',
+          // title: '内购SKU',
           align: 'center',
           width: 120,
           dataIndex: 'sku',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'skuTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '网页支付SKU',
+          // title: '网页支付SKU',
           align: 'center',
           width: 120,
           dataIndex: 'webSku',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'webSkuTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '单价',
@@ -529,6 +534,15 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 
 .import-text {
   margin-top: 8px;

@@ -13,7 +13,7 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <!-- <a-col :md="4" :sm="8">
@@ -23,12 +23,12 @@
           </a-col> -->
           <a-col :md="6" :sm="8">
             <a-form-item label="平台订单号">
-              <a-input placeholder="请输入平台订单号" v-model="queryParam.queryId"/>
+              <a-input placeholder="请输入平台订单号" v-model="queryParam.queryId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="商品id">
-              <a-input placeholder="请输入商品id" v-model="queryParam.productId"/>
+              <a-input placeholder="请输入商品id" v-model="queryParam.productId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -46,16 +46,15 @@
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
-            <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
-            </a-form-item>
-          </a-col>
+              <a-form-item label="创建时间">
+                <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+              </a-form-item>
+            </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="金额">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"/>
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin" />
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end"/>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end" />
               </a-form-item>
             </a-col>
           </template>
@@ -65,7 +64,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -86,45 +85,53 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
-        <template slot="htmlSlot" slot-scope="status">
-          <div v-html="status"></div>
-        </template>
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="status">
           <span v-if="!status" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(status)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(status)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="status">
           <span v-if="!status" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(status)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(status)"> 下载 </a-button>
         </template>
-
         <span slot="action" slot-scope="status, record">
           <a @click="handleEdit(record)">详情</a>
-          <a-divider type="vertical" v-has="'game:vip:admin'"/>
+          <a-divider type="vertical" v-has="'game:vip:admin'" />
           <a-dropdown v-has="'game:vip:admin'">
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
-              <a-menu-item :disabled="record.vipId > 0"
-                           @click="addVip(record)">添加VIP</a-menu-item>
-              <a-menu-item :disabled="record.vipId === 0"
-                           @click="deleteVip(record)">删除VIP</a-menu-item>
+              <a-menu-item :disabled="record.vipId > 0" @click="addVip(record)">添加VIP</a-menu-item>
+              <a-menu-item :disabled="record.vipId === 0" @click="deleteVip(record)">删除VIP</a-menu-item>
             </a-menu>
           </a-dropdown>
         </span>
+        <template slot="largeText" slot-scope="text">
+          <div class="large-text-container">
+            <span class="large-text" @click="copyText(text)">{{ text || '--' }}</span>
+          </div>
+        </template>
+        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">昵称 <a-icon type="copy" /></span>
+        <span slot="accountTitle">账号 <a-icon type="copy" /></span>
+        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle">sdk渠道 <a-icon type="copy" /></span>
+        <span slot="productIdTitle">商品id <a-icon type="copy" /></span>
+        <span slot="productNameTitle">商品名 <a-icon type="copy" /></span>
+        <span slot="queryIdTitle">平台订单号 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
-    <GameOrderModal ref="modalForm" @ok="modalFormOk"/>
+    <GameOrderModal ref="modalForm" @ok="modalFormOk" />
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {filterObj} from '@/utils/util';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameOrderModal from './modules/GameOrderModal';
 import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
@@ -153,51 +160,48 @@ export default {
           }
         },
         {
-          title: '区服id',
+          // title: '区服id',
           align: 'center',
           width: 80,
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '玩家id',
+          // title: '玩家id',
           align: 'center',
-          dataIndex: 'playerId'
+          dataIndex: 'playerId',
+          slots: { title: 'playerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '玩家名',
+          // title: '玩家名',
           align: 'center',
-          width: 80,
           dataIndex: 'nickname',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'nicknameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '账号',
+          // title: '账号',
           align: 'center',
-          width: 160,
+          // width: 120,
           dataIndex: 'account',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'accountTitle' },
+          scopedSlots: { customRender: 'largeText' }
         },
         {
-          title: '渠道',
+          // title: '渠道',
           align: 'center',
-          width: 120,
           dataIndex: 'channel',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'channelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: 'Sdk渠道',
+          // title: 'Sdk渠道',
           align: 'center',
-          width: 80,
           dataIndex: 'sdkChannel',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'sdkChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         // {
         //     title: "支付订单号",
@@ -206,21 +210,26 @@ export default {
         //     dataIndex: "orderId"
         // },
         {
-          title: '商品id',
+          // title: '商品id',
           align: 'center',
           width: 80,
-          dataIndex: 'productId'
+          dataIndex: 'productId',
+          slots: { title: 'productIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '商品名称',
+          // title: '商品名称',
           align: 'center',
           width: 120,
-          dataIndex: 'productName'
+          dataIndex: 'productName',
+          slots: { title: 'productNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '平台订单号',
-          align: 'left',
-          dataIndex: 'queryId'
+          // title: '平台订单号',
+          dataIndex: 'queryId',
+          slots: { title: 'queryIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '支付金额',
@@ -262,14 +271,12 @@ export default {
             return re;
           }
         },
-        {
-          title: "ip地址",
-          align: "center",
-          dataIndex: "remoteIp",
-          customRender: (value) => {
-            return value || '--';
-          }
-        },
+        // {
+        //   title: 'ip地址',
+        //   align: 'center',
+        //   dataIndex: 'remoteIp',
+        //   scopedSlots: { customRender: 'copySlot' }
+        // },
         // {
         //     title: "透传参数",
         //     align: "center",
@@ -308,8 +315,7 @@ export default {
           width: 120,
           dataIndex: 'action',
           align: 'center',
-          fixed: 'right',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -354,22 +360,32 @@ export default {
       this.queryParam.createDate_end = dateString[1];
     },
     deleteVip(record) {
-      this.handleConfrimRequest(this.url.deleteVip,
-        {id: record.vipId},
-        '是否删除VIP？',
-        `删除玩家: ${record.playerId}（${record.nickname}）的VIP特权`,
-        'delete');
+      this.handleConfrimRequest(this.url.deleteVip, { id: record.vipId }, '是否删除VIP？', `删除玩家: ${record.playerId}（${record.nickname}）的VIP特权`, 'delete');
     },
     addVip(record) {
-      this.handleConfrimRequest(this.url.addVip,
-        {playerIds: record.playerId},
-        '是否添加VIP？',
-        `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
-    },
+      this.handleConfrimRequest(this.url.addVip, { playerIds: record.playerId }, '是否添加VIP？', `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
+    }
   }
 };
 </script>
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.large-text-container {
+  display: block;
+  width: auto;
+  max-width: 360px;
+  overflow-y: auto;
+}
+
+.large-text {
+  white-space: normal;
+  word-break: break-word;
+}
 </style>

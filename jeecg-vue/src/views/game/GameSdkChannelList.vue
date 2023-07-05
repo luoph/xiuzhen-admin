@@ -6,23 +6,20 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="渠道">
-              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
-                                   dict="game_channel,name,simple_name"/>
+              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel" dict="game_channel,name,simple_name" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="Sdk渠道">
-              <a-input placeholder="请输入Sdk渠道" v-model="queryParam.sdkChannel"/>
+              <a-input placeholder="请输入Sdk渠道" v-model="queryParam.sdkChannel" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="上线时间">
-              <a-range-picker v-model="queryParam.onlineTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.onlineTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
-          <template v-if="toggleSearchStatus">
-          </template>
+          <template v-if="toggleSearchStatus"> </template>
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -42,20 +39,19 @@
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button @click="handleSync" type="primary" icon="sync">同步Sdk渠道</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('SDK渠道信息')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
-                @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -69,15 +65,14 @@
             </div>
             :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -87,10 +82,15 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <span slot="splitTags" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未配置</a-tag>
+          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
+        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="channelTitle">父渠道 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -99,15 +99,15 @@
 </template>
 
 <script>
-import {filterObj} from '@/utils/util';
+import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import GameSdkChannelModal from "@views/game/modules/GameSdkChannelModal.vue";
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import GameSdkChannelModal from '@views/game/modules/GameSdkChannelModal.vue';
 
 export default {
   name: 'GameSdkChannelList',
   mixins: [JeecgListMixin],
-  components: {JInput, GameSdkChannelModal},
+  components: { JInput, GameSdkChannelModal },
   data() {
     return {
       description: '游戏Sdk渠道管理页面',
@@ -137,20 +137,18 @@ export default {
           }
         },
         {
-          title: 'Sdk渠道',
+          // title: 'Sdk渠道',
           align: 'center',
           dataIndex: 'sdkChannel',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'sdkChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '父渠道',
+          // title: '父渠道',
           align: 'center',
           dataIndex: 'channel',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'channelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '上线时间',
@@ -174,14 +172,14 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 200,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
         list: 'game/sdkChannel/list',
         sync: 'game/sdkChannel/sync',
         delete: 'game/sdkChannel/delete',
-        deleteBatch: 'game/sdkChannel/deleteBatch',
+        deleteBatch: 'game/sdkChannel/deleteBatch'
       }
     };
   },
@@ -190,8 +188,7 @@ export default {
       return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
     }
   },
-  created() {
-  },
+  created() {},
   methods: {
     getQueryParams() {
       const param = Object.assign({}, this.queryParam, this.isorter);
@@ -208,15 +205,21 @@ export default {
       this.queryParam.onlineTime_end = dateString[1];
     },
     handleSync() {
-      this.handleConfrimRequest(this.url.sync,
-        {},
-        '是否同步Sdk渠道信息？',
-        '点击确定同步');
-    },
+      this.handleConfrimRequest(this.url.sync, {}, '是否同步Sdk渠道信息？', '点击确定同步');
+    }
   }
 };
 </script>
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 </style>

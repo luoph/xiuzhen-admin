@@ -120,9 +120,6 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -131,15 +128,20 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <span slot="strikeText" slot-scope="text, record">
           <span v-if="record.status === 0" style="color: red">
-            <s>{{ text }}</s>
+            <a @click="copyText(text)" class="copy-text"
+              ><s> {{ text }} </s></a>
           </span>
-          <span v-else>{{ text }}</span>
+          <span v-else
+            ><a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a></span>
         </span>
         <span slot="statusSlot" slot-scope="text, record">
-          <a-tag v-if="text === 0" color="red">无效</a-tag>
-          <a-tag v-else color="green">有效</a-tag>
+          <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
+          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
         </span>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
@@ -154,6 +156,15 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">角色昵称 <a-icon type="copy" /></span>
+        <span slot="accountTitle">账号 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="sidTitle">创角区 <a-icon type="copy" /></span>
+        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="mainTaskIdTitle">主线任务 <a-icon type="copy" /></span>
+        <span slot="combatPowerTitle">战力 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -198,44 +209,53 @@ export default {
           }
         },
         {
-          title: '玩家id',
+          // title: '玩家id',
           align: 'center',
           dataIndex: 'playerId',
+          slots: { title: 'playerIdTitle' },
           scopedSlots: { customRender: 'strikeText' }
         },
         {
-          title: '角色昵称',
+          // title: '角色昵称',
           align: 'center',
           dataIndex: 'nickname',
+          slots: { title: 'nicknameTitle' },
           scopedSlots: { customRender: 'strikeText' }
         },
         {
-          title: '账号',
+          // title: '账号',
           align: 'center',
-          dataIndex: 'account'
+          dataIndex: 'account',
+          slots: { title: 'accountTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '区服id',
+          // title: '区服id',
           align: 'center',
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '创角区服',
+          // title: '创角区服',
           align: 'center',
-          dataIndex: 'sid'
+          dataIndex: 'sid',
+          slots: { title: 'sidTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '渠道',
+          // title: '渠道',
           align: 'center',
-          dataIndex: 'channel'
+          dataIndex: 'channel',
+          slots: { title: 'channelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: 'Sdk渠道',
+          // title: 'Sdk渠道',
           align: 'center',
           dataIndex: 'sdkChannel',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'sdkChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '状态',
@@ -274,9 +294,11 @@ export default {
           dataIndex: 'totalPayAmount'
         },
         {
-          title: '主线任务id',
+          // title: '主线任务id',
           align: 'center',
-          dataIndex: 'mainTaskId'
+          dataIndex: 'mainTaskId',
+          slots: { title: 'mainTaskIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         // {
         //   title: '跳过动画',
@@ -308,9 +330,11 @@ export default {
         //   dataIndex: 'practiceYear'
         // },
         {
-          title: '战力',
+          // title: '战力',
           align: 'center',
-          dataIndex: 'combatPower'
+          dataIndex: 'combatPower',
+          slots: { title: 'combatPowerTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         // {
         //   title: '魅力值',
@@ -428,4 +452,13 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 </style>

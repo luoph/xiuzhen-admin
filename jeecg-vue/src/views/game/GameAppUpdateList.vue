@@ -95,9 +95,9 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -111,7 +111,6 @@
             <span class="large-text">{{ text || '--' }}</span>
           </div>
         </template>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
@@ -128,6 +127,10 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="appNameTitle">应用名称 <a-icon type="copy" /></span>
+        <span slot="packageNameTitle">应用包名 <a-icon type="copy" /></span>
+        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
+        <span slot="downloadUrlTitle">下载地址 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -168,14 +171,18 @@ export default {
           dataIndex: 'gameId'
         },
         {
-          title: '应用名称',
+          // title: '应用名称',
           align: 'center',
-          dataIndex: 'appName'
+          dataIndex: 'appName',
+          slots: { title: 'appNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '应用包名',
+          // title: '应用包名',
           align: 'center',
-          dataIndex: 'packageName'
+          dataIndex: 'packageName',
+          slots: { title: 'packageNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '版本号',
@@ -193,9 +200,11 @@ export default {
           dataIndex: 'platform'
         },
         {
-          title: '渠道',
+          // title: '渠道',
           align: 'center',
-          dataIndex: 'channel'
+          dataIndex: 'channel',
+          slots: { title: 'channelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '更新标题',
@@ -209,9 +218,11 @@ export default {
           scopedSlots: { customRender: 'largeText' }
         },
         {
-          title: '下载地址',
+          // title: '下载地址',
           align: 'center',
-          dataIndex: 'downloadUrl'
+          dataIndex: 'downloadUrl',
+          slots: { title: 'downloadUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '备注',
@@ -263,6 +274,11 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
 
 .large-text-container {
   display: flex;

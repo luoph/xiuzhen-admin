@@ -60,14 +60,13 @@
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="tagSlot" slot-scope="text, record">
-          <a-tag color="orange">{{ text }}</a-tag>
+          <a-tag color="orange" class="ant-tag-no-margin">{{ text }}</a-tag>
         </span>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -167,4 +166,8 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 </style>

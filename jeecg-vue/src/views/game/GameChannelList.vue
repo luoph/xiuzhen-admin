@@ -101,13 +101,19 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <span slot="splitTags" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未配置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+          <div class="tag-container">
+            <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+          </div>
         </span>
         <span slot="switchSlot" slot-scope="text, record">
           <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
+        <span slot="simpleNameTitle">唯一标识 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -173,15 +179,21 @@ export default {
           dataIndex: 'id'
         },
         {
-          title: '渠道名称',
+          title: '名称',
           align: 'center',
-          width: 120,
           dataIndex: 'name'
         },
         {
-          title: '唯一标识',
+          title: '备注',
           align: 'center',
-          dataIndex: 'simpleName'
+          dataIndex: 'remark'
+        },
+        {
+          // title: '唯一标识',
+          align: 'center',
+          dataIndex: 'simpleName',
+          slots: { title: 'simpleNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '游戏编号',
@@ -195,19 +207,16 @@ export default {
         {
           title: '公告id',
           align: 'center',
-          width: 80,
           dataIndex: 'noticeId'
         },
         {
           title: '版本号',
           align: 'center',
-          width: 100,
           dataIndex: 'versionCode'
         },
         {
           title: '版本名',
           align: 'center',
-          width: 120,
           dataIndex: 'versionName'
         },
         // {
@@ -239,19 +248,14 @@ export default {
         {
           title: '版本更新时间',
           align: 'center',
-          width: 180,
           dataIndex: 'versionUpdateTime'
         },
-        {
-          title: '备注',
-          align: 'center',
-          dataIndex: 'remark'
-        },
+
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          width: 220,
+          width: 240,
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -361,4 +365,18 @@ export default {
 </script>
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
+
+.tag-container {
+  min-width: 240px;
+  max-width: 400px;
+}
 </style>

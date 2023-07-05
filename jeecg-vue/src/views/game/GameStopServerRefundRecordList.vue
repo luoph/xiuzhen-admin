@@ -107,9 +107,9 @@
         class="j-table-force-nowrap"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+      <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text, record">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无图片</span>
           <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt="" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -118,25 +118,12 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadFile(text)"> 下载 </a-button>
         </template>
-
-        <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
-
-          <a-divider type="vertical" />
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a @click="handleDetail(record)">详情</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
-        </span>
+        <span slot="sourceServerIdTitle">停服区服id <a-icon type="copy" /></span>
+        <span slot="sourcePlayerIdTitle">停服玩家id <a-icon type="copy" /></span>
+        <span slot="targetServerIdTitle">返还区服id <a-icon type="copy" /></span>
+        <span slot="targetPlayerIdTitle">返还的玩家id <a-icon type="copy" /></span>
+        <span slot="accountTitle">返还玩家账号 <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">返还玩家昵称 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -173,34 +160,46 @@ export default {
           }
         },
         {
-          title: '停服区服id',
+          // title: '停服区服id',
           align: 'center',
-          dataIndex: 'sourceServerId'
+          dataIndex: 'sourceServerId',
+          slots: { title: 'sourceServerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '停服的玩家id',
+          // title: '停服玩家id',
           align: 'center',
-          dataIndex: 'sourcePlayerId'
+          dataIndex: 'sourcePlayerId',
+          slots: { title: 'sourcePlayerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '返还区服id',
+          // title: '返还区服id',
           align: 'center',
-          dataIndex: 'targetServerId'
+          dataIndex: 'targetServerId',
+          slots: { title: 'targetServerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '返还的玩家id',
+          // title: '返还的玩家id',
           align: 'center',
-          dataIndex: 'targetPlayerId'
+          dataIndex: 'targetPlayerId',
+          slots: { title: 'targetPlayerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '返还的玩家账号',
+          // title: '返还玩家账号',
           align: 'center',
-          dataIndex: 'account'
+          dataIndex: 'account',
+          slots: { title: 'accountTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '返还的玩家昵称',
+          // title: '返还玩家昵称',
           align: 'center',
-          dataIndex: 'nickname'
+          dataIndex: 'nickname',
+          slots: { title: 'nicknameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '充值总金额',
@@ -225,15 +224,6 @@ export default {
           align: 'center',
           dataIndex: 'createTime'
         }
-        // ,
-        // {
-        //   title: '操作',
-        //   dataIndex: 'action',
-        //   align:"center",
-        //   fixed:"right",
-        //   width:147,
-        //   scopedSlots: { customRender: 'action' }
-        // }
       ],
       url: {
         list: '/game/gameStopServerRefundRecord/list',
@@ -289,4 +279,10 @@ export default {
 </script>
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
 </style>

@@ -69,8 +69,13 @@
         :loading="loading"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
+        <template slot="largeText" slot-scope="text">
+          <div class="large-text-container">
+            <span class="large-text">{{ text || '--' }}</span>
+          </div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
@@ -80,17 +85,16 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
-
         <span slot="statusSlot" slot-scope="text">
-          <a-tag v-if="text === 0" color="red">无效</a-tag>
-          <a-tag v-else color="green">有效</a-tag>
+          <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
+          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
         </span>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
         </span>
+        <span slot="rewardTitle">奖励 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -209,13 +213,12 @@ export default {
           scopedSlots: { customRender: 'statusSlot' }
         },
         {
-          title: '奖励',
+          // title: '奖励',
           align: 'left',
           width: 240,
           dataIndex: 'reward',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'rewardTitle' },
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '开始时间',
@@ -283,4 +286,13 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 </style>

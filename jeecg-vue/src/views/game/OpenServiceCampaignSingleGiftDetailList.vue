@@ -67,12 +67,14 @@
         </template>
         <span slot="timeSlot" slot-scope="text, record">
           <div v-if="record.timeType == 1">
-            <a-tag color="blue">{{ record.startTime }}</a-tag>
-            <a-tag color="blue">{{ record.endTime }}</a-tag>
+            <a-tag color="blue" class="ant-tag-no-margin">{{ record.startTime }}</a-tag>
+            &nbsp;
+            <a-tag color="blue" class="ant-tag-no-margin">{{ record.endTime }}</a-tag>
           </div>
           <div v-if="record.timeType == 2">
-            <a-tag color="green">开服第{{ record.startDay }}天</a-tag>
-            <a-tag color="green">持续{{ record.duration }}天</a-tag>
+            <a-tag color="green" class="ant-tag-no-margin">开服第{{ record.startDay }}天</a-tag>
+            &nbsp;
+            <a-tag color="green" class="ant-tag-no-margin">持续{{ record.duration }}天</a-tag>
           </div>
         </span>
         <span slot="action" slot-scope="text, record">
@@ -337,6 +339,15 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 
 .image {
   width: 100%;

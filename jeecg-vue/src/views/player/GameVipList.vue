@@ -73,9 +73,9 @@
         :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -87,12 +87,18 @@
         <span slot="tagSlot" slot-scope="text, record">
           <a-tag color="orange">{{ text }}</a-tag>
         </span>
-
         <span slot="action" slot-scope="text, record">
           <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
             <a>删除</a>
           </a-popconfirm>
         </span>
+        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">角色昵称 <a-icon type="copy" /></span>
+        <span slot="accountTitle">账号 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="sidTitle">创角区 <a-icon type="copy" /></span>
+        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -132,40 +138,46 @@ export default {
           }
         },
         {
-          title: '玩家id',
+          // title: '玩家id',
           align: 'center',
-          dataIndex: 'playerId'
+          dataIndex: 'playerId',
+          slots: { title: 'playerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '区服',
+          // title: '玩家昵称',
           align: 'center',
-          dataIndex: 'serverId'
+          dataIndex: 'nickname',
+          slots: { title: 'nicknameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '创角区服',
+          // title: '区服',
           align: 'center',
-          dataIndex: 'sid'
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '渠道',
+          // title: '创角区服',
+          align: 'center',
+          dataIndex: 'sid',
+          slots: { title: 'sidTitle' },
+          scopedSlots: { customRender: 'copySlot' }
+        },
+        {
+          // title: '渠道',
           align: 'center',
           dataIndex: 'channel',
-          customRender: function (text) {
-            return text || '--';
-          }
+          slots: { title: 'channelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: 'Sdk渠道',
+          // title: 'Sdk渠道',
           align: 'center',
           dataIndex: 'sdkChannel',
-          customRender: function (text) {
-            return text || '--';
-          }
-        },
-        {
-          title: '玩家昵称',
-          align: 'center',
-          dataIndex: 'nickname'
+          slots: { title: 'sdkChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '玩家等级',
@@ -295,4 +307,10 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text { 
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
 </style>

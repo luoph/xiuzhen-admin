@@ -91,13 +91,18 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <span slot="switchSlot" slot-scope="text, record">
           <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
         <span slot="profileSlot" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
+        <span slot="sdkChannelTitle">sdk渠道 <a-icon type="copy" /></span>
+        <span slot="versionTitle">版本号 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -159,16 +164,20 @@ export default {
           dataIndex: 'name'
         },
         {
-          title: 'sdk渠道',
+          // title: 'sdk渠道',
           align: 'center',
           width: 100,
-          dataIndex: 'sdkChannel'
+          dataIndex: 'sdkChannel',
+          slots: { title: 'sdkChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '版本号',
+          // title: '版本号',
           align: 'center',
           width: 100,
-          dataIndex: 'version'
+          dataIndex: 'version',
+          slots: { title: 'versionTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '审核区服配置',
@@ -264,4 +273,13 @@ export default {
 </script>
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 </style>

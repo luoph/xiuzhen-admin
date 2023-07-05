@@ -14,18 +14,18 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="备注">
-              <j-input placeholder="请输入备注模糊查询" v-model="queryParam.remark"/>
+              <j-input placeholder="请输入备注模糊查询" v-model="queryParam.remark" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-col :md="6" :sm="8">
                 <a-form-item label="图片名">
-                  <j-input placeholder="请输入图片名" v-model="queryParam.name"/>
+                  <j-input placeholder="请输入图片名" v-model="queryParam.name" />
                 </a-form-item>
               </a-col>
               <a-form-item label="相对路径">
-                <j-input placeholder="请输入相对路径" v-model="queryParam.imgUrl"/>
+                <j-input placeholder="请输入相对路径" v-model="queryParam.imgUrl" />
               </a-form-item>
             </a-col>
           </template>
@@ -84,9 +84,9 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image" />
@@ -95,7 +95,6 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
@@ -110,6 +109,8 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="nameTitle">文件名 <a-icon type="copy" /></span>
+        <span slot="imgUrlTitle">图片地址 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -167,18 +168,20 @@ export default {
           scopedSlots: { customRender: 'imgSlot' }
         },
         {
-          title: '文件名',
+          // title: '文件名',
           align: 'center',
           width: 180,
-          dataIndex: 'name'
+          dataIndex: 'name',
+          slots: { title: 'nameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '图片地址',
+          // title: '图片地址',
           align: 'center',
-          width: 180,
-          customRender: function (t, r) {
-            return r.imgUrl;
-          }
+          width: 200,
+          dataIndex: 'imgUrl',
+          slots: { title: 'imgUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '图片尺寸',
@@ -206,8 +209,7 @@ export default {
         {
           title: '操作',
           align: 'center',
-          width: 180,
-          fixed: 'right',
+          width: 120,
           dataIndex: 'action',
           scopedSlots: { customRender: 'action' }
         }
@@ -240,6 +242,15 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 
 .list-image {
   width: 100%;

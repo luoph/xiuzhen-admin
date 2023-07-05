@@ -3,10 +3,10 @@
  * 高级查询按钮调用 superQuery方法  高级查询组件ref定义为superQueryModal
  * data中url定义 list为查询列表  delete为删除单条记录  deleteBatch为批量删除
  */
-import {EXPORT_FILE_SUFFIX, EXPORT_MIME_TYPE, filterObj} from '@/utils/util';
-import {deleteAction, downFile, getAction, getFileAccessHttpUrl, postAction} from '@/api/manage'
+import { EXPORT_FILE_SUFFIX, EXPORT_MIME_TYPE, filterObj } from '@/utils/util';
+import { deleteAction, downFile, getAction, getFileAccessHttpUrl, postAction } from '@/api/manage'
 import Vue from 'vue'
-import {ACCESS_TOKEN, TENANT_ID} from "@/store/mutation-types"
+import { ACCESS_TOKEN, TENANT_ID } from "@/store/mutation-types"
 import store from '@/store'
 
 export const JeecgListMixin = {
@@ -70,7 +70,7 @@ export const JeecgListMixin = {
   computed: {
     //token header
     tokenHeader() {
-      let head = {'X-Access-Token': Vue.ls.get(ACCESS_TOKEN)}
+      let head = { 'X-Access-Token': Vue.ls.get(ACCESS_TOKEN) }
       let tenantid = Vue.ls.get(TENANT_ID)
       if (tenantid) {
         head['tenant-id'] = tenantid
@@ -177,7 +177,7 @@ export const JeecgListMixin = {
     doBatch: function (batchUrl, ids) {
       var that = this;
       that.loading = true;
-      getAction(batchUrl, {ids: ids}, this.timeout)
+      getAction(batchUrl, { ids: ids }, this.timeout)
         .then(res => {
           if (res.success) {
             that.$message.success(res.message);
@@ -238,7 +238,7 @@ export const JeecgListMixin = {
           content: "是否删除选中数据?",
           onOk: function () {
             that.loading = true;
-            deleteAction(that.url.deleteBatch, {ids: ids}, that.timeout).then((res) => {
+            deleteAction(that.url.deleteBatch, { ids: ids }, that.timeout).then((res) => {
               if (res.success) {
                 // 重新计算分页问题
                 that.reCalculatePage(that.selectedRowKeys.length)
@@ -261,7 +261,7 @@ export const JeecgListMixin = {
         return
       }
       var that = this;
-      deleteAction(that.url.delete, {id: id}, that.timeout).then((res) => {
+      deleteAction(that.url.delete, { id: id }, that.timeout).then((res) => {
         if (res.success) {
           // 重新计算分页问题
           that.reCalculatePage(1)
@@ -333,6 +333,13 @@ export const JeecgListMixin = {
       this.$refs.modalForm.title = "新增";
       this.$refs.modalForm.disableSubmit = false;
     },
+    copyText(value) {
+      if (value) {
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(value);
+        this.$message.success(`已拷贝 ${value}`);
+      }
+    },
     handleTableChange(pagination, filters, sorter) {
       // 分页、排序、筛选变化时触发
       // TODO 筛选
@@ -382,9 +389,9 @@ export const JeecgListMixin = {
           return
         }
         if (typeof window.navigator.msSaveBlob !== 'undefined') {
-          window.navigator.msSaveBlob(new Blob([data], {type: EXPORT_MIME_TYPE}), fileName + EXPORT_FILE_SUFFIX)
+          window.navigator.msSaveBlob(new Blob([data], { type: EXPORT_MIME_TYPE }), fileName + EXPORT_FILE_SUFFIX)
         } else {
-          let url = window.URL.createObjectURL(new Blob([data], {type: EXPORT_MIME_TYPE}))
+          let url = window.URL.createObjectURL(new Blob([data], { type: EXPORT_MIME_TYPE }))
           let link = document.createElement('a')
           link.style.display = 'none'
           link.href = url
@@ -407,14 +414,14 @@ export const JeecgListMixin = {
         if (info.file.response.success) {
           // this.$message.success(`${info.file.name} 文件上传成功`);
           if (info.file.response.code === 201) {
-            let {message, result: {msg, fileUrl, fileName}} = info.file.response
+            let { message, result: { msg, fileUrl, fileName } } = info.file.response
             let href = window._CONFIG['domainURL'] + fileUrl
             this.$warning({
               title: message,
               content: (<div>
-                  <span>{msg}</span><br/>
-                  <span>具体详情请 <a href={href} target="_blank" download={fileName}>点击下载</a> </span>
-                </div>
+                <span>{msg}</span><br />
+                <span>具体详情请 <a href={href} target="_blank" download={fileName}>点击下载</a> </span>
+              </div>
               )
             })
           } else {

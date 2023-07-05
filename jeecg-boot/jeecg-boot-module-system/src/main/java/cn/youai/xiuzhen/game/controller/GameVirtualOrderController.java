@@ -1,13 +1,16 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.game.entity.GamePlayer;
+import cn.youai.xiuzhen.game.entity.GameRechargeGoods;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameVirtualOrder;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
+import cn.youai.xiuzhen.game.service.IGameRechargeGoodsService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.game.service.IGameVirtualOrderService;
 import com.alibaba.fastjson2.JSON;
@@ -27,10 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -50,6 +50,9 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
     @Autowired
     private IGameServerService gameServerService;
 
+    @Autowired
+    private IGameRechargeGoodsService rechargeGoodsService;
+
     @Value("${app.fake-order-url:/order/fake}")
     private String fakeOrderUrl;
 
@@ -61,20 +64,20 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
                                    HttpServletRequest req) {
         IPage<GameVirtualOrder> pageList = pageList(entity, pageNo, pageSize, req);
         if (pageList.getRecords() != null && pageList.getRecords().size() > 0) {
-            HashSet<Long> playerIds = new HashSet<>(pageList.getRecords().size());
-            pageList.getRecords().forEach(e -> playerIds.add(e.getPlayerId()));
+            Set<Long> playerIds = new HashSet<>(pageList.getRecords().size());
+            Set<Integer> goodsIds = new HashSet<>(pageList.getRecords().size());
+            pageList.getRecords().forEach(e -> {
+                playerIds.add(e.getPlayerId());
+                goodsIds.add(e.getGoodsId());
+            });
 
-            LambdaQueryWrapper<GamePlayer> query = Wrappers.lambdaQuery();
-            query.select(GamePlayer::getPlayerId, GamePlayer::getNickname);
-            query.in(GamePlayer::getPlayerId, playerIds);
-            query.groupBy(GamePlayer::getPlayerId);
-            List<GamePlayer> list = playerService.list(query);
+            Map<Long, String> playerNameMap = getPlayerNameMap(playerIds);
+            Map<Integer, String> goodsNameMap = getGoodsNameMap(goodsIds);
 
-            Map<Long, String> nameMap = CollectionUtil.isNotEmpty(list) ?
-                    list.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, GamePlayer::getNickname,
-                            (item1, item2) -> item2)) : new HashMap<>(list.size());
-
-            pageList.getRecords().forEach(e -> e.setPlayerName(nameMap.get(e.getPlayerId())));
+            pageList.getRecords().forEach(e -> {
+                e.setPlayerName(playerNameMap.get(e.getPlayerId()));
+                e.setGoodsName(goodsNameMap.get(e.getGoodsId()));
+            });
         }
         return Result.ok(pageList);
     }
@@ -153,4 +156,34 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
         return super.importExcel(request, response, GameVirtualOrder.class);
     }
 
+
+    private Map<Long, String> getPlayerNameMap(Collection<Long> playerIds) {
+        if (CollUtil.isEmpty(playerIds)) {
+            return new HashMap<>();
+        }
+
+        LambdaQueryWrapper<GamePlayer> query = Wrappers.lambdaQuery();
+        query.select(GamePlayer::getPlayerId, GamePlayer::getNickname);
+        query.in(GamePlayer::getPlayerId, playerIds);
+        query.groupBy(GamePlayer::getPlayerId);
+        List<GamePlayer> list = playerService.list(query);
+
+        return CollectionUtil.isNotEmpty(list) ?
+                list.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, GamePlayer::getNickname,
+                        (item1, item2) -> item2)) : new HashMap<>(list.size());
+    }
+
+    private Map<Integer, String> getGoodsNameMap(Collection<Integer> goodsIds) {
+        if (CollUtil.isEmpty(goodsIds)) {
+            return new HashMap<>();
+        }
+        LambdaQueryWrapper<GameRechargeGoods> query = Wrappers.lambdaQuery();
+        query.select(GameRechargeGoods::getGoodsId, GameRechargeGoods::getName);
+        query.in(GameRechargeGoods::getGoodsId, goodsIds);
+        List<GameRechargeGoods> list = rechargeGoodsService.list(query);
+
+        return CollectionUtil.isNotEmpty(list) ?
+                list.stream().collect(Collectors.toMap(GameRechargeGoods::getGoodsId, GameRechargeGoods::getName,
+                        (item1, item2) -> item2)) : new HashMap<>(list.size());
+    }
 }

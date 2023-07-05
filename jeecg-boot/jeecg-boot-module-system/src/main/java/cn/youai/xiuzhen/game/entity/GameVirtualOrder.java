@@ -7,12 +7,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
+import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 
 /**
  * @author jeecg-boot
@@ -21,9 +21,10 @@ import java.io.Serializable;
  * @date 2020-09-02
  */
 @Data
-@TableName("game_virtual_order")
 @Accessors(chain = true)
-public class GameVirtualOrder implements Serializable {
+@TableName("game_virtual_order")
+@EqualsAndHashCode(callSuper = true)
+public class GameVirtualOrder extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -62,6 +63,9 @@ public class GameVirtualOrder implements Serializable {
     @TableField(exist = false)
     private String goodsIds;
 
+    @TableField(exist = false)
+    private String goodsName;
+
     /**
      * 状态，0-失败 1-成功
      */
@@ -74,31 +78,4 @@ public class GameVirtualOrder implements Serializable {
     @Excel(name = "备注", width = 15)
     private java.lang.String remark;
 
-    /**
-     * 创建人
-     */
-    @Excel(name = "创建人", width = 15)
-    private java.lang.String createBy;
-
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date createTime;
-
-    /**
-     * 修改人
-     */
-    @Excel(name = "修改人", width = 15)
-    private java.lang.String updateBy;
-
-    /**
-     * 修改时间
-     */
-    @Excel(name = "修改时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    private java.util.Date updateTime;
 }

@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col v-if="!isIncludeActivityModel" :md="6" :sm="8">
             <a-form-item label="激活码活动id">
-              <a-input placeholder="请输入激活码活动id" v-model="queryParam.activityId"/>
+              <a-input placeholder="请输入激活码活动id" v-model="queryParam.activityId" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="激活码">
-              <a-input placeholder="请输入激活码" v-model="queryParam.code"/>
+              <a-input placeholder="请输入激活码" v-model="queryParam.code" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -87,9 +87,9 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -98,17 +98,15 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
-
         <span slot="statusSlot" slot-scope="text">
-          <a-tag v-if="text === 0" color="red">无效</a-tag>
-          <a-tag v-else color="green">有效</a-tag>
+          <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
+          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
         </span>
-
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -120,6 +118,7 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="codeTitle">激活码 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -169,9 +168,11 @@ export default {
           dataIndex: 'activityId'
         },
         {
-          title: '激活码',
+          // title: '激活码',
           align: 'center',
-          dataIndex: 'code'
+          dataIndex: 'code',
+          slots: { title: 'codeTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '可使用总数',
@@ -253,4 +254,13 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
 </style>

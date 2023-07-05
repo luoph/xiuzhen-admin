@@ -6,30 +6,30 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="游戏名称">
-              <j-input placeholder="请输入游戏名称" v-model="queryParam.name"/>
+              <j-input placeholder="请输入游戏名称" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
-<!--          <a-col :md="6" :sm="8">-->
-<!--            <a-form-item label="唯一标识">-->
-<!--              <j-search-select-tag v-model="queryParam.yaSimpleName" placeholder="唯一标识"-->
-<!--                                   dictCode="game_info,ya_simple_name,name"/>-->
-<!--            </a-form-item>-->
-<!--          </a-col>-->
-<!--          <template v-if="toggleSearchStatus">-->
-<!--            <a-col :md="6" :sm="8">-->
-<!--              <a-form-item label="gameAppKey">-->
-<!--                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"/>-->
-<!--              </a-form-item>-->
-<!--            </a-col>-->
-<!--          </template>-->
+          <!--          <a-col :md="6" :sm="8">-->
+          <!--            <a-form-item label="唯一标识">-->
+          <!--              <j-search-select-tag v-model="queryParam.yaSimpleName" placeholder="唯一标识"-->
+          <!--                                   dictCode="game_info,ya_simple_name,name"/>-->
+          <!--            </a-form-item>-->
+          <!--          </a-col>-->
+          <!--          <template v-if="toggleSearchStatus">-->
+          <!--            <a-col :md="6" :sm="8">-->
+          <!--              <a-form-item label="gameAppKey">-->
+          <!--                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"/>-->
+          <!--              </a-form-item>-->
+          <!--            </a-col>-->
+          <!--          </template>-->
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
-<!--              <a @click="handleToggleSearch" style="margin-left: 8px">-->
-<!--                {{ toggleSearchStatus ? '收起' : '展开' }}-->
-<!--                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>-->
-<!--              </a>-->
+              <!--              <a @click="handleToggleSearch" style="margin-left: 8px">-->
+              <!--                {{ toggleSearchStatus ? '收起' : '展开' }}-->
+              <!--                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>-->
+              <!--              </a>-->
             </span>
           </a-col>
         </a-row>
@@ -49,21 +49,20 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <!--          <a-divider type="vertical"/>-->
@@ -78,6 +77,18 @@
           <!--            </a-menu>-->
           <!--          </a-dropdown>-->
         </span>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
+        <span slot="simpleNameTitle">唯一标识 <a-icon type="copy" /></span>
+        <span slot="reviewChannelTitle">审核渠道 <a-icon type="copy" /></span>
+        <span slot="roleUrlTitle">角色信息地址 <a-icon type="copy" /></span>
+        <span slot="loginUrlTitle">帐号登录地址 <a-icon type="copy" /></span>
+        <span slot="authUrlTitle">实名认证地址 <a-icon type="copy" /></span>
+        <span slot="checkTextUrlTitle">敏感词检测地址 <a-icon type="copy" /></span>
+        <span slot="accountLoginUrlTitle">账号登录地址 <a-icon type="copy" /></span>
+        <span slot="serverUrlTitle">区服列表地址 <a-icon type="copy" /></span>
+        <span slot="noticeUrlTitle">公告地址 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -89,8 +100,8 @@
 
 <script>
 import GameInfoModal from './modules/GameInfoModal';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
 import JInput from '@/components/jeecg/JInput';
 
 export default {
@@ -124,69 +135,88 @@ export default {
         {
           title: '游戏名称',
           align: 'center',
-          width: 100,
           dataIndex: 'name'
         },
         {
-          title: '唯一标识',
+          // title: '唯一标识',
           align: 'center',
-          width: 100,
-          dataIndex: 'yaSimpleName'
+          dataIndex: 'yaSimpleName',
+          slots: { title: 'simpleNameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '审核渠道',
+          // title: '审核渠道',
           align: 'center',
-          dataIndex: 'reviewChannel'
+          dataIndex: 'reviewChannel',
+          slots: { title: 'reviewChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '帐号登录地址',
+          // title: '帐号登录地址',
           align: 'center',
-          dataIndex: 'loginUrl'
+          dataIndex: 'loginUrl',
+          slots: { title: 'loginUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '角色信息地址',
+          // title: '角色信息地址',
           align: 'center',
-          dataIndex: 'roleUrl'
+          dataIndex: 'roleUrl',
+          slots: { title: 'roleUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '实名认证地址',
+          // title: '实名认证地址',
           align: 'center',
-          dataIndex: 'authUrl'
+          dataIndex: 'authUrl',
+          slots: { title: 'authUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '敏感词检测地址',
+          // title: '敏感词检测地址',
           align: 'center',
-          dataIndex: 'checkTextUrl'
+          dataIndex: 'checkTextUrl',
+          slots: { title: 'checkTextUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '账号登录地址',
+          // title: '账号登录地址',
           align: 'center',
-          dataIndex: 'accountLoginUrl'
+          dataIndex: 'accountLoginUrl',
+          slots: { title: 'accountLoginUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         // {
         //   title: '支付验证地址',
         //   align: 'center',
         //   dataIndex: 'payUrl'
+        //   scopedSlots: { customRender: 'copySlot' }
         // },
         // {
         //   title: '账号注册地址',
         //   align: 'center',
         //   dataIndex: 'accountRegisterUrl'
+        //   scopedSlots: { customRender: 'copySlot' }
         // },
         // {
         //   title: '苹果登录回调',
         //   align: 'center',
-        //   dataIndex: 'oauthRedirectUrl'
+        //   dataIndex: 'oauthRedirectUrl',
+        //   scopedSlots: { customRender: 'copySlot' }
         // },
         {
-          title: '区服列表地址',
+          // title: '区服列表地址',
           align: 'center',
-          dataIndex: 'serverUrl'
+          dataIndex: 'serverUrl',
+          slots: { title: 'serverUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '公告地址',
+          // title: '公告地址',
           align: 'center',
-          dataIndex: 'noticeUrl'
+          dataIndex: 'noticeUrl',
+          slots: { title: 'noticeUrlTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '关闭注册天数',
@@ -203,7 +233,7 @@ export default {
           width: 80,
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -236,4 +266,9 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
 </style>

@@ -83,23 +83,33 @@
             <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)"><a>删除</a></a-popconfirm>
           </a-button>
         </span>
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
         <span slot="blueTags" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未配置</a-tag>
+          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
         <span slot="greenTags" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未配置</a-tag>
+          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green">{{ tag }}</a-tag>
         </span>
         <span slot="loadSlot" slot-scope="text, record">
-          <a-tag color="blue">{{ record.fiveLoad }} / {{ record.fifteenLoad }}</a-tag>
+          <a-tag color="blue" class="ant-tag-no-margin">{{ record.fiveLoad }} / {{ record.fifteenLoad }}</a-tag>
         </span>
         <span slot="perSlot" slot-scope="text, record">
           <a-progress type="circle" :width="70" :strokeWidth="8" stroke-linecap="square" :percent="text" :stroke-color="getPercentColor(text)" />
         </span>
+        <span slot="ipSlot" slot-scope="text, record">
+          <div class="ip-container">
+            <a-tag class="ant-tag-no-margin">公网</a-tag><a @click="copyText(record.ip)" class="copy-text"> {{ record.ip }} <a-icon type="copy" /></a>
+            <a-divider />
+            <a-tag class="ant-tag-no-margin">内网</a-tag><a @click="copyText(record.lan)" class="copy-text"> {{ record.lan }} <a-icon type="copy" /></a>
+          </div>
+        </span>
         <span slot="diskSlot" slot-scope="text, record">
           <div class="disk-usage-container">
-            <li v-for="(item, index) in text">
+            <li v-for="(item, index) in text" :key="item.fileSystem">
               <a-tag>{{ item.fileSystem }}</a-tag>
               <a-tag :color="getPercentColor(item.usedPer)">{{ item.avail }}</a-tag>
               <a-tag>{{ item.diskSize }} </a-tag>
@@ -110,6 +120,8 @@
             </li>
           </div>
         </span>
+        <span slot="nameTitle">名称 <a-icon type="copy" /></span>
+        <span slot="hostnameTitle">主机名 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -147,34 +159,32 @@ export default {
           }
         },
         {
-          title: '名称',
+          // title: '名称',
           align: 'center',
-          dataIndex: 'name'
+          dataIndex: 'name',
+          slots: { title: 'nameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '主机名',
+          // title: '主机名',
           align: 'center',
           dataIndex: 'hostname',
-          customRender: (value) => {
-            return value || '--';
-          }
+          slots: { title: 'hostnameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '公网ip',
+          title: 'IP地址',
           align: 'center',
-          dataIndex: 'ip',
-          customRender: (value) => {
-            return value || '--';
-          }
+          scopedSlots: { customRender: 'ipSlot' }
         },
-        {
-          title: '内网ip',
-          align: 'center',
-          dataIndex: 'lan',
-          customRender: (value) => {
-            return value || '--';
-          }
-        },
+        // {
+        //   title: '内网ip',
+        //   align: 'center',
+        //   dataIndex: 'lan',
+        //   customRender: (value) => {
+        //     return value || '--';
+        //   }
+        // },
         // {
         //   title: '系统',
         //   align: 'center',
@@ -310,13 +320,29 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
+.copy-text {
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.65);
+}
+
 .ant-divider-horizontal {
   margin: 6px 0 6px 0;
+  padding: 0 10px 0 10px;
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
+}
+
+.ip-container {
+  min-width: 170px;
+  max-width: 240px;
+  white-space: nowrap;
 }
 
 .disk-usage-container {
   min-width: 210px;
-  max-width: 360px;
+  max-width: 480px;
 }
 
 .disk-usage-progress {
