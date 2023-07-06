@@ -12,8 +12,8 @@
         />
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
-            <a-form-item label="角色昵称">
-              <a-input placeholder="请输入角色昵称" v-model="queryParam.nickname" />
+            <a-form-item label="角色名">
+              <a-input placeholder="请输入角色名" v-model="queryParam.nickname" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">

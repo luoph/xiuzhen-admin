@@ -6,8 +6,8 @@
         <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['id', validatorRules.id]" placeholder="请输入玩家id" style="width: 100%" />
         </a-form-item>
-        <a-form-item label="角色昵称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['nickname', validatorRules.nickname]" placeholder="请输入角色昵称"></a-input>
+        <a-form-item label="角色名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['nickname', validatorRules.nickname]" placeholder="请输入角色名"></a-input>
         </a-form-item>
         <a-form-item label="角色头像" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['avatar', validatorRules.avatar]" placeholder="请输入角色头像"></a-input>

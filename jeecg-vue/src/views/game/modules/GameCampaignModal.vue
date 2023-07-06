@@ -1,27 +1,24 @@
 <template>
-  <a-modal :title="title" :width="1400" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="1400" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]"
-                    initialValue="1">
+          <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
             <a-select-option :value="1">1-节日活动</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="活动展示名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称"/>
+          <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称" />
         </a-form-item>
         <a-form-item label="活动标语（描述）" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['description', validatorRules.description]"
-                   placeholder="请输入活动标语（描述）"/>
+          <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入活动标语（描述）" />
         </a-form-item>
         <a-form-item label="活动名称（备注）" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）"/>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）" />
         </a-form-item>
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"/>
-          <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
+          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id" />
+          <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
         </a-form-item>
         <!-- <a-form-item label="是否自动添加新服" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择是否自动添加新服" v-decorator="['autoAddServer', validatorRules.autoAddServer]" initialValue="1">
@@ -33,15 +30,15 @@
           <j-multi-select-tag
             v-decorator="['autoAddServerChannels', validatorRules.autoAddServerChannels]"
             placeholder="请选择自动添加新服的渠道"
-            dictCode="game_channel,name,simple_name">
+            dictCode="game_channel,name,simple_name"
+          >
           </j-multi-select-tag>
         </a-form-item>
-        <a-form-item label="sdk渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['sdkChannels', validatorRules.sdkChannels]" placeholder="请输入sdk渠道"/>
+        <a-form-item label="Sdk渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['sdkChannels', validatorRules.sdkChannels]" placeholder="请输入Sdk渠道" />
         </a-form-item>
         <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="选择活动类型" @change="handleTimeTypeChange"
-                    v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
+          <a-select placeholder="选择活动类型" @change="handleTimeTypeChange" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
             <a-select-option :value="1">1-时间范围</a-select-option>
             <a-select-option :value="2">2-开服第N天</a-select-option>
           </a-select>
@@ -49,36 +46,31 @@
         </a-form-item>
         <a-form-item v-show="model.timeType === 1" label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-form-item>
-            <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss"
-                           v-decorator="['startTime', validatorRules.startTime]"/>
+            <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
           </a-form-item>
           <a-form-item>
-            <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss"
-                           v-decorator="['endTime', validatorRules.endTime]"/>
+            <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
           </a-form-item>
         </a-form-item>
         <a-form-item v-show="model.timeType === 2" label="开始天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['startDay', validatorRules.startDay]"
-                          placeholder="请输入开始天数(开服第n天, 0表示开服第1天)" style="width: 100%"/>
+          <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始天数(开服第n天, 0表示开服第1天)" style="width: 100%" />
         </a-form-item>
         <a-form-item v-show="model.timeType === 2" label="持续天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续天数"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续天数" style="width: 100%" />
         </a-form-item>
         <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <img v-if="model.icon" :src="getImgView(model.icon)" :alt="getImgView(model.icon)" style="icon-image"/>
-          <game-image-selector placeholder="请选择活动图标" v-model="model.icon"/>
+          <img v-if="model.icon" :src="getImgView(model.icon)" :alt="getImgView(model.icon)" style="icon-image" />
+          <game-image-selector placeholder="请选择活动图标" v-model="model.icon" />
         </a-form-item>
         <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <img v-if="model.banner" :src="getImgView(model.banner)" :alt="getImgView(model.banner)"
-               style="banner-image"/>
-          <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner"/>
+          <img v-if="model.banner" :src="getImgView(model.banner)" :alt="getImgView(model.banner)" style="banner-image" />
+          <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
         </a-form-item>
         <a-form-item label="自动开启" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-switch checkedChildren="启用" unCheckedChildren="禁用" @change="onAutoOpenChose" v-model="isAutoOpen"/>
+          <a-switch checkedChildren="启用" unCheckedChildren="禁用" @change="onAutoOpenChose" v-model="isAutoOpen" />
         </a-form-item>
         <a-form-item label="优先级" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['priority', validatorRules.priority]" placeholder="请输入优先级"/>
+          <a-input v-decorator="['priority', validatorRules.priority]" placeholder="请输入优先级" />
         </a-form-item>
       </a-form>
 
@@ -92,7 +84,7 @@
 </template>
 
 <script>
-import {httpAction} from '@/api/manage';
+import { httpAction } from '@/api/manage';
 import pick from 'lodash.pick';
 import moment from 'moment';
 import JDate from '@/components/jeecg/JDate';
@@ -118,29 +110,29 @@ export default {
       isAutoOpen: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
-        type: {rules: [{required: true, message: '请输入活动类型!'}]},
-        name: {rules: [{required: true, message: '请输入活动名称（备注）!'}]},
-        description: {rules: [{required: true, message: '请输入活动标语（描述）!'}]},
-        serverIds: {rules: [{required: true, message: '请选择区服id！'}]},
-        autoAddServerChannels: {rules: [{required: false, message: '请选择自动添加新服的渠道!'}]},
-        showName: {rules: [{required: true, message: '请输入活动展示名称!'}]},
-        icon: {rules: [{required: true, message: '请输入活动图标!'}]},
-        banner: {rules: [{required: true, message: '请输入活动宣传图!'}]},
-        timeType: {rules: [{required: true, message: '请输入时间类型!'}]},
-        startDay: {rules: [{required: false, message: '请输入开始时间(开服第n天)!'}]},
-        duration: {rules: [{required: false, message: '请输入持续天数!'}]},
-        startTime: {rules: [{required: false, message: '请输入开始时间!'}]},
-        endTime: {rules: [{required: false, message: '请输入结束时间!'}]},
-        priority: {rules: [{required: true, message: '请输入优先级!'}]}
+        type: { rules: [{ required: true, message: '请输入活动类型!' }] },
+        name: { rules: [{ required: true, message: '请输入活动名称（备注）!' }] },
+        description: { rules: [{ required: true, message: '请输入活动标语（描述）!' }] },
+        serverIds: { rules: [{ required: true, message: '请选择区服id！' }] },
+        autoAddServerChannels: { rules: [{ required: false, message: '请选择自动添加新服的渠道!' }] },
+        showName: { rules: [{ required: true, message: '请输入活动展示名称!' }] },
+        icon: { rules: [{ required: true, message: '请输入活动图标!' }] },
+        banner: { rules: [{ required: true, message: '请输入活动宣传图!' }] },
+        timeType: { rules: [{ required: true, message: '请输入时间类型!' }] },
+        startDay: { rules: [{ required: false, message: '请输入开始时间(开服第n天)!' }] },
+        duration: { rules: [{ required: false, message: '请输入持续天数!' }] },
+        startTime: { rules: [{ required: false, message: '请输入开始时间!' }] },
+        endTime: { rules: [{ required: false, message: '请输入结束时间!' }] },
+        priority: { rules: [{ required: true, message: '请输入优先级!' }] }
       },
       url: {
         add: 'game/gameCampaign/add',
@@ -148,8 +140,7 @@ export default {
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});
@@ -199,8 +190,8 @@ export default {
         );
 
         // 时间格式化
-        this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null});
-        this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null});
+        this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
+        this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
       });
     },
     close() {
@@ -278,7 +269,25 @@ export default {
     },
     popupCallback(row) {
       this.form.setFieldsValue(
-        pick(row, 'type', 'name', 'description', 'showName', 'autoAddServerChannels', 'sdkChannels', 'icon', 'banner', 'status', 'autoOpen', 'timeType', 'startDay', 'duration', 'startTime', 'endTime', 'priority')
+        pick(
+          row,
+          'type',
+          'name',
+          'description',
+          'showName',
+          'autoAddServerChannels',
+          'sdkChannels',
+          'icon',
+          'banner',
+          'status',
+          'autoOpen',
+          'timeType',
+          'startDay',
+          'duration',
+          'startTime',
+          'endTime',
+          'priority'
+        )
       );
     },
     changeSelect(value) {

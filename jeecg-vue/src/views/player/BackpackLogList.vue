@@ -109,7 +109,7 @@ export default {
           dataIndex: 'playerId'
         },
         {
-          title: '昵称',
+          title: '角色名',
           align: 'center',
           dataIndex: 'nickname',
           customRender: (value) => {

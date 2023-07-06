@@ -115,10 +115,10 @@
         </template>
         <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
         <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
-        <span slot="nicknameTitle">昵称 <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
         <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
-        <span slot="sdkChannelTitle">sdk渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
         <span slot="productIdTitle">商品id <a-icon type="copy" /></span>
         <span slot="productNameTitle">商品名 <a-icon type="copy" /></span>
         <span slot="queryIdTitle">平台订单号 <a-icon type="copy" /></span>

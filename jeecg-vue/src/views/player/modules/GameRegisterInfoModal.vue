@@ -39,8 +39,8 @@
         <a-form-item label="手机型号" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="isEdit" v-decorator="['model', validatorRules.model]" placeholder="请输入手机型号"></a-input>
         </a-form-item>
-        <a-form-item label="系统名字" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['system', validatorRules.system]" placeholder="请输入系统名字"></a-input>
+        <a-form-item label="系统名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input :disabled="isEdit" v-decorator="['system', validatorRules.system]" placeholder="请输入系统名"></a-input>
         </a-form-item>
         <a-form-item label="系统版本" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="isEdit" v-decorator="['systemVersion', validatorRules.systemVersion]" placeholder="请输入系统版本"></a-input>

@@ -123,7 +123,7 @@
         <span slot="targetServerIdTitle">返还区服id <a-icon type="copy" /></span>
         <span slot="targetPlayerIdTitle">返还的玩家id <a-icon type="copy" /></span>
         <span slot="accountTitle">返还玩家账号 <a-icon type="copy" /></span>
-        <span slot="nicknameTitle">返还玩家昵称 <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">返还玩家角色名 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -195,7 +195,7 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '返还玩家昵称',
+          // title: '返还玩家角色名',
           align: 'center',
           dataIndex: 'nickname',
           slots: { title: 'nicknameTitle' },

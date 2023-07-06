@@ -258,7 +258,7 @@ export default {
           scopedSlots: { customRender: 'serverIdSlot' }
         },
         {
-          title: 'sdk渠道',
+          title: 'Sdk渠道',
           align: 'center',
           width: 100,
           dataIndex: 'sdkChannels',

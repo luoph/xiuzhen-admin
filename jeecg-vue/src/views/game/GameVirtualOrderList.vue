@@ -87,6 +87,10 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
+        <span slot="statusSlot" slot-scope="text">
+          <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
+          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
+        </span>
         <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
         <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
         <span slot="playerNameTitle">玩家名 <a-icon type="copy" /></span>
@@ -165,11 +169,11 @@ export default {
         {
           title: '状态',
           align: 'center',
-          dataIndex: 'status'
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '备注',
-          align: 'center',
           dataIndex: 'remark'
         },
         {
@@ -228,5 +232,9 @@ export default {
 .copy-text {
   white-space: nowrap;
   color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
 }
 </style>

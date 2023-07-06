@@ -17,8 +17,8 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家昵称">
-              <a-input placeholder="请输入玩家昵称" v-model="queryParam.nickname" />
+            <a-form-item label="角色名">
+              <a-input placeholder="请输入角色名" v-model="queryParam.nickname" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -93,7 +93,7 @@
           </a-popconfirm>
         </span>
         <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
-        <span slot="nicknameTitle">角色昵称 <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
         <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
         <span slot="sidTitle">创角区服 <a-icon type="copy" /></span>
@@ -145,7 +145,7 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '玩家昵称',
+          // title: '角色名',
           align: 'center',
           dataIndex: 'nickname',
           slots: { title: 'nicknameTitle' },

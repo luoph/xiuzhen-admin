@@ -22,8 +22,8 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="昵称">
-              <j-input placeholder="请输入昵称模糊查询" v-model="queryParam.nickname" />
+            <a-form-item label="角色名">
+              <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.nickname" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -134,10 +134,12 @@
         <span slot="strikeText" slot-scope="text, record">
           <span v-if="record.status === 0" style="color: red">
             <a @click="copyText(text)" class="copy-text"
-              ><s> {{ text }} </s></a>
+              ><s> {{ text }} </s></a
+            >
           </span>
           <span v-else
-            ><a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a></span>
+            ><a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a></span
+          >
         </span>
         <span slot="statusSlot" slot-scope="text, record">
           <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
@@ -151,13 +153,14 @@
           <a-dropdown>
             <a class="ant-dropdown-link">更多<a-icon type="down" /></a>
             <a-menu slot="overlay" v-has="'game:vip:admin'">
+              <a-menu-item @click="kickOff(record)">踢下线</a-menu-item>
               <a-menu-item :disabled="record.vipId > 0" @click="addVip(record)">添加VIP</a-menu-item>
               <a-menu-item :disabled="record.vipId === 0" @click="deleteVip(record)">删除VIP</a-menu-item>
             </a-menu>
           </a-dropdown>
         </span>
         <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
-        <span slot="nicknameTitle">角色昵称 <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
         <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
         <span slot="sidTitle">创角区服 <a-icon type="copy" /></span>
@@ -407,6 +410,7 @@ export default {
         list: 'game/player/list',
         addVip: 'game/vip/addVip',
         deleteVip: 'game/vip/delete',
+        kickOff: '/game/forbidden/kickOff',
         exportXlsUrl: 'game/player/exportXls'
       },
       dictOptions: {}
@@ -450,6 +454,23 @@ export default {
     },
     addVip(record) {
       this.handleConfrimRequest(this.url.addVip, { playerIds: record.playerId }, '是否添加VIP？', `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
+    },
+    kickOff(record) {
+      // 踢下线
+      let that = this;
+      this.$confirm({
+        title: '是否踢玩家下线?',
+        content: '玩家id：' + record.playerId + ' 角色名：' + record.nickname,
+        onOk: function () {
+          getAction(that.url.kickOff, { playerId: record.playerId, serverId: record.serverId }).then((res) => {
+            if (res.success) {
+              that.$message.success(res.message);
+            } else {
+              that.$message.error(res.message);
+            }
+          });
+        }
+      });
     }
   }
 };

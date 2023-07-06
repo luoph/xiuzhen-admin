@@ -135,12 +135,27 @@
           <a-divider type="vertical" />
           <a-button type="primary" size="small" @click="undoForbidLogin(record)"> 封号撤回 </a-button>
         </span>
+        <span slot="chatTypeSlot" slot-scope="text">
+          <a-tag v-if="text === 0" class="ant-tag-no-margin" color="green">传闻</a-tag>
+          <a-tag v-else-if="text === 1" class="ant-tag-no-margin" color="blue">世界</a-tag>
+          <a-tag v-else-if="text === 2" class="ant-tag-no-margin" color="orange">私聊</a-tag>
+          <a-tag v-else-if="text === 3" class="ant-tag-no-margin" color="cyan">仙盟</a-tag>
+          <a-tag v-else-if="text === 4" class="ant-tag-no-margin" color="purple">跨服</a-tag>
+          <a-tag v-else class="ant-tag-no-margin">未知</a-tag>
+        </span>
+        <span slot="msgTypeSlot" slot-scope="text">
+          <a-tag v-if="text === 1" class="ant-tag-no-margin" color="green">普通文本</a-tag>
+          <a-tag v-else-if="text === 2" class="ant-tag-no-margin" color="blue">修真日志</a-tag>
+          <a-tag v-else-if="text === 3" class="ant-tag-no-margin" color="orange">分享</a-tag>
+          <a-tag v-else class="ant-tag-no-margin" color="red">未知</a-tag>
+        </span>
         <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
         <span slot="senderIdTitle">发送者id <a-icon type="copy" /></span>
         <span slot="senderNameTitle">发送者名称 <a-icon type="copy" /></span>
         <span slot="receiverIdTitle">接收者id <a-icon type="copy" /></span>
         <span slot="receiverNameTitle">接收者名称 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -229,40 +244,14 @@ export default {
         {
           title: '聊天类型',
           align: 'center',
-          width: 80,
           dataIndex: 'chatType',
-          customRender: (value) => {
-            let re = '未知';
-            if (value === 0) {
-              re = '传闻';
-            } else if (value === 1) {
-              re = '世界';
-            } else if (value === 2) {
-              re = '私聊';
-            } else if (value === 3) {
-              re = '仙盟';
-            } else if (value === 4) {
-              re = '跨服';
-            }
-            return re;
-          }
+          scopedSlots: { customRender: 'chatTypeSlot' }
         },
         {
           title: '消息类型',
           align: 'center',
-          width: 80,
           dataIndex: 'msgType',
-          customRender: (value) => {
-            let re = '未知';
-            if (value === 1) {
-              re = '普通文本';
-            } else if (value === 2) {
-              re = '修真日志';
-            } else if (value === 3) {
-              re = '分享';
-            }
-            return re;
-          }
+          scopedSlots: { customRender: 'msgTypeSlot' }
         },
         {
           title: '角色等级',
@@ -270,14 +259,15 @@ export default {
           dataIndex: 'level'
         },
         {
-          title: 'Sdk渠道',
+          // title: 'Sdk渠道',
           align: 'center',
-          width: 100,
-          dataIndex: 'sdkChannel'
+          // width: 100,
+          dataIndex: 'sdkChannel',
+          slots: { title: 'sdkChannelTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '消息内容',
-          align: 'center',
           width: 280,
           dataIndex: 'msgContent'
         },
@@ -356,7 +346,7 @@ export default {
       let that = this;
       this.$confirm({
         title: '是否踢玩家下线?',
-        content: '玩家id：' + record.senderId + ' 玩家昵称：' + record.senderName,
+        content: '玩家id：' + record.senderId + ' 角色名：' + record.senderName,
         onOk: function () {
           getAction(that.url.kickOff, { playerId: record.senderId, serverId: record.serverId }).then((res) => {
             if (res.success) {
@@ -405,6 +395,10 @@ export default {
 .copy-text {
   white-space: nowrap;
   color: rgba(0, 0, 0, 0.65);
+}
+
+.ant-tag-no-margin {
+  margin-right: auto !important;
 }
 
 .ant-divider-horizontal {

@@ -107,7 +107,7 @@
         <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
         <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
         <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
-        <span slot="nicknameTitle">角色昵称 <a-icon type="copy" /></span>
+        <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
         <span slot="ipTitle">兑换IP <a-icon type="copy" /></span>
       </a-table>

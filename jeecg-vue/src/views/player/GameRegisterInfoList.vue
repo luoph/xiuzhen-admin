@@ -17,8 +17,8 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="昵称">
-              <j-input placeholder="请输入昵称模糊查询" v-model="queryParam.name" />
+            <a-form-item label="角色名">
+              <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -217,7 +217,7 @@ export default {
           dataIndex: 'model'
         },
         {
-          title: '系统名字',
+          title: '系统',
           align: 'center',
           dataIndex: 'system'
         },

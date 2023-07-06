@@ -101,7 +101,7 @@
           <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
-        <span slot="sdkChannelTitle">sdk渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
         <span slot="versionTitle">版本号 <a-icon type="copy" /></span>
       </a-table>
     </div>
@@ -164,7 +164,7 @@ export default {
           dataIndex: 'name'
         },
         {
-          // title: 'sdk渠道',
+          // title: 'Sdk渠道',
           align: 'center',
           width: 100,
           dataIndex: 'sdkChannel',

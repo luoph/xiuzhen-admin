@@ -6,49 +6,47 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="区服">
-              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
-                                   dict="game_server,name,id"/>
+              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId" dict="game_server,name,id" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="昵称">
-              <a-input placeholder="请输入昵称模糊查询" v-model="queryParam.nickname"/>
+            <a-form-item label="角色名">
+              <a-input placeholder="请输入角色名模糊查询" v-model="queryParam.nickname" />
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="6" :md="6" :sm="8">
             <a-form-item label="境界等级">
-              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.level_begin"/>
+              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.level_begin" />
               <span class="query-group-split-cust"></span>
-              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.level_end"/>
+              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.level_end" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="16">
               <a-form-item label="战力范围">
-                <a-input placeholder="最小战力值" class="query-group-cust" v-model="queryParam.combatPower_begin"/>
+                <a-input placeholder="最小战力值" class="query-group-cust" v-model="queryParam.combatPower_begin" />
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="最大战力值" class="query-group-cust" v-model="queryParam.combatPower_end"/>
+                <a-input placeholder="最大战力值" class="query-group-cust" v-model="queryParam.combatPower_end" />
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+                <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
               </a-form-item>
             </a-col>
           </template>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+            <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -76,53 +74,44 @@
 
     <!-- table区域-begin -->
     <div>
-      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
       <a-table
         ref="table"
         size="middle"
-        :scroll="{x:true}"
+        :scroll="{ x: true }"
         bordered
         rowKey="id"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         class="j-table-force-nowrap"
-        @change="handleTableChange">
-
+        @change="handleTableChange"
+      >
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
-        <template slot="imgSlot" slot-scope="text,record">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt=""
-               style="max-width:80px;font-size: 12px;font-style: italic;"/>
+        <template slot="imgSlot" slot-scope="text, record">
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无图片</span>
+          <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt="" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
-          <a-button
-            v-else
-            :ghost="true"
-            type="primary"
-            icon="download"
-            size="small"
-            @click="downloadFile(text)">
-            下载
-          </a-button>
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无文件</span>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadFile(text)"> 下载 </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a @click="handleDetail(record)">详情</a>
@@ -135,7 +124,6 @@
             </a-menu>
           </a-dropdown>
         </span>
-
       </a-table>
     </div>
 
@@ -144,12 +132,11 @@
 </template>
 
 <script>
-
-import '@/assets/less/TableExpand.less'
-import {mixinDevice} from '@/utils/mixin'
-import {JeecgListMixin} from '@/mixins/JeecgListMixin'
-import LogPlayerLevelModal from './modules/LogPlayerLevelModal'
-import {filterObj} from '@/utils/util';
+import '@/assets/less/TableExpand.less';
+import { mixinDevice } from '@/utils/mixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import LogPlayerLevelModal from './modules/LogPlayerLevelModal';
+import { filterObj } from '@/utils/util';
 
 export default {
   name: 'LogPlayerLevelList',
@@ -167,78 +154,77 @@ export default {
           dataIndex: '',
           key: 'rowIndex',
           width: 60,
-          align: "center",
+          align: 'center',
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
         {
           title: '服务器id',
-          align: "center",
+          align: 'center',
           dataIndex: 'serverId'
         },
         {
           title: '玩家id',
-          align: "center",
+          align: 'center',
           dataIndex: 'playerId'
         },
         {
-          title: '玩家昵称',
-          align: "center",
+          title: '角色名',
+          align: 'center',
           dataIndex: 'nickname'
         },
         {
           title: '境界等级',
-          align: "center",
+          align: 'center',
           dataIndex: 'level'
         },
         {
           title: '战力',
-          align: "center",
+          align: 'center',
           dataIndex: 'combatPower'
         },
         {
           title: '战力补偿',
-          align: "center",
+          align: 'center',
           dataIndex: 'combatPowerCompensation'
         },
         {
           title: '总战力',
-          align: "center",
+          align: 'center',
           dataIndex: 'totalCombatPower'
         },
         {
           title: '累计充值',
-          align: "center",
+          align: 'center',
           dataIndex: 'rechargeAmount'
         },
         {
           title: '创角时间',
-          align: "center",
+          align: 'center',
           dataIndex: 'registerTime'
         },
         {
           title: '创角天数',
-          align: "center",
+          align: 'center',
           dataIndex: 'playDays'
         },
         {
           title: '创建时间',
-          align: "center",
+          align: 'center',
           dataIndex: 'createTime'
         }
       ],
       url: {
-        list: "/stat/logPlayerLevel/list",
-        delete: "/stat/logPlayerLevel/delete",
-        deleteBatch: "/stat/logPlayerLevel/deleteBatch",
-        exportXlsUrl: "/stat/logPlayerLevel/exportXls",
-        importExcelUrl: "stat/logPlayerLevel/importExcel",
-
+        list: '/stat/logPlayerLevel/list',
+        delete: '/stat/logPlayerLevel/delete',
+        deleteBatch: '/stat/logPlayerLevel/deleteBatch',
+        exportXlsUrl: '/stat/logPlayerLevel/exportXls',
+        importExcelUrl: 'stat/logPlayerLevel/importExcel'
       },
       dictOptions: {},
-      superFieldList: [],
-    }
+      superFieldList: []
+    };
   },
   created() {
     this.getSuperFieldList();
@@ -246,11 +232,10 @@ export default {
   computed: {
     importExcelUrl: function () {
       return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
-    },
+    }
   },
   methods: {
-    initDictConfig() {
-    },
+    initDictConfig() {},
     getQueryParams() {
       console.log(this.queryParam.createDateRange);
       const param = Object.assign({}, this.queryParam, this.isorter);
@@ -267,17 +252,17 @@ export default {
     },
     getSuperFieldList() {
       let fieldList = [];
-      fieldList.push({type: 'int', value: 'playerId', text: '玩家id', dictCode: ''})
-      fieldList.push({type: 'int', value: 'serverId', text: '服务器id', dictCode: ''})
-      fieldList.push({type: 'int', value: 'level', text: '境界等级', dictCode: ''})
-      fieldList.push({type: 'int', value: 'combatPower', text: '战力', dictCode: ''})
-      fieldList.push({type: 'int', value: 'combatPowerCompensation', text: '战力补偿', dictCode: ''})
-      fieldList.push({type: 'date', value: 'createTime', text: '创建时间'})
-      fieldList.push({type: 'date', value: 'createDate', text: '创建日期'})
-      this.superFieldList = fieldList
+      fieldList.push({ type: 'int', value: 'playerId', text: '玩家id', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'serverId', text: '服务器id', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'level', text: '境界等级', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'combatPower', text: '战力', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'combatPowerCompensation', text: '战力补偿', dictCode: '' });
+      fieldList.push({ type: 'date', value: 'createTime', text: '创建时间' });
+      fieldList.push({ type: 'date', value: 'createDate', text: '创建日期' });
+      this.superFieldList = fieldList;
     }
   }
-}
+};
 </script>
 <style scoped>
 @import '~@assets/less/common.less';
