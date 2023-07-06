@@ -96,7 +96,7 @@
         <span slot="nicknameTitle">角色昵称 <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
         <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
-        <span slot="sidTitle">创角区 <a-icon type="copy" /></span>
+        <span slot="sidTitle">创角区服 <a-icon type="copy" /></span>
         <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
         <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
       </a-table>

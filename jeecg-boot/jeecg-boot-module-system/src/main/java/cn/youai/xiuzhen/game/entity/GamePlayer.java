@@ -116,6 +116,13 @@ public class GamePlayer {
     private Integer level;
 
     /**
+     * 主角光环
+     */
+    @Excel(name = "主角光环", width = 15)
+    @ApiModelProperty(value = "主角光环")
+    private Integer leadHaloLevel;
+
+    /**
      * 界: 1.人界, 2.飞升灵界, 3.飞升仙界, 4.飞升圣界
      */
     @Excel(name = "境界", width = 15)
