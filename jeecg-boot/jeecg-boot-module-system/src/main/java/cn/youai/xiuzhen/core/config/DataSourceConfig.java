@@ -100,6 +100,17 @@ public class DataSourceConfig {
     }
 
     /**
+     * 移除新的数据源
+     */
+    public static void removeDataSource(String key) {
+        DATA_SOURCE_MAP.remove(key);
+    }
+
+    public static void clearDataSource() {
+        DATA_SOURCE_MAP.clear();
+    }
+
+    /**
      * 获取数据源
      */
     public static DataSource getDataSource(String key) {

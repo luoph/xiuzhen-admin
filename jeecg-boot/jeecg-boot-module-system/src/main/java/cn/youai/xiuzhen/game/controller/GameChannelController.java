@@ -1,6 +1,8 @@
 package cn.youai.xiuzhen.game.controller;
 
 import cn.youai.server.springboot.component.OkHttpHelper;
+import cn.youai.xiuzhen.core.database.DataSourceHelper;
+import cn.youai.xiuzhen.core.database.MongoDataSourceHelper;
 import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameServer;
@@ -177,6 +179,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     }
 
     private void reloadServerCache() {
+        MongoDataSourceHelper.getInstance().reload();
+        DataSourceHelper.getInstance().reload();
         GameServerCache.getInstance().clear();
         GameServerCache.getInstance().loadAll();
         OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");

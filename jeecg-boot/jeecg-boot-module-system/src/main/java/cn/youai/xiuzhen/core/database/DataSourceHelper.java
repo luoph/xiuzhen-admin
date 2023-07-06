@@ -114,4 +114,12 @@ public class DataSourceHelper implements InitializingBean {
     public static void useDefaultDatabase() {
         switchDataSource(DataSourceConfig.DEFAULT_DATA_SOURCE_KEY);
     }
+
+    public void reload() {
+        DataSourceConfig.clearDataSource();
+    }
+
+    public void remove(int serverId) {
+        DataSourceConfig.removeDataSource(DataSourceConfig.SERVER_DATA_SOURCE_KEY + serverId);
+    }
 }
