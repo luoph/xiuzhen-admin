@@ -86,18 +86,18 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <span slot="blueTags" slot-scope="text, record">
+        <span slot="blueTags" slot-scope="text">
           <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
-        <span slot="greenTags" slot-scope="text, record">
+        <span slot="greenTags" slot-scope="text">
           <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green">{{ tag }}</a-tag>
         </span>
         <span slot="loadSlot" slot-scope="text, record">
           <a-tag color="blue" class="ant-tag-no-margin">{{ record.fiveLoad }} / {{ record.fifteenLoad }}</a-tag>
         </span>
-        <span slot="perSlot" slot-scope="text, record">
+        <span slot="perSlot" slot-scope="text">
           <a-progress type="circle" :width="70" :strokeWidth="8" stroke-linecap="square" :percent="text" :stroke-color="getPercentColor(text)" />
         </span>
         <span slot="ipSlot" slot-scope="text, record">
@@ -107,7 +107,12 @@
             <a-tag class="ant-tag-no-margin">内网</a-tag><a @click="copyText(record.lan)" class="copy-text"> {{ record.lan }} <a-icon type="copy" /></a>
           </div>
         </span>
-        <span slot="diskSlot" slot-scope="text, record">
+        <span slot="serverNumSlot" slot-scope="text, record" class="server-num-container">
+          <a-tag class="ant-tag-no-margin">区服</a-tag> {{ record.gameServerNum }}
+          <a-divider />
+          <a-tag class="ant-tag-no-margin">跨服</a-tag> {{ record.crossServerNum }}
+        </span>
+        <span slot="diskSlot" slot-scope="text">
           <div class="disk-usage-container">
             <li v-for="(item, index) in text" :key="item.fileSystem">
               <a-tag>{{ item.fileSystem }}</a-tag>
@@ -174,7 +179,7 @@ export default {
         },
         {
           title: 'IP地址',
-          align: 'center',
+          dataIndex: 'ip',
           scopedSlots: { customRender: 'ipSlot' }
         },
         // {
@@ -202,19 +207,13 @@ export default {
         //   }
         // },
         {
-          title: '区服数',
+          title: '区服/跨服数',
           align: 'center',
-          width: 60,
-          dataIndex: 'gameServerNum'
+          width: 100,
+          scopedSlots: { customRender: 'serverNumSlot' }
         },
         {
-          title: '跨服数',
-          align: 'center',
-          width: 60,
-          dataIndex: 'crossServerNum'
-        },
-        {
-          title: '在线玩家',
+          title: '在线数',
           align: 'center',
           width: 60,
           dataIndex: 'onlineNum'
@@ -267,6 +266,7 @@ export default {
         // {
         //   title: '启动时间',
         //   align: 'center',
+        //   width: 100,
         //   dataIndex: 'bootTime'
         // },
         {
@@ -337,6 +337,12 @@ export default {
 .ip-container {
   min-width: 170px;
   max-width: 240px;
+  white-space: nowrap;
+}
+
+.server-num-container {
+  min-width: 80px;
+  max-width: 140px;
   white-space: nowrap;
 }
 

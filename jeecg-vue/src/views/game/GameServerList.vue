@@ -258,7 +258,7 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '在线玩家',
+          title: '在线数',
           align: 'center',
           dataIndex: 'onlineNum',
           customRender: (text) => {
