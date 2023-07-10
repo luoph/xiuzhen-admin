@@ -7,7 +7,7 @@
         FROM `log_chat` l
         JOIN `game_player` p ON l.`sender_id` = p.`player_id`
         <where>
-            l.`chat_type` > 0 AND l.`sender_id` > 0 AND l.`msg_type` != 2
+            l.`chat_type` > 0 AND l.`sender_id` > 0 AND l.`msg_type` = 1
             <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
             <if test="entity != null">
                 <if test="entity.serverId !=null and entity.serverId > 0">
@@ -15,9 +15,6 @@
                 </if>
                 <if test="entity.chatType !=null and entity.chatType > 0">
                     AND l.`chat_type` = #{entity.chatType}
-                </if>
-                <if test="entity.msgType !=null and entity.msgType > 0">
-                    AND l.`msg_type` = #{entity.msgType}
                 </if>
                 <if test="entity.senderId !=null and entity.senderId > 0">
                     AND l.`sender_id` = #{entity.senderId}
