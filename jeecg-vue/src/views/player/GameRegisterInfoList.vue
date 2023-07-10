@@ -313,5 +313,4 @@ export default {
   white-space: nowrap;
   color: rgba(0, 0, 0, 0.65);
 }
-
 </style>

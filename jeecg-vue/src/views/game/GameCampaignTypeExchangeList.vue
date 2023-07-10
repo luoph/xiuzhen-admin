@@ -14,28 +14,29 @@
 
     <!-- table区域-begin -->
     <div>
-      <a-table 
-        ref="table" 
-        size="middle" 
-        bordered rowKey="id" 
-        :columns="columns" 
-        :dataSource="dataSource" 
-        :pagination="ipagination" 
-        :loading="loading" 
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+      <a-table
+        ref="table"
+        size="middle"
+        bordered
+        rowKey="id"
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="ipagination"
+        :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         class="j-table-force-nowrap"
-        @change="handleTableChange">
+        @change="handleTableChange"
+      >
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image"/>
+          <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
@@ -45,9 +46,9 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -65,9 +66,9 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '../../api/manage';
-import {filterObj} from '@/utils/util';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '../../api/manage';
+import { filterObj } from '@/utils/util';
 import GameCampaignTypeExchangeModal from './modules/GameCampaignTypeExchangeModal';
 import JDate from '@/components/jeecg/JDate.vue';
 
@@ -135,14 +136,14 @@ export default {
           align: 'center',
           width: 220,
           dataIndex: 'reward',
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '消耗列表',
           align: 'center',
           width: 220,
           dataIndex: 'consume',
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '最小世界等级',
@@ -163,7 +164,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -200,7 +201,7 @@ export default {
       // 查询条件
       var params = this.getQueryParams();
       this.loading = true;
-      getAction(this.url.list, params).then(res => {
+      getAction(this.url.list, params).then((res) => {
         if (res.success && res.result && res.result.records) {
           this.dataSource = res.result.records;
           this.ipagination.total = res.result.total;
@@ -216,7 +217,7 @@ export default {
       this.loadData();
     },
     handleAdd() {
-      this.$refs.modalForm.add({typeId: this.model.id, campaignId: this.model.campaignId});
+      this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
       this.$refs.modalForm.title = '新增兑换活动配置';
     },
     getQueryParams() {

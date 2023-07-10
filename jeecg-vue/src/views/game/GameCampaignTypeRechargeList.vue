@@ -14,17 +14,19 @@
 
     <!-- table区域-begin -->
     <div>
-      <a-table 
-        ref="table" 
-        size="middle" 
-        bordered rowKey="id" 
-        :columns="columns" 
-        :dataSource="dataSource" 
-        :pagination="ipagination" 
-        :loading="loading" 
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+      <a-table
+        ref="table"
+        size="middle"
+        bordered
+        rowKey="id"
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="ipagination"
+        :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         class="j-table-force-nowrap"
-        @change="handleTableChange">
+        @change="handleTableChange"
+      >
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>

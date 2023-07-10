@@ -1,6 +1,5 @@
 <template>
-  <a-modal :title="title" :width="1200" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="1200" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-tabs :activeKey="tabIndex" @change="handleTabChange">
         <!-- 查询区域 -->
@@ -10,7 +9,7 @@
               <a-row :gutter="10">
                 <a-col :md="10" :sm="8">
                   <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服">
-                    <a-input placeholder="搜索区服id或名称" v-model="queryParam.server"/>
+                    <a-input placeholder="搜索区服id或名称" v-model="queryParam.server" />
                   </a-form-item>
                 </a-col>
                 <a-col :md="6" :sm="8">
@@ -25,10 +24,8 @@
 
           <!-- 操作按钮区域 -->
           <div class="table-operator">
-            <a-button :disabled="selectedRowKeys.length <= 0" @click="batchSwitchServer(1)" type="primary">批量开启
-            </a-button>
-            <a-button :disabled="selectedRowKeys.length <= 0" @click="batchSwitchServer(0)" type="danger">批量关闭
-            </a-button>
+            <a-button :disabled="selectedRowKeys.length <= 0" @click="batchSwitchServer(1)" type="primary">批量开启 </a-button>
+            <a-button :disabled="selectedRowKeys.length <= 0" @click="batchSwitchServer(0)" type="danger">批量关闭 </a-button>
           </div>
 
           <!-- table区域-begin -->
@@ -66,9 +63,9 @@
 </template>
 
 <script>
-import {getAction} from '@/api/manage';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {filterObj} from '@/utils/util';
+import { getAction } from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { filterObj } from '@/utils/util';
 
 export default {
   name: 'GameChannelServerList',
@@ -127,24 +124,24 @@ export default {
           title: '活动状态',
           align: 'center',
           dataIndex: 'campaignStatus',
-          scopedSlots: {customRender: 'statusSlot'}
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       // 页签信息
       tabIndex: 0,
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       form: this.$form.createForm(this),
       url: {
@@ -156,8 +153,7 @@ export default {
     };
   },
   computed: {},
-  created() {
-  },
+  created() {},
   methods: {
     loadData(arg) {
       if (!this.model.id) {
@@ -201,7 +197,7 @@ export default {
       let that = this;
       that.loading = true;
       that.confirmLoading = true;
-      var params = {campaignId: this.model.id};
+      var params = { campaignId: this.model.id };
       getAction(that.url.typeList, params).then((res) => {
         if (res.success && res.result && res.result.records) {
           that.model.typeList = res.result.records;

@@ -70,7 +70,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="骨骼动画" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['animation', validatorRules.animation]" placeholder="骨骼动画"></a-input>
+          <a-input v-decorator="['animation', validatorRules.animation]" placeholder="骨骼动画" />
         </a-form-item>
 
         <a-form-item v-if="model.type === 11" label="砸蛋积分商品" :labelCol="labelCol" :wrapperCol="wrapperCol">

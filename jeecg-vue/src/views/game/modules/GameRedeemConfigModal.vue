@@ -4,7 +4,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入名称"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入名称" />
         </a-form-item>
         <a-form-item label="分组说明" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['summary', validatorRules.summary]" placeholder="请输入分组说明"/>

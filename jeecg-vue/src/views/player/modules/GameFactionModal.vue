@@ -1,15 +1,13 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="仙宗id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['factionId', validatorRules.factionId]"
-                   placeholder="请输入仙宗id"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['factionId', validatorRules.factionId]" placeholder="请输入仙宗id" />
         </a-form-item>
         <a-form-item label="仙宗名字" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入仙宗名字"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入仙宗名字" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -20,40 +18,39 @@
 </template>
 
 <script>
-import {httpAction} from "@/api/manage";
-import pick from "lodash.pick";
+import { httpAction } from '@/api/manage';
+import pick from 'lodash.pick';
 
 export default {
-  name: "GameFactionModal",
+  name: 'GameFactionModal',
   components: {},
   data() {
     return {
       form: this.$form.createForm(this),
-      title: "操作",
+      title: '操作',
       isEdit: false,
       width: 800,
       visible: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
-        factionId: {rules: [{required: true, message: "请输入仙宗id!"}]},
-        name: {rules: [{required: true, message: "请输入仙宗名字!"}]}
+        factionId: { rules: [{ required: true, message: '请输入仙宗id!' }] },
+        name: { rules: [{ required: true, message: '请输入仙宗名字!' }] }
       },
       url: {
-        edit: "player/faction/rename"
+        edit: 'player/faction/rename'
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});
@@ -64,11 +61,11 @@ export default {
       this.isEdit = this.model.id != null;
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "factionId", "name"));
+        this.form.setFieldsValue(pick(this.model, 'factionId', 'name'));
       });
     },
     close() {
-      this.$emit("close");
+      this.$emit('close');
       this.visible = false;
     },
     handleOk() {
@@ -77,22 +74,22 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           that.confirmLoading = true;
-          let httpUrl = "";
-          let method = "";
+          let httpUrl = '';
+          let method = '';
           if (!this.model.id) {
             httpUrl += this.url.add;
-            method = "post";
+            method = 'post';
           } else {
             httpUrl += this.url.edit;
-            method = "put";
+            method = 'put';
           }
           let formData = Object.assign(this.model, values);
-          console.log("表单提交数据", formData);
+          console.log('表单提交数据', formData);
           httpAction(httpUrl, formData, method)
-            .then(res => {
+            .then((res) => {
               if (res.success) {
                 that.$message.success(res.message);
-                that.$emit("ok");
+                that.$emit('ok');
               } else {
                 that.$message.warning(res.message);
               }
@@ -108,7 +105,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "factionId", "name"));
+      this.form.setFieldsValue(pick(row, 'factionId', 'name'));
     }
   }
 };

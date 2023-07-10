@@ -6,13 +6,26 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls(model.type === 17 ? '节日活动-赠酒排行榜' 
-      : model.type === 18 ? '节日活动-魅力值排行榜' 
-      : model.type === 21 ? '节日活动-累充排行' 
-      : model.type === 27 ? '节日活动-召唤排行' 
-      : '未知活动类型')">导出</a-button>
+      <a-button
+        type="primary"
+        icon="download"
+        @click="
+          handleExportXls(
+            model.type === 17
+              ? '节日活动-赠酒排行榜'
+              : model.type === 18
+              ? '节日活动-魅力值排行榜'
+              : model.type === 21
+              ? '节日活动-累充排行'
+              : model.type === 27
+              ? '节日活动-召唤排行'
+              : '未知活动类型'
+          )
+        "
+        >导出</a-button
+      >
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-          <a-button type="primary" icon="import">导入</a-button>
+        <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
           <a-menu slot="overlay">

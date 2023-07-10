@@ -6,13 +6,13 @@
       <a-form :form="form">
         <a-form-item label="key" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="isEdit" v-decorator="['dictKey', validatorRules.dictKey]"
-                   placeholder="请输入key"></a-input>
+                   placeholder="请输入key" />
         </a-form-item>
         <a-form-item label="value" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['dictValue', validatorRules.dictValue]" placeholder="请输入value"></a-input>
+          <a-input v-decorator="['dictValue', validatorRules.dictValue]" placeholder="请输入value" />
         </a-form-item>
         <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入描述"></a-input>
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入描述" />
         </a-form-item>
       </a-form>
     </a-spin>

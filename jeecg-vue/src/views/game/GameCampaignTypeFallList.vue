@@ -8,7 +8,7 @@
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('节日活动-节日掉落')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-          <a-button type="primary" icon="import">导入</a-button>
+        <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
             <a-menu slot="overlay">
@@ -26,17 +26,19 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
 
-      <a-table 
-        ref="table" 
-        size="middle" 
-        bordered rowKey="id" 
-        :columns="columns" 
-        :dataSource="dataSource" 
-        :pagination="ipagination" 
-        :loading="loading" 
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+      <a-table
+        ref="table"
+        size="middle"
+        bordered
+        rowKey="id"
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="ipagination"
+        :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         class="j-table-force-nowrap"
-        @change="handleTableChange">
+        @change="handleTableChange"
+      >
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>

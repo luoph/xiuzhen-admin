@@ -41,8 +41,8 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: 'max-content' }"
-        @change="handleTableChange">
-
+        @change="handleTableChange"
+      >
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">改名</a>
           <a-divider type="vertical" />
@@ -168,7 +168,7 @@ export default {
       this.$refs.channelServerSelector.reset();
     },
     handleDelete(record) {
-      this.handleConfrimRequest(this.url.delete, {serverId: record.serverId, factionId: record.factionId}, '是否删除仙宗？', '点击确定删除仙宗', 'delete');
+      this.handleConfrimRequest(this.url.delete, { serverId: record.serverId, factionId: record.factionId }, '是否删除仙宗？', '点击确定删除仙宗', 'delete');
     }
   }
 };

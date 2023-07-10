@@ -6,14 +6,14 @@
         <a-row :gutter="24">
           <a-col :md="22" :sm="22">
             <a-form-item label="道具ID">
-              <a-input placeholder="请输入道具ID，以空格或逗号分隔可查询多个" v-model="queryParam.itemId"></a-input>
+              <a-input placeholder="请输入道具ID，以空格或逗号分隔可查询多个" v-model="queryParam.itemId" />
             </a-form-item>
           </a-col>
         </a-row>
         <a-row :gutter="24">
           <a-col :md="22" :sm="22">
             <a-form-item label="道具名">
-              <a-input placeholder="请输入道具名，以空格或逗号分隔可查询多个" v-model="queryParam.itemName"></a-input>
+              <a-input placeholder="请输入道具名，以空格或逗号分隔可查询多个" v-model="queryParam.itemName" />
             </a-form-item>
           </a-col>
         </a-row>

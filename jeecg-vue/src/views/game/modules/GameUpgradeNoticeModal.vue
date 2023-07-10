@@ -11,11 +11,11 @@
           <j-editor v-model="contentHtml"/>
         </a-form-item>
         <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励"></a-input>
+          <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励" />
         </a-form-item>
         <a-form-item label="服务器" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-show="isEdit" v-decorator="['serverIds', validatorRules.serverIds]"
-                   placeholder="请输入服务器"></a-input>
+                   placeholder="请输入服务器" />
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
         <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">

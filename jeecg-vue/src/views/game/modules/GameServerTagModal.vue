@@ -5,14 +5,14 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="标签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入标签名"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入标签名" />
         </a-form-item>
         <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入排序"
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注" />
         </a-form-item>
       </a-form>
     </a-spin>

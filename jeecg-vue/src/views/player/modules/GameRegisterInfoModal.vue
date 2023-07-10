@@ -4,7 +4,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="帐号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['account', validatorRules.account]" placeholder="请输入帐号"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['account', validatorRules.account]" placeholder="请输入帐号" />
         </a-form-item>
         <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
@@ -13,49 +13,49 @@
           <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入区服Id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="角色名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入角色名称"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入角色名称" />
         </a-form-item>
         <a-form-item label="IP" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['ip', validatorRules.ip]" placeholder="请输入IP"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['ip', validatorRules.ip]" placeholder="请输入IP" />
         </a-form-item>
         <a-form-item label="渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道" />
         </a-form-item>
         <a-form-item label="Sdk渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['sdkChannel', validatorRules.sdkChannel]" placeholder="请输入Sdk渠道"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['sdkChannel', validatorRules.sdkChannel]" placeholder="请输入Sdk渠道" />
         </a-form-item>
         <a-form-item label="imei" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['imei', validatorRules.imei]" placeholder="请输入imei"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['imei', validatorRules.imei]" placeholder="请输入imei" />
         </a-form-item>
         <a-form-item label="mac" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['mac', validatorRules.mac]" placeholder="请输入mac"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['mac', validatorRules.mac]" placeholder="请输入mac" />
         </a-form-item>
         <a-form-item label="idfa" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['idfa', validatorRules.idfa]" placeholder="请输入idfa"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['idfa', validatorRules.idfa]" placeholder="请输入idfa" />
         </a-form-item>
         <a-form-item label="手机品牌" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['vendor', validatorRules.vendor]" placeholder="请输入手机品牌"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['vendor', validatorRules.vendor]" placeholder="请输入手机品牌" />
         </a-form-item>
         <a-form-item label="手机型号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['model', validatorRules.model]" placeholder="请输入手机型号"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['model', validatorRules.model]" placeholder="请输入手机型号" />
         </a-form-item>
         <a-form-item label="系统名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['system', validatorRules.system]" placeholder="请输入系统名"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['system', validatorRules.system]" placeholder="请输入系统名" />
         </a-form-item>
         <a-form-item label="系统版本" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['systemVersion', validatorRules.systemVersion]" placeholder="请输入系统版本"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['systemVersion', validatorRules.systemVersion]" placeholder="请输入系统版本" />
         </a-form-item>
         <a-form-item label="网络类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['network', validatorRules.network]" placeholder="请输入网络类型"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['network', validatorRules.network]" placeholder="请输入网络类型" />
         </a-form-item>
         <a-form-item label="version_name" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['versionName', validatorRules.versionName]" placeholder="请输入version_name"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['versionName', validatorRules.versionName]" placeholder="请输入version_name" />
         </a-form-item>
         <a-form-item label="version_code" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['versionCode', validatorRules.versionCode]" placeholder="请输入version_code"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['versionCode', validatorRules.versionCode]" placeholder="请输入version_code" />
         </a-form-item>
         <a-form-item label="平台" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['platform', validatorRules.platform]" placeholder="请输入平台"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['platform', validatorRules.platform]" placeholder="请输入平台" />
         </a-form-item>
       </a-form>
     </a-spin>

@@ -30,21 +30,21 @@
           </a-upload>
         </a-form-item>
         <a-form-item label="图片名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入图片名"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入图片名" />
         </a-form-item>
         <a-form-item label="相对路径" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="true" v-decorator="['imgUrl', validatorRules.imgUrl]"
-                   placeholder="请输入相对路径"></a-input>
+                   placeholder="请输入相对路径" />
         </a-form-item>
         <a-form-item label="图片宽（px）" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="true" v-decorator="['width', validatorRules.width]" placeholder="请输入图片宽"></a-input>
+          <a-input :disabled="true" v-decorator="['width', validatorRules.width]" placeholder="请输入图片宽" />
         </a-form-item>
         <a-form-item label="图片高（px）" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="true" v-decorator="['height', validatorRules.height]"
-                   placeholder="请输入图片高"></a-input>
+                   placeholder="请输入图片高" />
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注" />
         </a-form-item>
       </a-form>
     </a-spin>

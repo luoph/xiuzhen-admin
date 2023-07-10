@@ -1,27 +1,27 @@
 <template>
-  <game-image-component v-bind="configs" v-on="$listeners"/>
+  <game-image-component v-bind="configs" v-on="$listeners" />
 </template>
 
 <script>
-import GameImageComponent from "../GameImageComponent";
+import GameImageComponent from '../GameImageComponent';
 
 export default {
-  name: "GameImageSelector",
-  components: {GameImageComponent},
-  props: ["value"],
+  name: 'GameImageSelector',
+  components: { GameImageComponent },
+  props: ['value'],
   data() {
     return {
       settings: {
-        name: "图片",
-        valueKey: "imgUrl",
-        returnKeys: ["id", "imgUrl"],
+        name: '图片',
+        valueKey: 'imgUrl',
+        returnKeys: ['id', 'imgUrl'],
         multiple: false
       }
     };
   },
   computed: {
     configs() {
-      return Object.assign({value: this.value}, this.settings, this.$attrs);
+      return Object.assign({ value: this.value }, this.settings, this.$attrs);
     }
   }
 };

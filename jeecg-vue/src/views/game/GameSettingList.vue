@@ -215,5 +215,4 @@ export default {
   white-space: normal;
   word-break: break-word;
 }
-
 </style>

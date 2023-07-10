@@ -16,7 +16,7 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="SKU">
-              <j-input placeholder="请输入sku模糊查询" v-model="queryParam.sku" />
+              <j-input placeholder="请输入SKU模糊查询" v-model="queryParam.sku" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">

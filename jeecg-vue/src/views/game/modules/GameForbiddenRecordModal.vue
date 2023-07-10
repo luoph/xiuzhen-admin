@@ -6,7 +6,7 @@
       <a-form :form="form">
         <a-form-item label="执行的增删改操作类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['operation', validatorRules.operation]"
-                   placeholder="请输入执行的增删改操作类型"></a-input>
+                   placeholder="请输入执行的增删改操作类型" />
         </a-form-item>
         <a-form-item label="封号禁言表id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['forbiddenId', validatorRules.forbiddenId]" placeholder="请输入封号禁言表id"
@@ -21,13 +21,13 @@
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="playerId/ip/deviceId" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['banKey', validatorRules.banKey]" placeholder="请输入playerId/ip/deviceId"></a-input>
+          <a-input v-decorator="['banKey', validatorRules.banKey]" placeholder="请输入playerId/ip/deviceId" />
         </a-form-item>
         <a-form-item label="对应 ban_type 的值" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['banValue', validatorRules.banValue]" placeholder="请输入对应 ban_type 的值"></a-input>
+          <a-input v-decorator="['banValue', validatorRules.banValue]" placeholder="请输入对应 ban_type 的值" />
         </a-form-item>
         <a-form-item label="封禁原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['reason', validatorRules.reason]" placeholder="请输入封禁原因"></a-input>
+          <a-input v-decorator="['reason', validatorRules.reason]" placeholder="请输入封禁原因" />
         </a-form-item>
         <a-form-item label="0-临时 1-永久" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['isForever', validatorRules.isForever]" placeholder="请输入0-临时 1-永久"
@@ -46,7 +46,7 @@
                   :trigger-change="true" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="操作人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入操作人"></a-input>
+          <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入操作人" />
         </a-form-item>
       </a-form>
     </a-spin>

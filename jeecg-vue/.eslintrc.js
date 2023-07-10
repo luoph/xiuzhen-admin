@@ -40,6 +40,7 @@ module.exports = {
         "vue/html-closing-bracket-newline": "off",
         "vue/html-closing-bracket-spacing": "off",
         "vue/html-indent": "off",
+        "vue/html-quotes": "off",
         "vue/html-self-closing": "off",
         "vue/max-attributes-per-line": "off",
         // "vue/max-attributes-per-line": ["error", { singleline: 10, multiline: { max: 1, allowFirstLine: false } }],

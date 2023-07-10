@@ -14,8 +14,7 @@
       <!-- <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
       <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据" :autoSize="{ minRows: 2, maxRows: 20 }"/> -->
       <a-button type="primary" icon="download" @click="handleExportXls('节日活动-节日派对-进度任务')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
-                @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <!--<a-dropdown v-if="selectedRowKeys.length > 0">
@@ -48,28 +47,27 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         class="j-table-force-nowrap"
-        @change="handleTableChange">
+        @change="handleTableChange"
+      >
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -87,10 +85,10 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameCampaignTypePartyProgressModal from './modules/GameCampaignTypePartyProgressModal';
-import {getAction, postAction} from '@api/manage';
-import {filterObj} from '@/utils/util';
+import { getAction, postAction } from '@api/manage';
+import { filterObj } from '@/utils/util';
 
 export default {
   name: 'GameCampaignTypePartyProgressList',
@@ -150,15 +148,15 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
         list: 'game/gameCampaignTypePartyProgress/list',
         delete: 'game/gameCampaignTypePartyProgress/delete',
         //deleteBatch: "game/gameCampaignTypePartyProgress/deleteBatch"
-        exportXlsUrl: "game/gameCampaignTypePartyProgress/exportXls",
-        importExcelUrl: "game/gameCampaignTypePartyProgress/importExcel",
+        exportXlsUrl: 'game/gameCampaignTypePartyProgress/exportXls',
+        importExcelUrl: 'game/gameCampaignTypePartyProgress/importExcel',
         importTextUrl: 'game/gameCampaignTypePartyProgress/importText'
       },
       dictOptions: {}
@@ -204,7 +202,7 @@ export default {
       this.loadData();
     },
     handleAdd() {
-      this.$refs.modalForm.add({typeId: this.model.id, campaignId: this.model.campaignId});
+      this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
       this.$refs.modalForm.title = '新增节日派对进度任务配置';
     },
     getQueryParams() {

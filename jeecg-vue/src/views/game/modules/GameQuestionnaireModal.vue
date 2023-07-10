@@ -5,7 +5,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
+          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id" />
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
         <a-form-item label="问卷地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -28,7 +28,7 @@
           </a-col>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注" />
         </a-form-item>
       </a-form>
     </a-spin>
