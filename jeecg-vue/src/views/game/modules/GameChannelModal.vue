@@ -7,7 +7,7 @@
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入渠道名称" />
         </a-form-item>
         <a-form-item label="唯一标识" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['simpleName', validatorRules.simpleName]" placeholder="请输入唯一标识" />
+          <a-input :disabled="isEdit" v-decorator="['simpleName', validatorRules.simpleName]" placeholder="请输入唯一标识" />
         </a-form-item>
         <a-form-item label="公告Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['noticeId', validatorRules.noticeId]" placeholder="请输入公告Id" style="width: 100%" />
@@ -66,6 +66,7 @@ export default {
       form: this.$form.createForm(this),
       title: '操作',
       width: 800,
+      isEdit: false,
       visible: false,
       model: {},
       labelCol: {
@@ -106,6 +107,7 @@ export default {
       this.form.resetFields();
       this.model = Object.assign({}, record);
       this.visible = true;
+      this.isEdit = this.model.id != null;
       this.$nextTick(() => {
         this.form.setFieldsValue(
           pick(this.model, 'name', 'simpleName', 'gameId', 'noticeId', 'versionCode', 'versionName', 'taStatistics', 'testLogin', 'ipWhitelist', 'remark', 'extra')
