@@ -13,62 +13,61 @@
           <a-input v-decorator="['dodge']" style="width: 100%"></a-input>
         </a-form-item>
         <a-form-item label="命中" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['hit']" style="width: 100%"/>
+          <a-input-number v-decorator="['hit']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="速度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['speed']" style="width: 100%"/>
+          <a-input-number v-decorator="['speed']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="暴击" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['crit']" style="width: 100%"/>
+          <a-input-number v-decorator="['crit']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="暴抗" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['critDef']" style="width: 100%"/>
+          <a-input-number v-decorator="['critDef']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="暴击率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['critPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['critPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="命中率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['hitPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['hitPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="闪避率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['dodgePct']" style="width: 100%"/>
+          <a-input-number v-decorator="['dodgePct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="暴抗率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['critDefPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['critDefPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="破军率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['breakAttPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['breakAttPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="破军免伤率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['breakDrPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['breakDrPct']" style="width: 100%" />
         </a-form-item>
 
         <a-form-item label="卓越率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['excelAttPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['excelAttPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="卓越抵抗" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['excelDelPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['excelDelPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="卓越伤害" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['excelDmgPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['excelDmgPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="卓越免伤" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['excelDrPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['excelDrPct']" style="width: 100%" />
         </a-form-item>
 
         <a-form-item label="会心率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['insightAttPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['insightAttPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="会心抵抗" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['insightDefPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['insightDefPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="会心伤害" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['insightDmgPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['insightDmgPct']" style="width: 100%" />
         </a-form-item>
         <a-form-item label="会心免伤" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['insightDrPct']" style="width: 100%"/>
+          <a-input-number v-decorator="['insightDrPct']" style="width: 100%" />
         </a-form-item>
-
       </a-form>
     </a-spin>
     <!-- </a-modal> -->
@@ -78,12 +77,12 @@
 </template>
 
 <script>
-import {getAction} from "@/api/manage";
-import pick from "lodash.pick";
-import JDate from "@/components/jeecg/JDate";
+import { getAction } from '@/api/manage';
+import pick from 'lodash.pick';
+import JDate from '@/components/jeecg/JDate';
 
 export default {
-  name: "PlayerModal",
+  name: 'PlayerModal',
   components: {
     JDate,
     getAction
@@ -91,21 +90,21 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this),
-      title: "操作",
+      title: '操作',
       width: 800,
       visible: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       url: {
-        list: "game/player/detail"
+        list: 'game/player/detail'
       }
     };
   },
@@ -114,7 +113,7 @@ export default {
   },
   methods: {
     close() {
-      this.$emit("close");
+      this.$emit('close');
       this.visible = false;
     },
     edit(record) {
@@ -128,12 +127,36 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "hp", "def", "dodge", "hit", "speed", "crit", "critDef", "critPct", "hitPct", "dodgePct", "critDefPct", "breakAttPct", "breakDrPct",
-        "excelAttPct", "excelDelPct", "excelDmgPct", "excelDrPct", "insightAttPct", "insightDefPct", "insightDmgPct", "insightDrPct"));
+      this.form.setFieldsValue(
+        pick(
+          row,
+          'hp',
+          'def',
+          'dodge',
+          'hit',
+          'speed',
+          'crit',
+          'critDef',
+          'critPct',
+          'hitPct',
+          'dodgePct',
+          'critDefPct',
+          'breakAttPct',
+          'breakDrPct',
+          'excelAttPct',
+          'excelDelPct',
+          'excelDmgPct',
+          'excelDrPct',
+          'insightAttPct',
+          'insightDefPct',
+          'insightDmgPct',
+          'insightDrPct'
+        )
+      );
     },
     queryServerList() {
       let that = this;
-      getAction(that.url.list + "?playerId=" + this.playerId).then(res => {
+      getAction(that.url.list + '?playerId=' + this.playerId).then((res) => {
         if (res.success) {
           this.popupCallback(res.result);
         }

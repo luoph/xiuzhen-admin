@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.stat.mapper.LogCmdMapper">
+
+    <select id="selectLogCmdList" resultType="cn.youai.log.LogCmd">
+        SELECT `player_id`, `server_id`, `msg_id`, COUNT(*) AS num, ROUND(AVG(`cost_time`)) AS `cost_time`,
+        `create_date` FROM `log_cmd`
+        <where>
+            `server_id` = #{serverId}
+            AND `create_date` = #{date}
+            AND `cost_time` >= #{costTime}
+        </where>
+        GROUP BY `server_id`, `msg_id`
+        HAVING COUNT(*) > 1;
+    </select>
+
+</mapper>

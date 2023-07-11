@@ -223,7 +223,7 @@ export default {
           )
         );
 
-        this.form.setFieldsValue({buyType: null != this.model.buyType ? this.model.buyType.split(",").sort() : []});
+        this.form.setFieldsValue({ buyType: null != this.model.buyType ? this.model.buyType.split(',').sort() : [] });
       });
     },
     close() {
@@ -302,7 +302,7 @@ export default {
       // this.form.setFieldsValue({
       //   buyType: value.join(',')
       // });
-    },
+    }
   }
 };
 </script>

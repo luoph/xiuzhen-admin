@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.system.entity.SysUser;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +15,11 @@ import java.util.List;
  * @date 2019-12-10
  */
 public interface GameServerMapper extends BaseMapper<GameServer> {
+
+    /**
+     * 查询某一天的游戏服id
+     */
+    List<Integer> selectRunningServerIds(@Param("date") Date date);
 
     /**
      * 查询所有区服

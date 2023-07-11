@@ -4,35 +4,28 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="兑换码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['code', validatorRules.code]" placeholder="请输入兑换码"/>
+          <a-input :disabled="isEdit" v-decorator="['code', validatorRules.code]" placeholder="请输入兑换码" />
         </a-form-item>
         <a-form-item label="渠道编码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]"
-                   placeholder="请输入渠道编码"/>
+          <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道编码" />
         </a-form-item>
         <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]"
-                          placeholder="请输入玩家id" style="width: 100%"/>
+          <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="分组id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isEdit" v-decorator="['groupId', validatorRules.groupId]"
-                          placeholder="请输入分组id" style="width: 100%"/>
+          <a-input-number :disabled="isEdit" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]"
-                          placeholder="请输入区服Id" style="width: 100%"/>
+          <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入区服Id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="兑换ip" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['remoteIp', validatorRules.remoteIp]"
-                   placeholder="请输入兑换ip"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['remoteIp', validatorRules.remoteIp]" placeholder="请输入兑换ip"></a-input>
         </a-form-item>
         <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-date :disabled="isEdit" placeholder="请选择创建时间"
-                  v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%"/>
+          <j-date :disabled="isEdit" placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
         </a-form-item>
         <a-form-item label="创建日期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-date :disabled="isEdit" placeholder="请选择创建日期"
-                  v-decorator="['createDate', validatorRules.createDate]" :trigger-change="true" style="width: 100%"/>
+          <j-date :disabled="isEdit" placeholder="请选择创建日期" v-decorator="['createDate', validatorRules.createDate]" :trigger-change="true" style="width: 100%" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -43,7 +36,7 @@
 </template>
 
 <script>
-import {httpAction} from '@/api/manage';
+import { httpAction } from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 
@@ -61,21 +54,21 @@ export default {
       isEdit: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
-        code: {rules: [{required: true, message: '请输入兑换码!'}]},
-        channel: {rules: [{required: true, message: '请输入渠道编码!'}]},
-        playerId: {rules: [{required: true, message: '请输入玩家id!'}]},
+        code: { rules: [{ required: true, message: '请输入兑换码!' }] },
+        channel: { rules: [{ required: true, message: '请输入渠道编码!' }] },
+        playerId: { rules: [{ required: true, message: '请输入玩家id!' }] },
         groupId: {},
-        serverId: {rules: [{required: true, message: '请输入区服Id!'}]},
-        remoteIp: {rules: [{required: true, message: '请输入兑换ip!'}]},
+        serverId: { rules: [{ required: true, message: '请输入区服Id!' }] },
+        remoteIp: { rules: [{ required: true, message: '请输入兑换ip!' }] },
         createTime: {},
         createDate: {}
       },
@@ -85,8 +78,7 @@ export default {
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});

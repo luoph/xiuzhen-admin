@@ -1,12 +1,10 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="图片类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select :disabled="isEdit" placeholder="选择图片类型" v-decorator="['type', validatorRules.type]"
-                    initialValue="1">
+          <a-select :disabled="isEdit" placeholder="选择图片类型" v-decorator="['type', validatorRules.type]" initialValue="1">
             <a-select-option :value="1">图标</a-select-option>
             <a-select-option :value="2">宣传图</a-select-option>
           </a-select>
@@ -22,9 +20,9 @@
             :beforeUpload="beforeUpload"
             @change="handleChange"
           >
-            <img v-if="picUrl" :src="getImageView()" alt="图片" style="height: 104px; max-width: 300px"/>
+            <img v-if="picUrl" :src="getImageView()" alt="图片" style="height: 104px; max-width: 300px" />
             <div v-else>
-              <a-icon :type="uploadLoading ? 'loading' : 'plus'"/>
+              <a-icon :type="uploadLoading ? 'loading' : 'plus'" />
               <div class="ant-upload-text">上传</div>
             </div>
           </a-upload>
@@ -33,15 +31,13 @@
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入图片名" />
         </a-form-item>
         <a-form-item label="相对路径" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="true" v-decorator="['imgUrl', validatorRules.imgUrl]"
-                   placeholder="请输入相对路径" />
+          <a-input :disabled="true" v-decorator="['imgUrl', validatorRules.imgUrl]" placeholder="请输入相对路径" />
         </a-form-item>
         <a-form-item label="图片宽（px）" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="true" v-decorator="['width', validatorRules.width]" placeholder="请输入图片宽" />
         </a-form-item>
         <a-form-item label="图片高（px）" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="true" v-decorator="['height', validatorRules.height]"
-                   placeholder="请输入图片高" />
+          <a-input :disabled="true" v-decorator="['height', validatorRules.height]" placeholder="请输入图片高" />
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注" />
@@ -53,10 +49,10 @@
 </template>
 
 <script>
-import {httpAction} from '@/api/manage';
+import { httpAction } from '@/api/manage';
 import pick from 'lodash.pick';
 import Vue from 'vue';
-import {ACCESS_TOKEN} from '@/store/mutation-types';
+import { ACCESS_TOKEN } from '@/store/mutation-types';
 
 export default {
   name: 'GameImageModal',
@@ -70,19 +66,19 @@ export default {
       isEdit: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       uploadLoading: false,
       picUrl: '',
       headers: {},
       validatorRules: {
-        type: {rules: [{required: true, message: '请输入图片类型!'}]}
+        type: { rules: [{ required: true, message: '请输入图片类型!' }] }
         // remark: { rules: [{ required: true, message: "请输入备注!" }] }
       },
       url: {
@@ -94,7 +90,7 @@ export default {
   },
   created() {
     const token = Vue.ls.get(ACCESS_TOKEN);
-    this.headers = {'X-Access-Token': token};
+    this.headers = { 'X-Access-Token': token };
   },
   computed: {
     uploadAction: function () {

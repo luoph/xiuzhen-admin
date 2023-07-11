@@ -1,40 +1,31 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
-                          placeholder="请输入开服活动id" style="width: 100%"/>
+          <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]"
-                          placeholder="请输入页签id" style="width: 100%"/>
+          <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['rankDetailId', validatorRules.rankDetailId]"
-                          placeholder="请输入详情id" style="width: 100%"/>
+          <a-input-number :disabled="true" v-decorator="['rankDetailId', validatorRules.rankDetailId]" placeholder="请输入详情id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="排行消耗道具id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['itemId', validatorRules.itemId]" placeholder="请输入排行消耗道具id"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['itemId', validatorRules.itemId]" placeholder="请输入排行消耗道具id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="排行消耗道具数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入排行消耗道具数量"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入排行消耗道具数量" style="width: 100%" />
         </a-form-item>
         <a-form-item label="消耗对应积分" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['score', validatorRules.score]" placeholder="请输入消耗对应积分"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['score', validatorRules.score]" placeholder="请输入消耗对应积分" style="width: 100%" />
         </a-form-item>
         <a-form-item label="道具积分分类" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['itemType', validatorRules.itemType]" placeholder="请输入道具积分分类"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['itemType', validatorRules.itemType]" placeholder="请输入道具积分分类" style="width: 100%" />
         </a-form-item>
         <a-form-item label="道具积分分类名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['itemTypeName', validatorRules.itemTypeName]"
-                   placeholder="请输入道具积分分类名称"/>
+          <a-input v-decorator="['itemTypeName', validatorRules.itemTypeName]" placeholder="请输入道具积分分类名称" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -47,7 +38,7 @@
 </template>
 
 <script>
-import {httpAction} from '@/api/manage';
+import { httpAction } from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 
@@ -65,23 +56,23 @@ export default {
       isEdit: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
-        campaignId: {rules: [{required: true, message: '请输入开服活动id!'}]},
-        campaignTypeId: {rules: [{required: true, message: '请输入页签id!'}]},
-        rankDetailId: {rules: [{required: true, message: '请输入详情id!'}]},
-        itemId: {rules: [{required: true, message: '请输入排行消耗道具id!'}]},
-        num: {rules: [{required: true, message: '请输入排行消耗道具数量!'}]},
-        score: {rules: [{required: true, message: '请输入消耗对应积分!'}]},
-        itemType: {rules: [{required: true, message: '请输入道具积分分类!'}]},
-        itemTypeName: {rules: [{required: true, message: '请输入道具积分分类名称!'}]}
+        campaignId: { rules: [{ required: true, message: '请输入开服活动id!' }] },
+        campaignTypeId: { rules: [{ required: true, message: '请输入页签id!' }] },
+        rankDetailId: { rules: [{ required: true, message: '请输入详情id!' }] },
+        itemId: { rules: [{ required: true, message: '请输入排行消耗道具id!' }] },
+        num: { rules: [{ required: true, message: '请输入排行消耗道具数量!' }] },
+        score: { rules: [{ required: true, message: '请输入消耗对应积分!' }] },
+        itemType: { rules: [{ required: true, message: '请输入道具积分分类!' }] },
+        itemTypeName: { rules: [{ required: true, message: '请输入道具积分分类名称!' }] }
       },
       url: {
         add: 'game/openServiceCampaignRankDetailScore/add',
@@ -89,8 +80,7 @@ export default {
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add(record) {
       this.edit(record);

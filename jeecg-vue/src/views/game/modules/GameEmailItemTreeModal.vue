@@ -33,13 +33,12 @@
     </div>
     <div style="margin-bottom: 50px">
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a
-      >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
       <div v-if="showError">
-        <a-alert message="错误选择" description="所选记录没有数量！" type="error" showIcon/>
+        <a-alert message="错误选择" description="所选记录没有数量！" type="error" showIcon />
       </div>
       <a-table
         ref="table"
@@ -55,7 +54,7 @@
         @change="handleTableChange"
       >
         <span slot="num" slot-scope="text, record">
-          <a-input-number style="width: 100%" id="inputNumber" v-model="record.num" :min="1"/>
+          <a-input-number style="width: 100%" id="inputNumber" v-model="record.num" :min="1" />
         </span>
       </a-table>
     </div>
@@ -66,8 +65,8 @@
   </a-drawer>
 </template>
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
 
 export default {
   name: 'GameEmailItemTreeModal',
@@ -121,7 +120,7 @@ export default {
           align: 'center',
           width: 75,
           dataIndex: 'num',
-          scopedSlots: {customRender: 'num'}
+          scopedSlots: { customRender: 'num' }
         }
       ],
       url: {
@@ -139,7 +138,6 @@ export default {
     });
   },
   methods: {
-
     close() {
       this.$emit('close');
       this.visible = false;

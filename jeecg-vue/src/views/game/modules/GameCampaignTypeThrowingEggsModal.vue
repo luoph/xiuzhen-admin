@@ -56,10 +56,7 @@
           <a-textarea v-decorator="['luckyPoolItem']" rows="4" placeholder='幸运奖池掉落:[{"rewardId":1001,"itemId":1001,"fallNum":100,"weight":100}]' />
         </a-form-item>
         <a-form-item label="大奖动画" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input
-            v-decorator="['rewardAnim', validatorRules.rewardAnim]"
-            placeholder='动画:{"name": "pet_019", "offsetY": 440, "offsetX": 400, "scale": 0.6,"itemId":1001 }'
-           />
+          <a-input v-decorator="['rewardAnim', validatorRules.rewardAnim]" placeholder='动画:{"name": "pet_019", "offsetY": 440, "offsetX": 400, "scale": 0.6,"itemId":1001 }' />
         </a-form-item>
         <a-form-item label="普通奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['showOrdinaryReward']" rows="4" placeholder='普通奖励:[{"itemId":1001,"num":1001}]' />

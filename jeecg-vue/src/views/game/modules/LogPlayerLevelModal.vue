@@ -5,56 +5,56 @@
     :visible="visible"
     switchFullscreen
     @ok="handleOk"
-    :okButtonProps="{ class:{'jee-hidden': disableSubmit} }"
+    :okButtonProps="{ class: { 'jee-hidden': disableSubmit } }"
     @cancel="handleCancel"
-    cancelText="关闭">
+    cancelText="关闭"
+  >
     <log-player-level-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></log-player-level-form>
   </j-modal>
 </template>
 
 <script>
-
-  import LogPlayerLevelForm from './LogPlayerLevelForm'
-  export default {
-    name: 'LogPlayerLevelModal',
-    components: {
-      LogPlayerLevelForm
+import LogPlayerLevelForm from './LogPlayerLevelForm';
+export default {
+  name: 'LogPlayerLevelModal',
+  components: {
+    LogPlayerLevelForm
+  },
+  data() {
+    return {
+      title: '',
+      width: 800,
+      visible: false,
+      disableSubmit: false
+    };
+  },
+  methods: {
+    add() {
+      this.visible = true;
+      this.$nextTick(() => {
+        this.$refs.realForm.add();
+      });
     },
-    data () {
-      return {
-        title:'',
-        width:800,
-        visible: false,
-        disableSubmit: false
-      }
+    edit(record) {
+      this.visible = true;
+      this.$nextTick(() => {
+        this.$refs.realForm.edit(record);
+      });
     },
-    methods: {
-      add () {
-        this.visible=true
-        this.$nextTick(()=>{
-          this.$refs.realForm.add();
-        })
-      },
-      edit (record) {
-        this.visible=true
-        this.$nextTick(()=>{
-          this.$refs.realForm.edit(record);
-        })
-      },
-      close () {
-        this.$emit('close');
-        this.visible = false;
-      },
-      handleOk () {
-        this.$refs.realForm.submitForm();
-      },
-      submitCallback(){
-        this.$emit('ok');
-        this.visible = false;
-      },
-      handleCancel () {
-        this.close()
-      }
+    close() {
+      this.$emit('close');
+      this.visible = false;
+    },
+    handleOk() {
+      this.$refs.realForm.submitForm();
+    },
+    submitCallback() {
+      this.$emit('ok');
+      this.visible = false;
+    },
+    handleCancel() {
+      this.close();
     }
   }
+};
 </script>

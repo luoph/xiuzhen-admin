@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameServerMapper">
+    <select id="selectRunningServerIds" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT DISTINCT(`id`) FROM `game_server`
+        WHERE (`open_time` <= DATE(#{date}) AND `outdated` = 0)
+        OR (`open_time` <= DATE(#{date}) AND `merge_time` >= DATE(#{date}) AND `outdated` != 0);
+        ]]>
+    </select>
 
     <select id="selectGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
         SELECT s.*

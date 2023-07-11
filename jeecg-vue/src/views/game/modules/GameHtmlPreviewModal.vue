@@ -1,6 +1,5 @@
 <template>
-  <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="确定">
+  <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="确定">
     <a-spin :spinning="confirmLoading">
       <div v-html="model" class="noticeContent"></div>
     </a-spin>
@@ -9,37 +8,35 @@
 
 <script>
 export default {
-  name: "GameHtmlPreviewModal",
+  name: 'GameHtmlPreviewModal',
   components: {},
   data() {
     return {
-      title: "HTML预览",
+      title: 'HTML预览',
       visible: false,
-      model: "",
+      model: '',
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     edit(text) {
       this.model = text;
       this.visible = true;
     },
     close() {
-      this.$emit("close");
+      this.$emit('close');
       this.visible = false;
     },
-    handleOk() {
-    },
+    handleOk() {},
     handleCancel() {
       this.close();
     }

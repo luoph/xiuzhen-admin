@@ -1,10 +1,8 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
-      <a-form :form="form">
-      </a-form>
+      <a-form :form="form"> </a-form>
     </a-spin>
   </a-modal>
   <!--
@@ -15,37 +13,36 @@
 </template>
 
 <script>
-import {httpAction} from "@/api/manage";
-import pick from "lodash.pick";
+import { httpAction } from '@/api/manage';
+import pick from 'lodash.pick';
 
 export default {
-  name: "GameStatOrderModal",
+  name: 'GameStatOrderModal',
   components: {},
   data() {
     return {
       form: this.$form.createForm(this),
-      title: "操作",
+      title: '操作',
       width: 800,
       visible: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {},
       url: {
-        add: "game/gameStatOrder/add",
-        edit: "game/gameStatOrder/edit"
+        add: 'game/gameStatOrder/add',
+        edit: 'game/gameStatOrder/edit'
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});
@@ -55,11 +52,11 @@ export default {
       this.model = Object.assign({}, record);
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "date", "serverId", "activeNum", "payNum", "amount", "payRate", "arpu", "arppu", "serverAverageAmount"));
+        this.form.setFieldsValue(pick(this.model, 'date', 'serverId', 'activeNum', 'payNum', 'amount', 'payRate', 'arpu', 'arppu', 'serverAverageAmount'));
       });
     },
     close() {
-      this.$emit("close");
+      this.$emit('close');
       this.visible = false;
     },
     handleOk() {
@@ -68,22 +65,22 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           that.confirmLoading = true;
-          let httpUrl = "";
-          let method = "";
+          let httpUrl = '';
+          let method = '';
           if (!this.model.id) {
             httpUrl += this.url.add;
-            method = "post";
+            method = 'post';
           } else {
             httpUrl += this.url.edit;
-            method = "put";
+            method = 'put';
           }
           let formData = Object.assign(this.model, values);
-          console.log("表单提交数据", formData);
+          console.log('表单提交数据', formData);
           httpAction(httpUrl, formData, method)
-            .then(res => {
+            .then((res) => {
               if (res.success) {
                 that.$message.success(res.message);
-                that.$emit("ok");
+                that.$emit('ok');
               } else {
                 that.$message.warning(res.message);
               }
@@ -99,8 +96,8 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "date", "serverId", "activeNum", "payNum", "amount", "payRate", "arpu", "arppu", "serverAverageAmount"));
-    },
+      this.form.setFieldsValue(pick(row, 'date', 'serverId', 'activeNum', 'payNum', 'amount', 'payRate', 'arpu', 'arppu', 'serverAverageAmount'));
+    }
   }
 };
 </script>

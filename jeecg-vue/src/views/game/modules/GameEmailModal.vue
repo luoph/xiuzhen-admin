@@ -1,28 +1,23 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"/>
+          <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题" />
         </a-form-item>
         <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['describe', validatorRules.describe]" placeholder="请输入描述"
-                      :autosize="{ minRows: 2, maxRows: 6 }"/>
+          <a-textarea v-decorator="['describe', validatorRules.describe]" placeholder="请输入描述" :autosize="{ minRows: 2, maxRows: 6 }" />
         </a-form-item>
         <a-form-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group @change="contentType($event.target.value)"
-                         v-decorator="['type', { initialValue: 2 }, validatorRules.type]" style="width: 100%">
+          <a-radio-group @change="contentType($event.target.value)" v-decorator="['type', { initialValue: 2 }, validatorRules.type]" style="width: 100%">
             <a-radio-button :value="1">有附件</a-radio-button>
             <a-radio-button :value="2">无附件</a-radio-button>
           </a-radio-group>
         </a-form-item>
-        <a-form-item v-if="contentData" :visible.sync="contentData" label="附件" :labelCol="labelCol"
-                     :wrapperCol="wrapperCol">
+        <a-form-item v-if="contentData" :visible.sync="contentData" label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
-          <a-textarea v-decorator="['content', { initialValue: itemTree }, validatorRules.content]"
-                      placeholder="请输入附件" :autoSize="{ minRows: 2, maxRows: 6 }"/>
+          <a-textarea v-decorator="['content', { initialValue: itemTree }, validatorRules.content]" placeholder="请输入附件" :autoSize="{ minRows: 2, maxRows: 6 }" />
           <game-email-item-tree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></game-email-item-tree-modal>
         </a-form-item>
         <a-form-item v-show="false" label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -31,30 +26,25 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item label="目标类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group @change="selectReceiver($event.target.value)"
-                         v-decorator="['receiverType', { initialValue: 1 }]" dict style="width: 100%">
+          <a-radio-group @change="selectReceiver($event.target.value)" v-decorator="['receiverType', { initialValue: 1 }]" dict style="width: 100%">
             <a-radio-button :value="1">玩家</a-radio-button>
             <a-radio-button :value="2">区服</a-radio-button>
           </a-radio-group>
         </a-form-item>
         <a-form-item v-if="playerType" label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['receiverIds', { initialValue: '' }]" placeholder="请以英文“,”分割输入多个玩家id"
-                      style="width: 100%" :autoSize="{ minRows: 2, maxRows: 6 }"/>
+          <a-textarea v-decorator="['receiverIds', { initialValue: '' }]" placeholder="请以英文“,”分割输入多个玩家id" style="width: 100%" :autoSize="{ minRows: 2, maxRows: 6 }" />
         </a-form-item>
         <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <game-server-selector v-decorator="['receiverIds', { initialValue: '' }]" @onSelectServer="onServerSelected"/>
+          <game-server-selector v-decorator="['receiverIds', { initialValue: '' }]" @onSelectServer="onServerSelected" />
         </a-form-item>
         <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker placeholder="请选择生效时间" showTime format="YYYY-MM-DD HH:mm:ss"
-                         v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%"/>
+          <a-date-picker placeholder="请选择生效时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%" />
         </a-form-item>
         <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss"
-                         v-decorator="['startTime', validatorRules.startTime]" style="width: 100%"/>
+          <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
         </a-form-item>
         <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss"
-                         v-decorator="['endTime', validatorRules.endTime]" style="width: 100%"/>
+          <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -65,11 +55,11 @@
 </template>
 
 <script>
-import {httpAction} from '@/api/manage';
+import { httpAction } from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 import JSearchSelectTag from '@/components/dict/JSearchSelectTag';
-import {Button} from 'ant-design-vue';
+import { Button } from 'ant-design-vue';
 import GameEmailItemTreeModal from './GameEmailItemTreeModal';
 import ServerSelect from '@/components/gameserver/ServerSelect';
 import GameServerSelector from '@comp/gameserver/GameServerSelector';
@@ -83,7 +73,7 @@ export default {
     JSearchSelectTag,
     ServerSelect,
     GameServerSelector,
-    GameEmailItemTreeModal,
+    GameEmailItemTreeModal
   },
   data() {
     return {
@@ -94,25 +84,25 @@ export default {
       model: {},
       itemTree: null,
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
-        title: {rules: [{required: true, message: '请输入标题!'}]},
-        describe: {rules: [{required: true, message: '请输入描述!'}]},
-        type: {rules: [{required: true, message: '请选择类型!'}]},
-        content: {rules: [{required: true, message: '请添加附件!'}]},
-        state: {rules: [{required: true, message: '请选择状态!'}]},
-        receiverType: {rules: [{required: true, message: '请选择目标类型!'}]},
-        receiverIds: {rules: [{required: false, message: '请以英文“,”分割输入多个玩家id/区服Id！'}]},
-        sendTime: {rules: [{required: true, message: '请输入生效时间!'}]},
-        startTime: {rules: [{required: false, message: '请输入开始时间!'}]},
-        endTime: {rules: [{required: false, message: '请输入结束时间!'}]}
+        title: { rules: [{ required: true, message: '请输入标题!' }] },
+        describe: { rules: [{ required: true, message: '请输入描述!' }] },
+        type: { rules: [{ required: true, message: '请选择类型!' }] },
+        content: { rules: [{ required: true, message: '请添加附件!' }] },
+        state: { rules: [{ required: true, message: '请选择状态!' }] },
+        receiverType: { rules: [{ required: true, message: '请选择目标类型!' }] },
+        receiverIds: { rules: [{ required: false, message: '请以英文“,”分割输入多个玩家id/区服Id！' }] },
+        sendTime: { rules: [{ required: true, message: '请输入生效时间!' }] },
+        startTime: { rules: [{ required: false, message: '请输入开始时间!' }] },
+        endTime: { rules: [{ required: false, message: '请输入结束时间!' }] }
       },
       serverType: false,
       playerType: true,
@@ -136,10 +126,10 @@ export default {
       this.model = Object.assign({}, record);
       this.$nextTick(() => {
         this.form.setFieldsValue(pick(this.model, 'id', 'title', 'describe', 'type', 'content', 'state', 'receiverType', 'receiverIds'));
-        this.form.setFieldsValue({sendTime: this.model.sendTime ? moment(this.model.sendTime) : null});
-        this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null});
-        this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null});
-        this.form.setFieldsValue({receiverIds: this.model.receiverIds ? this.model.receiverIds : null});
+        this.form.setFieldsValue({ sendTime: this.model.sendTime ? moment(this.model.sendTime) : null });
+        this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
+        this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
+        this.form.setFieldsValue({ receiverIds: this.model.receiverIds ? this.model.receiverIds : null });
       });
 
       this.selectReceiver(record.receiverType);
@@ -207,18 +197,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row,
-        'id',
-        'title',
-        'describe',
-        'type',
-        'content',
-        'state',
-        'receiverType',
-        'receiverIds',
-        'sendTime',
-        'startTime',
-        'endTime'));
+      this.form.setFieldsValue(pick(row, 'id', 'title', 'describe', 'type', 'content', 'state', 'receiverType', 'receiverIds', 'sendTime', 'startTime', 'endTime'));
     },
     selectReceiver(e) {
       // 1-玩家 2-服务器
@@ -238,10 +217,12 @@ export default {
       if (this.contentData) {
         this.contentData = true;
         this.validatorRules.content = {
-          rules: [{
-            required: true,
-            message: '请添加附件!'
-          }]
+          rules: [
+            {
+              required: true,
+              message: '请添加附件!'
+            }
+          ]
         };
         this.validatorRules.content = '';
       }

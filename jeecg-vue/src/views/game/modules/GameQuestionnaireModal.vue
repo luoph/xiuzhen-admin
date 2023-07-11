@@ -1,15 +1,14 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id" />
-          <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
+          <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
         </a-form-item>
         <a-form-item label="问卷地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['url', validatorRules.url]" placeholder="请输入问卷调查地址"/>
+          <a-textarea v-decorator="['url', validatorRules.url]" placeholder="请输入问卷调查地址" />
         </a-form-item>
         <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="状态" v-decorator="['status', validatorRules.status]" initialValue="1">
@@ -19,12 +18,10 @@
         </a-form-item>
         <a-form-item label="时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-col :md="8" :sm="8">
-            <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss"
-                           v-decorator="['startTime', validatorRules.startTime]"/>
+            <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
           </a-col>
           <a-col :md="8" :sm="8">
-            <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss"
-                           v-decorator="['endTime', validatorRules.endTime]"/>
+            <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
           </a-col>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -41,7 +38,7 @@
 </template>
 
 <script>
-import {httpAction} from '@/api/manage';
+import { httpAction } from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 import moment from 'moment';
@@ -62,21 +59,21 @@ export default {
       isEdit: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
-        serverIds: {rules: [{required: true, message: '请选择区服id！'}]},
-        url: {rules: [{required: true, message: '请输入问卷地址!'}]},
-        status: {rules: [{required: true, message: '请选择状态!'}]},
-        startTime: {rules: [{required: true, message: '请输入开始时间!'}]},
-        endTime: {rules: [{required: true, message: '请输入结束时间!'}]},
-        remark: {rules: [{required: true, message: '请输入备注!'}]}
+        serverIds: { rules: [{ required: true, message: '请选择区服id！' }] },
+        url: { rules: [{ required: true, message: '请输入问卷地址!' }] },
+        status: { rules: [{ required: true, message: '请选择状态!' }] },
+        startTime: { rules: [{ required: true, message: '请输入开始时间!' }] },
+        endTime: { rules: [{ required: true, message: '请输入结束时间!' }] },
+        remark: { rules: [{ required: true, message: '请输入备注!' }] }
       },
       url: {
         add: 'game/questionnaire/add',
@@ -84,8 +81,7 @@ export default {
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});
@@ -101,8 +97,8 @@ export default {
         this.form.setFieldsValue(pick(this.model, 'serverIds', 'url', 'status', 'startTime', 'endTime', 'remark'));
 
         // 时间格式化
-        this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null});
-        this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null});
+        this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
+        this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
       });
     },
     close() {

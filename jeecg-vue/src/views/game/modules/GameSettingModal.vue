@@ -1,12 +1,10 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="key" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['dictKey', validatorRules.dictKey]"
-                   placeholder="请输入key" />
+          <a-input :disabled="isEdit" v-decorator="['dictKey', validatorRules.dictKey]" placeholder="请输入key" />
         </a-form-item>
         <a-form-item label="value" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['dictValue', validatorRules.dictValue]" placeholder="请输入value" />
@@ -23,42 +21,41 @@
 </template>
 
 <script>
-import {httpAction} from "@/api/manage";
-import pick from "lodash.pick";
+import { httpAction } from '@/api/manage';
+import pick from 'lodash.pick';
 
 export default {
-  name: "GameSettingModal",
+  name: 'GameSettingModal',
   components: {},
   data() {
     return {
       form: this.$form.createForm(this),
-      title: "操作",
+      title: '操作',
       isEdit: false,
       width: 800,
       visible: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
-        dictKey: {rules: [{required: true, message: "请输入key!"}]},
-        dictValue: {rules: [{required: true, message: "请输入value!"}]},
-        remark: {rules: [{required: true, message: "请输入描述!"}]}
+        dictKey: { rules: [{ required: true, message: '请输入key!' }] },
+        dictValue: { rules: [{ required: true, message: '请输入value!' }] },
+        remark: { rules: [{ required: true, message: '请输入描述!' }] }
       },
       url: {
-        add: "game/gameSetting/add",
-        edit: "game/gameSetting/edit"
+        add: 'game/gameSetting/add',
+        edit: 'game/gameSetting/edit'
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});
@@ -69,11 +66,11 @@ export default {
       this.isEdit = this.model.id != null;
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "dictKey", "dictValue", "remark"));
+        this.form.setFieldsValue(pick(this.model, 'dictKey', 'dictValue', 'remark'));
       });
     },
     close() {
-      this.$emit("close");
+      this.$emit('close');
       this.visible = false;
     },
     handleOk() {
@@ -82,22 +79,22 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           that.confirmLoading = true;
-          let httpUrl = "";
-          let method = "";
+          let httpUrl = '';
+          let method = '';
           if (!this.model.id) {
             httpUrl += this.url.add;
-            method = "post";
+            method = 'post';
           } else {
             httpUrl += this.url.edit;
-            method = "put";
+            method = 'put';
           }
           let formData = Object.assign(this.model, values);
-          console.log("表单提交数据", formData);
+          console.log('表单提交数据', formData);
           httpAction(httpUrl, formData, method)
-            .then(res => {
+            .then((res) => {
               if (res.success) {
                 that.$message.success(res.message);
-                that.$emit("ok");
+                that.$emit('ok');
               } else {
                 that.$message.warning(res.message);
               }
@@ -113,7 +110,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "dictKey", "dictValue", "remark"));
+      this.form.setFieldsValue(pick(row, 'dictKey', 'dictValue', 'remark'));
     }
   }
 };
