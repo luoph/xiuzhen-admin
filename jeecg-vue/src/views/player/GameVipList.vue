@@ -12,8 +12,8 @@
         />
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -92,10 +92,10 @@
             <a>删除</a>
           </a-popconfirm>
         </span>
-        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
         <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
         <span slot="sidTitle">创角区服 <a-icon type="copy" /></span>
         <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
         <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
@@ -138,7 +138,7 @@ export default {
           }
         },
         {
-          // title: '玩家id',
+          // title: '玩家ID',
           align: 'center',
           dataIndex: 'playerId',
           slots: { title: 'playerIdTitle' },

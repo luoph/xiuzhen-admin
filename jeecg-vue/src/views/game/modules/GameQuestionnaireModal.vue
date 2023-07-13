@@ -4,7 +4,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id" />
+          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服ID" />
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
         </a-form-item>
         <a-form-item label="问卷地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -68,7 +68,7 @@ export default {
       },
       confirmLoading: false,
       validatorRules: {
-        serverIds: { rules: [{ required: true, message: '请选择区服id！' }] },
+        serverIds: { rules: [{ required: true, message: '请选择区服ID！' }] },
         url: { rules: [{ required: true, message: '请输入问卷地址!' }] },
         status: { rules: [{ required: true, message: '请选择状态!' }] },
         startTime: { rules: [{ required: true, message: '请输入开始时间!' }] },

@@ -20,8 +20,8 @@
             <a-select-option :value="7">7 - 指定渠道 & 指定区服 & 同一分组只能兑换一次</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="分组id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isIncludeGroupModel" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
+        <a-form-item label="分组ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number :disabled="isIncludeGroupModel" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组ID" style="width: 100%" />
         </a-form-item>
         <a-form-item label="限制渠道id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['channelIds', validatorRules.channelIds]" placeholder="请输入限制渠道id, 使用半角','分割多个id" />

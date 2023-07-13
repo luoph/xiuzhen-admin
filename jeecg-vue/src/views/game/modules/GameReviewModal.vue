@@ -1,26 +1,22 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-           @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入渠道名称"/>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入渠道名称" />
         </a-form-item>
         <a-form-item label="Sdk渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['sdkChannel', validatorRules.sdkChannel]" placeholder="请输入Sdk渠道"/>
+          <a-input v-decorator="['sdkChannel', validatorRules.sdkChannel]" placeholder="请输入Sdk渠道" />
         </a-form-item>
         <a-form-item label="游戏编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-search-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
-                               dict="game_info,name,id"/>
+          <j-search-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号" dict="game_info,name,id" />
         </a-form-item>
         <a-form-item label="版本号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['version', validatorRules.version]" placeholder="请输入版本号"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['version', validatorRules.version]" placeholder="请输入版本号" style="width: 100%" />
         </a-form-item>
         <a-form-item label="审核区服配置" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-search-select-tag v-decorator="['profile', validatorRules.profile]" placeholder="请输入审核区服配置"
-                               dict="game_channel,name,simple_name"/>
+          <j-search-select-tag v-decorator="['profile', validatorRules.profile]" placeholder="请输入审核区服配置" dict="game_channel,name,simple_name" />
         </a-form-item>
         <a-form-item label="审核开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="审核开关" v-decorator="['status', validatorRules.status]" initialValue="1">
@@ -29,7 +25,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"/>
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -40,7 +36,7 @@
 </template>
 
 <script>
-import {httpAction} from '@/api/manage';
+import { httpAction } from '@/api/manage';
 import pick from 'lodash.pick';
 
 export default {
@@ -54,22 +50,22 @@ export default {
       visible: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
-        name: {rules: [{required: true, message: '请输入名称!'}]},
-        gameId: {rules: [{required: true, message: '请输入游戏编号!'}]},
-        sdkChannel: {rules: [{required: true, message: '请输入Sdk渠道标识!'}]},
-        version: {rules: [{required: true, message: '请输入版本号!'}]},
-        profile: {rules: [{required: false, message: '请输入审核区服配置!'}]},
-        status: {rules: [{required: true, message: '请选择审核开关!'}]},
-        remark: {},
+        name: { rules: [{ required: true, message: '请输入名称!' }] },
+        gameId: { rules: [{ required: true, message: '请输入游戏编号!' }] },
+        sdkChannel: { rules: [{ required: true, message: '请输入Sdk渠道标识!' }] },
+        version: { rules: [{ required: true, message: '请输入版本号!' }] },
+        profile: { rules: [{ required: false, message: '请输入审核区服配置!' }] },
+        status: { rules: [{ required: true, message: '请选择审核开关!' }] },
+        remark: {}
       },
       url: {
         add: 'game/review/add',
@@ -77,8 +73,7 @@ export default {
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});
@@ -88,9 +83,7 @@ export default {
       this.model = Object.assign({}, record);
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(
-          pick(this.model, 'name', 'sdkChannel', 'gameId', 'version', 'profile', 'remark', 'status')
-        );
+        this.form.setFieldsValue(pick(this.model, 'name', 'sdkChannel', 'gameId', 'version', 'profile', 'remark', 'status'));
       });
     },
     close() {
@@ -133,9 +126,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(
-        pick(row, 'name', 'sdkChannel', 'gameId', 'version', 'profile', 'remark', 'status')
-      );
+      this.form.setFieldsValue(pick(row, 'name', 'sdkChannel', 'gameId', 'version', 'profile', 'remark', 'status'));
     }
   }
 };

@@ -140,7 +140,7 @@ export default {
           }
         },
         {
-          title: '商品id',
+          title: '商品ID',
           align: 'center',
           dataIndex: 'goodsId'
         },

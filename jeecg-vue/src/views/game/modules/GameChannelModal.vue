@@ -10,7 +10,8 @@
           <a-input :disabled="isEdit" v-decorator="['simpleName', validatorRules.simpleName]" placeholder="请输入唯一标识" />
         </a-form-item>
         <a-form-item label="公告Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['noticeId', validatorRules.noticeId]" placeholder="请输入公告Id" style="width: 100%" />
+          <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
+          <j-search-select-tag v-decorator="['noticeId', validatorRules.noticeId]" placeholder="请选择公告Id" dict="game_notice,title,id" />
         </a-form-item>
         <a-form-item label="大渠道描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入大渠道描述" />

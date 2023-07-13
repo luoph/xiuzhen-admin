@@ -12,8 +12,8 @@
         />
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -111,8 +111,8 @@
                         </a-menu>
                     </a-dropdown> -->
         </span>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
-        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
         <span slot="nameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="accountTitle">帐号 <a-icon type="copy" /></span>
         <span slot="ipTitle">注册IP <a-icon type="copy" /></span>
@@ -158,14 +158,14 @@ export default {
           }
         },
         {
-          // title: '区服id',
+          // title: '区服ID',
           align: 'center',
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '玩家id',
+          // title: '玩家ID',
           align: 'center',
           dataIndex: 'playerId',
           slots: { title: 'playerIdTitle' },

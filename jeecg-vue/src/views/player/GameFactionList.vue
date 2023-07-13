@@ -95,7 +95,7 @@ export default {
         //   }
         // },
         {
-          title: '区服id',
+          title: '区服ID',
           align: 'center',
           dataIndex: 'serverId'
         },

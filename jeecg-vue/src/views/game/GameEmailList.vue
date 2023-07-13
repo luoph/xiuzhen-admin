@@ -16,7 +16,7 @@
           </a-col>
           <a-col :md="5" :sm="8">
             <a-form-item label="目标主体">
-              <j-input placeholder="请输入玩家id/区服id模糊查询" v-model="queryParam.receiverIds" />
+              <j-input placeholder="请输入玩家ID/区服ID模糊查询" v-model="queryParam.receiverIds" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">

@@ -15,11 +15,11 @@
         <a-form-item label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入区服Id" style="width: 100%" />
         </a-form-item>
-        <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
+        <a-form-item label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家ID" style="width: 100%" />
         </a-form-item>
-        <a-form-item label="商品id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['productId', validatorRules.productId]" placeholder="请输入商品id" />
+        <a-form-item label="商品ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input :disabled="isEdit" v-decorator="['productId', validatorRules.productId]" placeholder="请输入商品ID" />
         </a-form-item>
         <a-form-item label="ip地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="isEdit" v-decorator="['remoteIp', validatorRules.remoteIp]" placeholder="请输入ip地址" />
@@ -132,7 +132,7 @@ export default {
         queryId: {},
         channel: { rules: [{ required: true, message: '请输入渠道!' }] },
         serverId: { rules: [{ required: true, message: '请输入区服Id!' }] },
-        playerId: { rules: [{ required: true, message: '请输入玩家id!' }] },
+        playerId: { rules: [{ required: true, message: '请输入玩家ID!' }] },
         productId: {},
         remoteIp: { rules: [{ required: true, message: '请输入ip地址!' }] },
         orderStatus: { rules: [{ required: true, message: '请选择订单状态!' }] },

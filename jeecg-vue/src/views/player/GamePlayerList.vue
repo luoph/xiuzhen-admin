@@ -12,8 +12,8 @@
         />
         <a-row :gutter="24">
           <a-col :md="5" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="5" :sm="8">
@@ -159,10 +159,10 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
         <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
         <span slot="sidTitle">创角区服 <a-icon type="copy" /></span>
         <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
         <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
@@ -212,7 +212,7 @@ export default {
           }
         },
         {
-          // title: '玩家id',
+          // title: '玩家ID',
           align: 'center',
           dataIndex: 'playerId',
           slots: { title: 'playerIdTitle' },
@@ -233,7 +233,7 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '区服id',
+          // title: '区服ID',
           align: 'center',
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
@@ -460,7 +460,7 @@ export default {
       let that = this;
       this.$confirm({
         title: '是否踢玩家下线?',
-        content: '玩家id：' + record.playerId + ' 角色名：' + record.nickname,
+        content: '玩家ID：' + record.playerId + ' 角色名：' + record.nickname,
         onOk: function () {
           getAction(that.url.kickOff, { playerId: record.playerId, serverId: record.serverId }).then((res) => {
             if (res.success) {

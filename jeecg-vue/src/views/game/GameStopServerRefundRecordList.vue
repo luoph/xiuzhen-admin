@@ -5,23 +5,23 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
-            <a-form-item label="停服区服id">
+            <a-form-item label="停服区服ID">
               <j-search-select-tag placeholder="请选择区服" v-model="queryParam.sourceServerId" dict="game_server,name,id" />
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
-            <a-form-item label="停服的玩家id">
-              <a-input placeholder="请输入停服的玩家id" v-model="queryParam.sourcePlayerId" />
+            <a-form-item label="停服的玩家ID">
+              <a-input placeholder="请输入停服的玩家ID" v-model="queryParam.sourcePlayerId" />
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
-            <a-form-item label="返还区服id">
+            <a-form-item label="返还区服ID">
               <j-search-select-tag placeholder="请选择区服" v-model="queryParam.targetServerId" dict="game_server,name,id" />
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
-            <a-form-item label="返还的玩家id">
-              <a-input placeholder="请输入返还的玩家id" v-model="queryParam.targetPlayerId" />
+            <a-form-item label="返还的玩家ID">
+              <a-input placeholder="请输入返还的玩家ID" v-model="queryParam.targetPlayerId" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -118,10 +118,10 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadFile(text)"> 下载 </a-button>
         </template>
-        <span slot="sourceServerIdTitle">停服区服id <a-icon type="copy" /></span>
-        <span slot="sourcePlayerIdTitle">停服玩家id <a-icon type="copy" /></span>
-        <span slot="targetServerIdTitle">返还区服id <a-icon type="copy" /></span>
-        <span slot="targetPlayerIdTitle">返还的玩家id <a-icon type="copy" /></span>
+        <span slot="sourceServerIdTitle">停服区服ID <a-icon type="copy" /></span>
+        <span slot="sourcePlayerIdTitle">停服玩家ID <a-icon type="copy" /></span>
+        <span slot="targetServerIdTitle">返还区服ID <a-icon type="copy" /></span>
+        <span slot="targetPlayerIdTitle">返还的玩家ID <a-icon type="copy" /></span>
         <span slot="accountTitle">返还玩家账号 <a-icon type="copy" /></span>
         <span slot="nicknameTitle">返还玩家角色名 <a-icon type="copy" /></span>
       </a-table>
@@ -160,28 +160,28 @@ export default {
           }
         },
         {
-          // title: '停服区服id',
+          // title: '停服区服ID',
           align: 'center',
           dataIndex: 'sourceServerId',
           slots: { title: 'sourceServerIdTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '停服玩家id',
+          // title: '停服玩家ID',
           align: 'center',
           dataIndex: 'sourcePlayerId',
           slots: { title: 'sourcePlayerIdTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '返还区服id',
+          // title: '返还区服ID',
           align: 'center',
           dataIndex: 'targetServerId',
           slots: { title: 'targetServerIdTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '返还的玩家id',
+          // title: '返还的玩家ID',
           align: 'center',
           dataIndex: 'targetPlayerId',
           slots: { title: 'targetPlayerIdTitle' },
@@ -265,10 +265,10 @@ export default {
     initDictConfig() {},
     getSuperFieldList() {
       let fieldList = [];
-      fieldList.push({ type: 'int', value: 'sourceServerId', text: '停服区服id', dictCode: '' });
-      fieldList.push({ type: 'int', value: 'sourcePlayerId', text: '停服的玩家id', dictCode: '' });
-      fieldList.push({ type: 'int', value: 'targetServerId', text: '返还区服id', dictCode: '' });
-      fieldList.push({ type: 'int', value: 'targetPlayerId', text: '返还的玩家id', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'sourceServerId', text: '停服区服ID', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'sourcePlayerId', text: '停服的玩家ID', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'targetServerId', text: '返还区服ID', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'targetPlayerId', text: '返还的玩家ID', dictCode: '' });
       fieldList.push({ type: 'BigDecimal', value: 'sourceAmount', text: '充值总金额', dictCode: '' });
       fieldList.push({ type: 'int', value: 'targetNum', text: '返还总仙玉', dictCode: '' });
       fieldList.push({ type: 'date', value: 'createTime', text: '创建时间' });

@@ -112,7 +112,7 @@ export default {
           dataIndex: 'serverId'
         },
         {
-          title: '玩家id',
+          title: '玩家ID',
           align: 'center',
           width: '10%',
           dataIndex: 'playerId'

@@ -1,5 +1,5 @@
 <template>
-  <a-select showSearch placeholder="请选择商品id" v-model="goodsId" :initialValue="goodsId" @change="handleInput">
+  <a-select showSearch placeholder="请选择商品ID" v-model="goodsId" :initialValue="goodsId" @change="handleInput">
     <a-select-option :key="0" value="0">请选择</a-select-option>
     <a-select-option v-for="item in goodsOptions" :key="item.name" :value="item.goodsId">
       {{ item.goodsId + "-" + item.name }}

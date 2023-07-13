@@ -15,13 +15,13 @@
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="公网ip">
-              <a-input placeholder="请输入公网ip" v-model="queryParam.ip" />
+            <a-form-item label="公网IP">
+              <a-input placeholder="请输入公网IP" v-model="queryParam.ip" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="内网ip">
-              <a-input placeholder="请输入内网ip" v-model="queryParam.lan" />
+            <a-form-item label="内网IP">
+              <a-input placeholder="请输入内网IP" v-model="queryParam.lan" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -88,42 +88,51 @@
         </span>
         <span slot="blueTags" slot-scope="text">
           <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue" class="ant-tag-no-margin">{{ tag }}</a-tag>
         </span>
         <span slot="greenTags" slot-scope="text">
           <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green">{{ tag }}</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green" class="ant-tag-no-margin">{{ tag }}</a-tag>
         </span>
-        <span slot="loadSlot" slot-scope="text, record">
-          <a-tag color="blue" class="ant-tag-no-margin">{{ record.fiveLoad }} / {{ record.fifteenLoad }}</a-tag>
+        <span slot="loadSlot" class="load-container" slot-scope="text, record">
+          <a-tag class="ant-tag-no-margin" :color="getPercentColor(record.fiveLoad, record.cpuCoreNum)"> {{ record.fiveLoad }} </a-tag>&nbsp;/&nbsp;
+          <a-tag class="ant-tag-no-margin" :color="getPercentColor(record.fifteenLoad, record.cpuCoreNum)">
+            {{ record.fifteenLoad }}
+          </a-tag>
         </span>
         <span slot="perSlot" slot-scope="text">
-          <a-progress type="circle" :width="70" :strokeWidth="8" stroke-linecap="square" :percent="text" :stroke-color="getPercentColor(text)" />
+          <a-progress
+            type="circle"
+            :width="70"
+            :strokeWidth="8"
+            stroke-linecap="square"
+            :percent="text"
+            :format="(percent) => `${percent}%`"
+            :stroke-color="getPercentColor(text)"
+          />
         </span>
-        <span slot="ipSlot" slot-scope="text, record">
-          <div class="ip-container">
-            <a-tag class="ant-tag-no-margin">公网</a-tag><a @click="copyText(record.ip)" class="copy-text"> {{ record.ip }} <a-icon type="copy" /></a>
-            <a-divider />
-            <a-tag class="ant-tag-no-margin">内网</a-tag><a @click="copyText(record.lan)" class="copy-text"> {{ record.lan }} <a-icon type="copy" /></a>
-          </div>
+        <span slot="ipSlot" class="ip-container" slot-scope="text, record">
+          <a-tag class="ant-tag-no-margin">公网</a-tag><a @click="copyText(record.ip)" class="copy-text"> {{ record.ip }} <a-icon type="copy" /></a>
+          <a-divider />
+          <a-tag class="ant-tag-no-margin">内网</a-tag><a @click="copyText(record.lan)" class="copy-text"> {{ record.lan }} <a-icon type="copy" /></a>
         </span>
         <span slot="serverNumSlot" slot-scope="text, record" class="server-num-container">
           <a-tag class="ant-tag-no-margin">区服</a-tag> {{ record.gameServerNum }}
           <a-divider />
           <a-tag class="ant-tag-no-margin">跨服</a-tag> {{ record.crossServerNum }}
         </span>
-        <span slot="diskSlot" slot-scope="text">
-          <div class="disk-usage-container">
-            <li v-for="(item, index) in text" :key="item.fileSystem">
-              <a-tag>{{ item.fileSystem }}</a-tag>
-              <a-tag :color="getPercentColor(item.usedPer)">{{ item.avail }}</a-tag>
-              <a-tag>{{ item.diskSize }} </a-tag>
-              <div class="disk-usage-progress">
-                <a-progress size="small" :strokeWidth="8" stroke-linecap="square" :percent="item.usedPer" :stroke-color="getPercentColor(item.usedPer)" />
-              </div>
-              <a-divider v-if="index !== text.length - 1" />
-            </li>
-          </div>
+        <span slot="diskSlot" class="disk-usage-container" slot-scope="text">
+          <li v-for="(item, index) in text" :key="item.fileSystem">
+            <div style="white-space: nowrap">
+              <a-tag class="ant-tag-no-margin">{{ item.fileSystem }}</a-tag
+              >&nbsp; <a-tag class="ant-tag-no-margin" :color="getPercentColor(item.usedPer)">{{ item.avail }}</a-tag
+              >&nbsp; <a-tag class="ant-tag-no-margin">{{ item.diskSize }} </a-tag>
+            </div>
+            <div class="disk-usage-progress">
+              <a-progress size="small" :strokeWidth="8" stroke-linecap="square" :percent="item.usedPer" :stroke-color="getPercentColor(item.usedPer)" />
+            </div>
+            <a-divider v-if="index !== text.length - 1" />
+          </li>
         </span>
         <span slot="nameTitle">名称 <a-icon type="copy" /></span>
         <span slot="hostnameTitle">主机名 <a-icon type="copy" /></span>
@@ -179,6 +188,7 @@ export default {
         },
         {
           title: 'IP地址',
+          align: 'center',
           dataIndex: 'ip',
           scopedSlots: { customRender: 'ipSlot' }
         },
@@ -219,21 +229,22 @@ export default {
           dataIndex: 'onlineNum'
         },
         {
-          title: '区服id',
+          title: '区服ID',
           align: 'center',
+          width: 100,
           dataIndex: 'gameServerIds',
           scopedSlots: { customRender: 'blueTags' }
         },
         {
-          title: '跨服id',
+          title: '跨服ID',
           align: 'center',
+          width: 100,
           dataIndex: 'crossServerIds',
-          scopedSlots: { customRender: 'greenTags' }
+          scopedSlots: { customRender: 'blueTags' }
         },
         {
           title: 'CPU核数',
           align: 'center',
-          width: 80,
           dataIndex: 'cpuCoreNum'
         },
         {
@@ -259,7 +270,6 @@ export default {
         {
           title: '负载(5/15)',
           align: 'center',
-          width: 80,
           dataIndex: '',
           scopedSlots: { customRender: 'loadSlot' }
         },
@@ -272,7 +282,6 @@ export default {
         {
           title: '状态更新',
           align: 'center',
-          width: 100,
           dataIndex: 'uploadTime'
         },
         {
@@ -312,6 +321,9 @@ export default {
     },
     getPercentColor(value) {
       return value >= 80 ? '#FF5252' : value >= 60 ? '#FFAB00' : '#00C853';
+    },
+    getLoadColor(value, cpuNum) {
+      return value >= cpuNum ? '#FF5252' : value >= 1 ? '#FFAB00' : '#00C853';
     }
   }
 };
@@ -337,6 +349,11 @@ export default {
 .ip-container {
   min-width: 170px;
   max-width: 240px;
+  white-space: nowrap;
+}
+
+.load-container {
+  min-width: 100px;
   white-space: nowrap;
 }
 

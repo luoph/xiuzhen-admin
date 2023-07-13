@@ -3,8 +3,8 @@
   <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服id">
-          <a-input-number :disabled="isEdit" placeholder="请输入区服id" v-decorator="['id', validatorRules.id]" />
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服ID">
+          <a-input-number :disabled="isEdit" placeholder="请输入区服ID" v-decorator="['id', validatorRules.id]" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服名字">
           <a-input placeholder="请输入区服名字" v-decorator="['name', validatorRules.name]" />
@@ -131,7 +131,7 @@
         <a-form-item label="GM可用IP" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['gmIp', validatorRules.gmIp]" />
         </a-form-item>
-        <a-form-item label="GM可用玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="GM可用玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['gmPlayerId', validatorRules.gmPlayerId]" />
         </a-form-item>
         <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="出错提示信息">-->
@@ -146,7 +146,7 @@
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服后母服id">
           <a-input-number v-decorator="['pid', {}]" style="width: 100%" />
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="保留玩家id">
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="保留玩家ID">
           <a-input-number v-decorator="['reservePlayerId', {}]" style="width: 100%" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时间">
@@ -194,7 +194,7 @@ export default {
       confirmLoading: false,
       form: this.$form.createForm(this),
       validatorRules: {
-        id: { rules: [{ required: true, message: '请输入区服id' }] },
+        id: { rules: [{ required: true, message: '请输入区服ID' }] },
         gameId: { rules: [{ required: true, message: '请选择游戏id!' }] },
         name: { rules: [{ required: true, message: '请输入区服名字!' }] },
         remark: { rules: [{ required: true, message: '请输入区服备注!' }] },
@@ -213,7 +213,7 @@ export default {
         clientGm: { rules: [{ required: false, message: '请输入客户端GM地址!' }] },
         gmIp: { rules: [{ required: false, message: '请输入GM可用ip!' }] },
         recommend: { rules: [{ required: true, message: '请选择推荐标识!' }] },
-        gmPlayerId: { rules: [{ required: false, message: '请输入GM可用玩家id!' }] },
+        gmPlayerId: { rules: [{ required: false, message: '请输入GM可用玩家ID!' }] },
         gmStatus: { rules: [{ required: true, message: '请设置GM开关!' }] },
         taStatistics: { rules: [{ required: true, message: '请设置TA开关!' }] },
         onlineStat: { rules: [{ required: true, message: '请设置在线统计开关!' }] },

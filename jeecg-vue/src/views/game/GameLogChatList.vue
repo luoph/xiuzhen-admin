@@ -61,7 +61,7 @@
               </a-form-item>
             </a-col>
           </template>
-          <a-col :md="12" :sm="8">
+          <a-col :md="10" :sm="8">
             <a-form-item label="日期范围">
               <a-radio-group v-model="dayRange" @change="onDayRangeChange">
                 <a-radio :value="-1">自定义</a-radio>
@@ -149,7 +149,7 @@
           <a-tag v-else-if="text === 3" class="ant-tag-no-margin" color="orange">分享</a-tag>
           <a-tag v-else class="ant-tag-no-margin" color="red">未知</a-tag>
         </span>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
         <span slot="senderIdTitle">发送者id <a-icon type="copy" /></span>
         <span slot="senderNameTitle">发送者 <a-icon type="copy" /></span>
@@ -198,7 +198,7 @@ export default {
           }
         },
         {
-          // title: '区服id',
+          // title: '区服ID',
           align: 'center',
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
@@ -346,7 +346,7 @@ export default {
       let that = this;
       this.$confirm({
         title: '是否踢玩家下线?',
-        content: '玩家id：' + record.senderId + ' 角色名：' + record.senderName,
+        content: '玩家ID：' + record.senderId + ' 角色名：' + record.senderName,
         onOk: function () {
           getAction(that.url.kickOff, { playerId: record.senderId, serverId: record.serverId }).then((res) => {
             if (res.success) {

@@ -25,8 +25,8 @@
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col v-if="!isIncludeGroupModel" :md="4" :sm="8">
-              <a-form-item label="分组id">
-                <a-input placeholder="请输入分组id" v-model="queryParam.groupId" />
+              <a-form-item label="分组ID">
+                <a-input placeholder="请输入分组ID" v-model="queryParam.groupId" />
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
@@ -183,7 +183,7 @@ export default {
           }
         },
         {
-          title: '分组id',
+          title: '分组ID',
           align: 'center',
           width: 80,
           dataIndex: 'groupId'

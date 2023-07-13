@@ -12,8 +12,8 @@
         />
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <!-- <a-col :md="4" :sm="8">
@@ -27,8 +27,8 @@
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="商品id">
-              <a-input placeholder="请输入商品id" v-model="queryParam.productId" />
+            <a-form-item label="商品ID">
+              <a-input placeholder="请输入商品ID" v-model="queryParam.productId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -113,13 +113,13 @@
             <span class="large-text" @click="copyText(text)">{{ text || '--' }}</span>
           </div>
         </template>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
-        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
         <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
         <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
         <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
-        <span slot="productIdTitle">商品id <a-icon type="copy" /></span>
+        <span slot="productIdTitle">商品ID <a-icon type="copy" /></span>
         <span slot="productNameTitle">商品名 <a-icon type="copy" /></span>
         <span slot="queryIdTitle">平台订单号 <a-icon type="copy" /></span>
       </a-table>
@@ -160,7 +160,7 @@ export default {
           }
         },
         {
-          // title: '区服id',
+          // title: '区服ID',
           align: 'center',
           width: 80,
           dataIndex: 'serverId',
@@ -168,7 +168,7 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '玩家id',
+          // title: '玩家ID',
           align: 'center',
           dataIndex: 'playerId',
           slots: { title: 'playerIdTitle' },
@@ -210,7 +210,7 @@ export default {
         //     dataIndex: "orderId"
         // },
         {
-          // title: '商品id',
+          // title: '商品ID',
           align: 'center',
           width: 80,
           dataIndex: 'productId',

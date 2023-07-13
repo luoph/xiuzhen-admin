@@ -9,8 +9,8 @@
             <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
           <a-col :md="4" :sm="4">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="10" :sm="8">
@@ -81,7 +81,7 @@ export default {
           }
         },
         {
-          title: '玩家id',
+          title: '玩家ID',
           align: 'center',
           dataIndex: 'playerId'
         },

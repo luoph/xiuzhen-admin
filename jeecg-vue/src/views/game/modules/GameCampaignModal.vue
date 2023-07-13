@@ -17,7 +17,7 @@
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）" />
         </a-form-item>
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id" />
+          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服ID" />
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
         </a-form-item>
         <!-- <a-form-item label="是否自动添加新服" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -122,7 +122,7 @@ export default {
         type: { rules: [{ required: true, message: '请输入活动类型!' }] },
         name: { rules: [{ required: true, message: '请输入活动名称（备注）!' }] },
         description: { rules: [{ required: true, message: '请输入活动标语（描述）!' }] },
-        serverIds: { rules: [{ required: true, message: '请选择区服id！' }] },
+        serverIds: { rules: [{ required: true, message: '请选择区服ID！' }] },
         autoAddServerChannels: { rules: [{ required: false, message: '请选择自动添加新服的渠道!' }] },
         showName: { rules: [{ required: true, message: '请输入活动展示名称!' }] },
         icon: { rules: [{ required: true, message: '请输入活动图标!' }] },

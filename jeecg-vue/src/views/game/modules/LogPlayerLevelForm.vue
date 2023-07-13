@@ -4,8 +4,8 @@
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
           <a-col :span="24">
-            <a-form-model-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="playerId">
-              <a-input-number v-model="model.playerId" placeholder="请输入玩家id" style="width: 100%" />
+            <a-form-model-item label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="playerId">
+              <a-input-number v-model="model.playerId" placeholder="请输入玩家ID" style="width: 100%" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -71,7 +71,7 @@
         confirmLoading: false,
         validatorRules: {
            playerId: [
-              { required: true, message: '请输入玩家id!'},
+              { required: true, message: '请输入玩家ID!'},
            ],
            serverId: [
               { required: true, message: '请输入服务器id!'},

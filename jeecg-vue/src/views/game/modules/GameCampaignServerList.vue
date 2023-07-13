@@ -9,7 +9,7 @@
               <a-row :gutter="10">
                 <a-col :md="10" :sm="8">
                   <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服">
-                    <a-input placeholder="搜索区服id或名称" v-model="queryParam.server" />
+                    <a-input placeholder="搜索区服ID或名称" v-model="queryParam.server" />
                   </a-form-item>
                 </a-col>
                 <a-col :md="6" :sm="8">
@@ -92,7 +92,7 @@ export default {
           }
         },
         {
-          title: '区服id',
+          title: '区服ID',
           align: 'center',
           dataIndex: 'serverId'
         },

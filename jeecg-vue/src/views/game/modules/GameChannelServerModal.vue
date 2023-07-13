@@ -103,12 +103,12 @@ export default {
           let formData = Object.assign(this.model, values);
 
           if (this.isEdit && (this.model.serverId == null || this.model.serverId == '')) {
-            that.$message.error('请输入区服id');
+            that.$message.error('请输入区服ID');
             that.confirmLoading = false;
             return;
           }
           if (!this.isEdit && (this.model.serverIds == null || this.model.serverIds == '')) {
-            that.$message.error('请输入区服id');
+            that.$message.error('请输入区服ID');
             that.confirmLoading = false;
             return;
           }

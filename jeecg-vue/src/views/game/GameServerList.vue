@@ -11,12 +11,12 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="服务器ip">
-              <j-search-select-tag placeholder="请选择服务器ip" v-model="queryParam.host" dict="game_vps,hostname,ip" />
+            <a-form-item label="服务器IP">
+              <j-search-select-tag placeholder="请选择服务器IP" v-model="queryParam.host" dict="game_vps,hostname,ip" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="区服id">
+            <a-form-item label="区服ID">
               <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin" />
               <span class="query-group-split-cust"></span>
               <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.id_end" />
@@ -175,8 +175,8 @@
           <a-tag v-else-if="record.outdated === 1" color="red" class="ant-tag-no-margin">已合并</a-tag>
           <a-tag v-else-if="record.outdated === 2" color="red" class="ant-tag-no-margin">已下线</a-tag>
         </span>
-        <span slot="idTitle">区服id <a-icon type="copy" /></span>
-        <span slot="hostTitle">服务器ip <a-icon type="copy" /></span>
+        <span slot="idTitle">区服ID <a-icon type="copy" /></span>
+        <span slot="hostTitle">服务器IP <a-icon type="copy" /></span>
         <span slot="loginUrlTitle">连接地址 <a-icon type="copy" /></span>
         <span slot="gmUrlTitle">GM地址 <a-icon type="copy" /></span>
       </a-table>
@@ -224,7 +224,7 @@ export default {
           }
         },
         {
-          // title: '区服id',
+          // title: '区服ID',
           fixed: 'left',
           align: 'center',
           dataIndex: 'id',
@@ -244,7 +244,7 @@ export default {
           scopedSlots: { customRender: 'tagSlot' }
         },
         {
-          // title: '服务器ip',
+          // title: '服务器IP',
           align: 'left',
           dataIndex: 'host',
           slots: { title: 'hostTitle' },

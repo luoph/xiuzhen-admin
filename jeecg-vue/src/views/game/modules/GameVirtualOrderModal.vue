@@ -3,11 +3,11 @@
   <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
+        <a-form-item label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家ID" style="width: 100%" />
         </a-form-item>
-        <a-form-item label="商品id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['goodsIds', validatorRules.goodsIds]" placeholder="请输入商品id（如：1001, 1002, 1003）" style="width: 100%" />
+        <a-form-item label="商品ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['goodsIds', validatorRules.goodsIds]" placeholder="请输入商品ID（如：1001, 1002, 1003）" style="width: 100%" />
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注" />
@@ -48,8 +48,8 @@ export default {
       confirmLoading: false,
       validatorRules: {
         serverId: {},
-        playerId: { rules: [{ required: true, message: '请输入玩家id!' }] },
-        goodsIds: { rules: [{ required: true, message: '请输入商品id!' }] },
+        playerId: { rules: [{ required: true, message: '请输入玩家ID!' }] },
+        goodsIds: { rules: [{ required: true, message: '请输入商品ID!' }] },
         remark: { rules: [{ required: true, message: '请输入备注!' }] }
       },
       url: {

@@ -12,8 +12,8 @@
         />
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -22,14 +22,14 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="兑换ip">
-              <a-input placeholder="请输入兑换ip" v-model="queryParam.remoteIp" />
+            <a-form-item label="兑换IP">
+              <a-input placeholder="请输入兑换IP" v-model="queryParam.remoteIp" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
-              <a-form-item label="分组id">
-                <a-input placeholder="请输入分组id" v-model="queryParam.groupId" />
+              <a-form-item label="分组ID">
+                <a-input placeholder="请输入分组ID" v-model="queryParam.groupId" />
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="16">
@@ -106,7 +106,7 @@
         <span slot="codeTitle">激活码 <a-icon type="copy" /></span>
         <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
         <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
-        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
         <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
         <span slot="ipTitle">兑换IP <a-icon type="copy" /></span>
@@ -172,14 +172,14 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '玩家id',
+          // title: '玩家ID',
           align: 'center',
           dataIndex: 'playerId',
           slots: { title: 'playerIdTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '分组id',
+          title: '分组ID',
           align: 'center',
           dataIndex: 'groupId'
         },

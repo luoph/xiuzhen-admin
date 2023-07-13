@@ -128,7 +128,7 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
         <span slot="banValueTitle">封禁值 <a-icon type="copy" /></span>
         <span slot="reasonTitle">封禁原因 <a-icon type="copy" /></span>
       </a-table>
@@ -171,7 +171,7 @@ export default {
           }
         },
         {
-          // title: '区服id',
+          // title: '区服ID',
           align: 'center',
           width: 80,
           dataIndex: 'serverId',
@@ -203,7 +203,7 @@ export default {
             if (value === 'ip') {
               text = 'ip地址';
             } else if (value === 'playerId') {
-              text = '玩家id';
+              text = '玩家ID';
             } else if (value === 'deviceId') {
               text = '设备id';
             }

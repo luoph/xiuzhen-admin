@@ -10,13 +10,13 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="商品id">
-              <a-input placeholder="请输商品id" v-model="queryParam.goodsId" />
+            <a-form-item label="商品ID">
+              <a-input placeholder="请输商品ID" v-model="queryParam.goodsId" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -91,10 +91,10 @@
           <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
           <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
         </span>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
-        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
         <span slot="playerNameTitle">玩家名 <a-icon type="copy" /></span>
-        <span slot="goodsIdTitle">商品id <a-icon type="copy" /></span>
+        <span slot="goodsIdTitle">商品ID <a-icon type="copy" /></span>
         <span slot="goodsNameTitle">商品名称 <a-icon type="copy" /></span>
       </a-table>
     </div>
@@ -132,14 +132,14 @@ export default {
           }
         },
         {
-          // title: '区服id',
+          // title: '区服ID',
           align: 'center',
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '玩家id',
+          // title: '玩家ID',
           align: 'center',
           dataIndex: 'playerId',
           slots: { title: 'playerIdTitle' },
@@ -153,7 +153,7 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          // title: '商品id',
+          // title: '商品ID',
           align: 'center',
           dataIndex: 'goodsId',
           slots: { title: 'goodsIdTitle' },

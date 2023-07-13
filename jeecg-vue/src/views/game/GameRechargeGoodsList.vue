@@ -90,8 +90,8 @@
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
-      <a-button type="primary" icon="delete" @click="deleteAll">删除全部</a-button>
-      <a-button @click="updateGoods" type="primary" icon="sync">刷新商品配置</a-button>
+      <a-button type="primary" icon="sync" @click="updateGoods">刷新商品</a-button>
+      <a-button type="danger" icon="delete" @click="deleteAll">删除全部</a-button>
       <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
@@ -146,13 +146,13 @@
             <span class="large-text" @click="copyText(text)">{{ text || '--' }}</span>
           </div>
         </template>
-        <span slot="buyTypeSlot" slot-scope="text, record">
+        <span slot="buyTypeSlot" slot-scope="text">
           <a-tag v-if="!text" color="red" class="ant-tag-no-margin">未设置</a-tag>
           <!-- <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag> -->
           <span v-else v-for="tag in text.split(',').sort()" :key="tag">
-            <a-tag v-if="tag == 1" color="blue" class="ant-tag-no-margin">{{ tag }}-真实充值</a-tag>
-            <a-tag v-if="tag == 2" color="blue" class="ant-tag-no-margin">{{ tag }}-GM额度</a-tag>
-            <a-tag v-if="tag == 3" color="blue" class="ant-tag-no-margin">{{ tag }}-代金券</a-tag>
+            <a-tag v-if="tag == 1" color="green" class="ant-tag-no-margin">{{ tag }}-真实充值</a-tag>
+            <a-tag v-if="tag == 2" color="yellow" class="ant-tag-no-margin">{{ tag }}-GM额度</a-tag>
+            <a-tag v-if="tag == 3" color="orange" class="ant-tag-no-margin">{{ tag }}-代金券</a-tag>
           </span>
         </span>
         <span slot="action" slot-scope="text, record">
@@ -171,10 +171,44 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="goodsIdTitle">商品id <a-icon type="copy" /></span>
-        <span slot="nameTitle">商品名称 <a-icon type="copy" /></span>
+        <span slot="switchSlot" slot-scope="text">
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
+        </span>
+        <span slot="skuSlot" slot-scope="text, record">
+          <a-tag class="ant-tag-no-margin">内购</a-tag><a @click="copyText(record.sku)" class="copy-text"> {{ record.sku || '--' }} <a-icon type="copy" /></a>
+          <a-divider />
+          <a-tag class="ant-tag-no-margin">网页</a-tag><a @click="copyText(record.webSku)" class="copy-text"> {{ record.webSku || '--' }} <a-icon type="copy" /></a>
+        </span>
+        <span slot="localPriceSlot" slot-scope="text, record">
+          <a-tag class="ant-tag-no-margin">内购</a-tag><a class="copy-text"> {{ record.localPrice || '--' }}</a>
+          <a-divider />
+          <a-tag class="ant-tag-no-margin">网页</a-tag><a class="copy-text"> {{ record.webLocalPrice || '--' }} </a>
+        </span>
+        <span slot="displayPriceSlot" slot-scope="text, record">
+          <a-tag class="ant-tag-no-margin">内购</a-tag><a class="copy-text"> {{ record.displayPrice || '--' }} </a>
+          <a-divider />
+          <a-tag class="ant-tag-no-margin">网页</a-tag><a class="copy-text"> {{ record.webDisplayPrice || '--' }} </a>
+        </span>
+        <span slot="recommendSlot" slot-scope="text">
+          <a-tag v-if="text === 1" class="ant-tag-no-margin" color="green">推荐</a-tag>
+          <a-tag v-else-if="text === 2" class="ant-tag-no-margin" color="orange">礼包</a-tag>
+          <a-tag v-else class="ant-tag-no-margin">未配置</a-tag>
+        </span>
+        <span slot="goodsGroupSlot" slot-scope="text">
+          <a-tag v-if="text === 1" class="ant-tag-no-margin" color="green">直充</a-tag>
+          <a-tag v-else-if="text === 2" class="ant-tag-no-margin" color="blue">礼包</a-tag>
+          <a-tag v-else class="ant-tag-no-margin">未配置</a-tag>
+        </span>
+        <span slot="tagSlot" slot-scope="text">
+          <a-tag color="blue" class="ant-tag-no-margin">{{ text }}</a-tag>
+        </span>
+        <span slot="goodsIdTitle">商品ID <a-icon type="copy" /></span>
+        <span slot="nameTitle">名称 <a-icon type="copy" /></span>
+        <span slot="remarkTitle">备注 <a-icon type="copy" /></span>
         <span slot="skuTitle">内购SKU <a-icon type="copy" /></span>
         <span slot="webSkuTitle">网页支付SKU <a-icon type="copy" /></span>
+        <span slot="itemsTitle">奖励列表 <a-icon type="copy" /></span>
+        <span slot="additionTitle">首次额外赠送 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -206,24 +240,24 @@ export default {
       },
       // 表头
       columns: [
-        // {
-        //   title: '#',
-        //   dataIndex: '',
-        //   key: 'rowIndex',
-        //   fixed: 'left',
-        //   width: 40,
-        //   align: 'center',
-        //   customRender: function (t, r, index) {
-        //     return parseInt(index) + 1;
-        //   }
-        // },
         {
-          title: 'id',
-          align: 'center',
+          title: '#',
+          dataIndex: '',
+          key: 'rowIndex',
           fixed: 'left',
-          width: 80,
-          dataIndex: 'id'
+          width: 60,
+          align: 'center',
+          customRender: function (t, r, index) {
+            return parseInt(index) + 1;
+          }
         },
+        // {
+        //   title: 'id',
+        //   align: 'center',
+        //   fixed: 'left',
+        //   width: 80,
+        //   dataIndex: 'id'
+        // },
         {
           // title: '商品Id',
           align: 'center',
@@ -242,25 +276,18 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '备注',
+          // title: '备注',
           align: 'center',
           fixed: 'left',
-          dataIndex: 'remark'
+          dataIndex: 'remark',
+          slots: { title: 'remarkTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '商品组别',
           align: 'center',
-          width: 80,
           dataIndex: 'goodsGroup',
-          customRender: (value) => {
-            let text = '--';
-            if (value === 1) {
-              text = '直充';
-            } else if (value === 2) {
-              text = '礼包';
-            }
-            return text;
-          }
+          scopedSlots: { customRender: 'goodsGroupSlot' }
         },
         {
           title: '商品类型',
@@ -333,100 +360,76 @@ export default {
         {
           title: '购买类型',
           align: 'center',
-          width: 90,
+          width: 120,
           dataIndex: 'buyType',
           scopedSlots: { customRender: 'buyTypeSlot' }
         },
         {
-          title: 'gm额度',
+          title: 'GM额度',
           align: 'center',
-          width: 80,
           dataIndex: 'gmCoin'
         },
         {
           title: '代金券',
           align: 'center',
-          width: 80,
           dataIndex: 'cashCoupon'
-        },
-        {
-          // title: '内购SKU',
-          align: 'center',
-          width: 120,
-          dataIndex: 'sku',
-          slots: { title: 'skuTitle' },
-          scopedSlots: { customRender: 'copySlot' }
-        },
-        {
-          // title: '网页支付SKU',
-          align: 'center',
-          width: 120,
-          dataIndex: 'webSku',
-          slots: { title: 'webSkuTitle' },
-          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '单价',
           align: 'center',
-          width: 80,
           dataIndex: 'price'
         },
         {
           title: '折扣',
           align: 'center',
-          width: 80,
           dataIndex: 'discount'
-        },
-        {
-          title: '货币',
-          align: 'center',
-          width: 80,
-          dataIndex: 'currency'
         },
         {
           title: '特殊标签',
           align: 'center',
-          width: 120,
           dataIndex: 'recommend',
-          customRender: (value) => {
-            let text = '--';
-            if (value === 0) {
-              text = '无(0)';
-            } else if (value === 1) {
-              text = '推荐(1)';
-            } else if (value === 2) {
-              text = '礼包(2)';
-            }
-            return text;
-          }
+          scopedSlots: { customRender: 'recommendSlot' }
         },
         {
-          title: '奖励列表',
+          title: '计入累充',
+          align: 'center',
+          dataIndex: 'amountStat',
+          scopedSlots: { customRender: 'switchSlot' }
+        },
+        {
+          title: 'SKU',
+          align: 'center',
+          width: 140,
+          dataIndex: 'sku',
+          scopedSlots: { customRender: 'skuSlot' }
+        },
+        {
+          // title: '奖励列表',
           align: 'center',
           width: 220,
           dataIndex: 'items',
+          slots: { title: 'itemsTitle' },
           scopedSlots: { customRender: 'largeText' }
         },
         {
-          title: '是否计入累充',
+          // title: '首次额外赠送',
           align: 'center',
-          width: 80,
-          dataIndex: 'amountStat',
-          customRender: (value) => {
-            let text = '--';
-            if (value === 0) {
-              text = '否';
-            } else if (value === 1) {
-              text = '是';
-            }
-            return text;
-          }
+          width: 220,
+          dataIndex: 'addition',
+          slots: { title: 'additionTitle' },
+          scopedSlots: { customRender: 'largeText' }
         },
         {
-          title: '统计',
+          title: '统计类型',
           align: 'center',
-          width: 80,
+          // width: 80,
           dataIndex: 'amountStatTypes'
+        },
+        {
+          title: '货币',
+          align: 'center',
+          dataIndex: 'currency',
+          scopedSlots: { customRender: 'tagSlot' }
         },
         {
           title: '兑换比例',
@@ -435,46 +438,23 @@ export default {
           dataIndex: 'exchange'
         },
         {
-          title: '首次额外赠送',
-          align: 'center',
-          width: 180,
-          dataIndex: 'addition',
-          customRender: (value) => {
-            return value || '--';
-          }
-        },
-        {
           title: '当地价格',
           align: 'center',
-          width: 120,
+          width: 180,
           dataIndex: 'localPrice',
-          customRender: (value) => {
-            return value || '--';
-          }
-        },
-        {
-          title: '网页支付价格',
-          align: 'center',
-          width: 120,
-          dataIndex: 'webLocalPrice',
-          customRender: (value) => {
-            return value || '--';
-          }
+          scopedSlots: { customRender: 'localPriceSlot' }
         },
         {
           title: '显示价格',
           align: 'center',
-          width: 120,
+          width: 180,
           dataIndex: 'displayPrice',
-          customRender: (value) => {
-            return value || '--';
-          }
+          scopedSlots: { customRender: 'displayPriceSlot' }
         },
         {
-          title: '网页显示价格',
+          title: '网页支付价格',
           align: 'center',
-          width: 120,
-          dataIndex: 'webDisplayPrice',
+          dataIndex: 'webLocalPrice',
           customRender: (value) => {
             return value || '--';
           }
@@ -542,6 +522,11 @@ export default {
 
 .ant-tag-no-margin {
   margin-right: auto !important;
+}
+
+.ant-divider-horizontal {
+  margin: 6px 0 6px 0;
+  padding: 0 10px 0 10px;
 }
 
 .import-text {

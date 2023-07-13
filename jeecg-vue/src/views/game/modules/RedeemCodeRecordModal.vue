@@ -9,17 +9,17 @@
         <a-form-item label="渠道编码" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道编码" />
         </a-form-item>
-        <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
+        <a-form-item label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家ID" style="width: 100%" />
         </a-form-item>
-        <a-form-item label="分组id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isEdit" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
+        <a-form-item label="分组ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number :disabled="isEdit" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组ID" style="width: 100%" />
         </a-form-item>
         <a-form-item label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入区服Id" style="width: 100%" />
         </a-form-item>
-        <a-form-item label="兑换ip" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['remoteIp', validatorRules.remoteIp]" placeholder="请输入兑换ip"></a-input>
+        <a-form-item label="兑换IP" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input :disabled="isEdit" v-decorator="['remoteIp', validatorRules.remoteIp]" placeholder="请输入兑换IP"></a-input>
         </a-form-item>
         <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-date :disabled="isEdit" placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
@@ -65,10 +65,10 @@ export default {
       validatorRules: {
         code: { rules: [{ required: true, message: '请输入兑换码!' }] },
         channel: { rules: [{ required: true, message: '请输入渠道编码!' }] },
-        playerId: { rules: [{ required: true, message: '请输入玩家id!' }] },
+        playerId: { rules: [{ required: true, message: '请输入玩家ID!' }] },
         groupId: {},
         serverId: { rules: [{ required: true, message: '请输入区服Id!' }] },
-        remoteIp: { rules: [{ required: true, message: '请输入兑换ip!' }] },
+        remoteIp: { rules: [{ required: true, message: '请输入兑换IP!' }] },
         createTime: {},
         createDate: {}
       },

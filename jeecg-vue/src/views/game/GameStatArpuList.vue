@@ -10,7 +10,7 @@
               <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
-          <a-col :md="12" :sm="8">
+          <a-col :md="10" :sm="8">
             <a-form-item label="日期范围">
               <a-radio-group v-model="dayRange" @change="onDayRangeChange">
                 <a-radio :value="0">自定义</a-radio>
@@ -26,14 +26,13 @@
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
               <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+              <a-button type="primary" icon="download" style="margin-left: 8px" @click="handleExportXls('数据报表')">导出</a-button>
             </span>
           </a-col>
         </a-row>
       </a-form>
 
-      <div class="table-operator">
-        <a-button type="primary" icon="download" @click="handleExportXls('数据报表')">导出</a-button>
-      </div>
+      <div class="table-operator"></div>
     </div>
     <!-- 查询区域-END -->
     <!-- table区域-begin -->

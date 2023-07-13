@@ -14,7 +14,7 @@
         </a-form-item>
         <a-form-item label="封禁依据" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请选择封禁依据" v-decorator="['banKey', validatorRules.banKey]">
-            <a-select-option :value="'playerId'">玩家id</a-select-option>
+            <a-select-option :value="'playerId'">玩家ID</a-select-option>
             <a-select-option :value="'ip'">ip</a-select-option>
             <a-select-option :value="'deviceId'">设备号</a-select-option>
           </a-select>

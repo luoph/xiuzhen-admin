@@ -15,8 +15,8 @@
         <a-form-item label="商品描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['itemDesc', validatorRules.itemDesc]" placeholder="请输入商品描述" />
         </a-form-item>
-        <a-form-item label="商品id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品id" style="width: 100%" />
+        <a-form-item label="商品ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品ID" style="width: 100%" />
         </a-form-item>
         <a-form-item label="免费领取" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-checkbox v-decorator="['free', { initialValue: false }]" :checked="form.getFieldValue('free')"> 本组商品是否免费领取 </a-checkbox>
@@ -88,7 +88,7 @@ export default {
         showOrder: { rules: [{ required: true, message: '请输入位置序号!' }] },
         itemDesc: { rules: [{ required: true, message: '请输入商品描述!' }] },
         limitNum: { initialValue: 0, rules: [{ required: true, message: '请输入限购次数!' }] },
-        goodsId: { rules: [{ required: true, message: '请输入商品id!' }] },
+        goodsId: { rules: [{ required: true, message: '请输入商品ID!' }] },
         chooseItems: { rules: [{ required: true, message: '请输入可选物品!' }] },
         minLevel: { rules: [{ required: true, message: '请输入最小世界等级!' }] },
         maxLevel: { rules: [{ required: true, message: '请输入最大世界等级!' }] }

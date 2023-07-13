@@ -3,8 +3,8 @@
     <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['id', validatorRules.id]" placeholder="请输入玩家id" style="width: 100%" />
+        <a-form-item label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['id', validatorRules.id]" placeholder="请输入玩家ID" style="width: 100%" />
         </a-form-item>
         <a-form-item label="角色名" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['nickname', validatorRules.nickname]" placeholder="请输入角色名" />

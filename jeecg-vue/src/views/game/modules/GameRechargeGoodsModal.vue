@@ -4,7 +4,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="商品Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id" style="width: 100%" />
+          <a-input-number :disabled="isEdit" v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名称" />
@@ -145,6 +145,7 @@ export default {
       title: '操作',
       width: 1000,
       visible: false,
+      isEdit: false,
       model: {},
       labelCol: {
         xs: { span: 26 },
@@ -192,6 +193,7 @@ export default {
     edit(record) {
       this.form.resetFields();
       this.model = Object.assign({}, record);
+      this.isEdit = this.model.id != null;
       this.visible = true;
       this.$nextTick(() => {
         this.form.setFieldsValue(

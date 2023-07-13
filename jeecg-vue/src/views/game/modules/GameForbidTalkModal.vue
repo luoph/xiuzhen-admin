@@ -11,8 +11,8 @@
             <a-select-option :value="2">聊天</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['banValue', validatorRules.banValue]" placeholder="请输入玩家id" style="width: 100%" />
+        <a-form-item label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number :disabled="true" v-decorator="['banValue', validatorRules.banValue]" placeholder="请输入玩家ID" style="width: 100%" />
         </a-form-item>
         <a-form-item label="封禁时长（秒）" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入封禁时长（秒）" style="width: 100%" />

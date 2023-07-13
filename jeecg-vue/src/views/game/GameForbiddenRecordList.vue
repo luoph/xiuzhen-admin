@@ -29,7 +29,7 @@
           <a-col :md="6" :sm="8">
             <a-form-item label="封禁依据">
               <a-select placeholder="请选择封禁依据" v-model="queryParam.banKey" initialValue="playerId">
-                <a-select-option value="playerId">玩家id</a-select-option>
+                <a-select-option value="playerId">玩家ID</a-select-option>
                 <a-select-option value="ip">ip</a-select-option>
                 <a-select-option value="deviceId">设备号</a-select-option>
               </a-select>
@@ -128,7 +128,7 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
         </span>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
         <span slot="banValueTitle">封禁值 <a-icon type="copy" /></span>
         <span slot="reasonTitle">封禁原因 <a-icon type="copy" /></span>
       </a-table>
@@ -187,7 +187,7 @@ export default {
           dataIndex: 'forbiddenId'
         },
         {
-          // title: '区服id',
+          // title: '区服ID',
           align: 'center',
           width: 80,
           dataIndex: 'serverId',
@@ -217,7 +217,7 @@ export default {
             if (value == 'ip') {
               text = 'IP';
             } else if (value == 'playerId') {
-              text = '玩家id';
+              text = '玩家ID';
             } else if (value == 'deviceId') {
               text = '设备号';
             }

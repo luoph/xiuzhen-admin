@@ -12,8 +12,8 @@
         />
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="8">
@@ -39,6 +39,7 @@
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" style="margin-left: 8px" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+              <a-button type="primary" icon="download" style="margin-left: 8px" @click="handleExportXls('付费排行')">导出</a-button>
             </span>
           </a-col>
         </a-row>
@@ -47,9 +48,7 @@
     <!-- 查询区域-END -->
 
     <!-- 操作按钮区域 -->
-    <div class="table-operator">
-      <a-button type="primary" icon="download" @click="handleExportXls('付费排行')">导出</a-button>
-    </div>
+    <div class="table-operator"></div>
 
     <!-- table区域-begin -->
     <div>
@@ -77,10 +76,10 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="playerIdTitle">玩家id <a-icon type="copy" /></span>
+        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
         <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
         <span slot="accountTitle">账号 <a-icon type="copy" /></span>
-        <span slot="serverIdTitle">区服id <a-icon type="copy" /></span>
+        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
         <span slot="sidTitle">创角区服 <a-icon type="copy" /></span>
         <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
         <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
@@ -122,7 +121,7 @@ export default {
           }
         },
         {
-          // title: '玩家id',
+          // title: '玩家ID',
           align: 'center',
           width: 140,
           dataIndex: 'playerId',
@@ -302,5 +301,4 @@ export default {
 .ant-tag-no-margin {
   margin-right: auto !important;
 }
-
 </style>

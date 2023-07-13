@@ -10,7 +10,7 @@
           <a-textarea v-decorator="['noticeText']" rows="4" placeholder="请输入正文" />
         </a-form-item>
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-if="isEdit" v-decorator="['gameServerList', validatorRules.gameServerList]" placeholder="区服id" />
+          <a-input v-if="isEdit" v-decorator="['gameServerList', validatorRules.gameServerList]" placeholder="区服ID" />
           <game-server-selector v-model="model.gameServerList" @onSelectServer="changeSelect" />
         </a-form-item>
         <a-form-item label="播放频率" :labelCol="labelCol" :wrapperCol="wrapperCol">

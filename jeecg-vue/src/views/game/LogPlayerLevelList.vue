@@ -10,8 +10,8 @@
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -165,7 +165,7 @@ export default {
           dataIndex: 'serverId'
         },
         {
-          title: '玩家id',
+          title: '玩家ID',
           align: 'center',
           dataIndex: 'playerId'
         },
@@ -252,7 +252,7 @@ export default {
     },
     getSuperFieldList() {
       let fieldList = [];
-      fieldList.push({ type: 'int', value: 'playerId', text: '玩家id', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'playerId', text: '玩家ID', dictCode: '' });
       fieldList.push({ type: 'int', value: 'serverId', text: '服务器id', dictCode: '' });
       fieldList.push({ type: 'int', value: 'level', text: '境界等级', dictCode: '' });
       fieldList.push({ type: 'int', value: 'combatPower', text: '战力', dictCode: '' });

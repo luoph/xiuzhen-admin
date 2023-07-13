@@ -9,8 +9,8 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="停服的玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="sourcePlayerId">
-              <a-input-number v-model="model.sourcePlayerId" placeholder="请输入停服的玩家id" style="width: 100%" />
+            <a-form-model-item label="停服的玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="sourcePlayerId">
+              <a-input-number v-model="model.sourcePlayerId" placeholder="请输入停服的玩家ID" style="width: 100%" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -19,8 +19,8 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="返还的玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="targetPlayerId">
-              <a-input-number v-model="model.targetPlayerId" placeholder="请输入返还的玩家id" style="width: 100%" />
+            <a-form-model-item label="返还的玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="targetPlayerId">
+              <a-input-number v-model="model.targetPlayerId" placeholder="请输入返还的玩家ID" style="width: 100%" />
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -68,9 +68,9 @@ export default {
       confirmLoading: false,
       validatorRules: {
         sourceServerId: [{ required: true, message: '请输入停服的服务器id!' }],
-        sourcePlayerId: [{ required: true, message: '请输入停服的玩家id!' }],
+        sourcePlayerId: [{ required: true, message: '请输入停服的玩家ID!' }],
         targetServerId: [{ required: true, message: '请输入返还的服务器id!' }],
-        targetPlayerId: [{ required: true, message: '请输入返还的玩家id!' }],
+        targetPlayerId: [{ required: true, message: '请输入返还的玩家ID!' }],
         sourceAmount: [{ required: true, message: '请输入充值总金额!' }],
         targetNum: [{ required: true, message: '请输入返还总仙玉!' }]
       },

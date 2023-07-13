@@ -3,8 +3,8 @@
   <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['playerIds', validatorRules.playerIds]" placeholder="请输入玩家id（使用,分隔多个玩家id）" />
+        <a-form-item label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['playerIds', validatorRules.playerIds]" placeholder="请输入玩家ID（使用,分隔多个玩家ID）" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -40,7 +40,7 @@ export default {
       },
       confirmLoading: false,
       validatorRules: {
-        playerIds: { rules: [{ required: true, message: '请输入玩家id!' }] },
+        playerIds: { rules: [{ required: true, message: '请输入玩家ID!' }] },
         remark: {}
       },
       url: {

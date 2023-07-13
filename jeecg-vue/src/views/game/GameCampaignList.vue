@@ -244,7 +244,7 @@ export default {
           dataIndex: 'priority'
         },
         {
-          title: '区服id',
+          title: '区服ID',
           align: 'center',
           width: 150,
           dataIndex: 'serverIds',
