@@ -30,10 +30,10 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     private String sendLampNoticeUpdate;
 
     @Autowired
-    private IGameServerService gameServerService;
+    private IGameServerService serverService;
 
-    private void sendLampNoticeUpdate() {
-        gameServerService.gameServerGet(gameServerService.getOnlineServerIds(), sendLampNoticeUpdate, null);
+    private void notifyLampNoticeUpdate() {
+        serverService.getUrl(serverService.getOnlineServerIds(), sendLampNoticeUpdate);
     }
 
     @AutoLog(value = "跑马灯消息-列表查询")
@@ -50,7 +50,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     public Result<?> add(@RequestBody GameLampNotice entity) {
         entity.setStatus(1);
         Result<?> result = super.add(entity);
-        sendLampNoticeUpdate();
+        notifyLampNoticeUpdate();
         return result;
     }
 
@@ -58,7 +58,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameLampNotice entity) {
         Result<?> result = super.edit(entity);
-        sendLampNoticeUpdate();
+        notifyLampNoticeUpdate();
         return result;
     }
 
@@ -66,7 +66,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         Result<?> result = super.delete(id);
-        sendLampNoticeUpdate();
+        notifyLampNoticeUpdate();
         return result;
     }
 
@@ -74,7 +74,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         Result<?> result = super.deleteBatch(ids);
-        sendLampNoticeUpdate();
+        notifyLampNoticeUpdate();
         return result;
     }
 
@@ -94,7 +94,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         Result<?> result = super.importExcel(request, response, GameLampNotice.class);
-        sendLampNoticeUpdate();
+        notifyLampNoticeUpdate();
         return result;
     }
 
@@ -113,7 +113,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
             gameLampNotice.setStatus(1);
         }
         service.updateById(gameLampNotice);
-        sendLampNoticeUpdate();
+        notifyLampNoticeUpdate();
         return Result.ok("消息状态更新成功！");
     }
 }

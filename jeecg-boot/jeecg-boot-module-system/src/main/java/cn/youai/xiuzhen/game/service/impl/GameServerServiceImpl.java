@@ -13,6 +13,7 @@ import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.game.mapper.GameServerMapper;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
+import cn.youai.xiuzhen.utils.RequestUtils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -133,135 +133,47 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     @Override
     public Map<Integer, Response> cleanCache(Collection<Integer> serverIds, String cacheName) {
-        return gameServerGet(serverIds, cleanCacheUrl + cacheName);
+        return getUrl(serverIds, cleanCacheUrl + cacheName);
     }
 
     @Override
-    public Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path) {
-        return gameServerGet(serverIds, path, Response.class);
+    public Map<Integer, Response> getUrl(Collection<Integer> serverIds, String path) {
+        return getUrl(serverIds, path, Response.class);
     }
 
     @Override
-    public <T> Map<Integer, T> gameServerGet(Collection<Integer> serverIds, String path, Class<T> clazz) {
-        Map<Integer, T> responseMap = new HashMap<>(serverIds.size());
-        CountDownLatch latch = new CountDownLatch(serverIds.size());
-        for (Integer serverId : serverIds) {
-            GameServer gameServer = getById(serverId);
-            if (skipRequest(gameServer)) {
-                latch.countDown();
-                continue;
-            }
-
-            OkHttpHelper.getAsync(gameServer.getGmUrl() + path, new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    log.error("onlineNum onFailure", e);
-                    latch.countDown();
-                }
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
-                        try {
-                            T rspObj = JSON.parseObject(response.body().string(), clazz);
-                            responseMap.put(serverId, rspObj);
-                        } catch (Exception e) {
-                            log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
-                        } finally {
-                            response.body().close();
-                        }
-                    }
-                    latch.countDown();
-                }
-            });
-        }
-
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            log.error("gameServerGet error, serverIds:" + serverIds + ", path:" + path, e);
-        }
-        return responseMap;
+    public <T> Map<Integer, T> getUrl(Collection<Integer> serverIds, String path, Class<T> clazz) {
+        return RequestUtils.batchGet(serverIds, path, this, GameServer::getGmUrl, GameServer::skipCheck, clazz);
     }
 
     @Override
-    public Map<Integer, Response> gameServerGet(String serverIds, String path) {
-        return gameServerGet(StringUtils.split2Int(serverIds), path);
+    public Map<Integer, Response> getUrl(String serverIds, String path) {
+        return getUrl(StringUtils.split2Int(serverIds), path);
     }
 
     @Override
-    public <T> Map<Integer, T> gameServerGet(String serverIds, String path, Class<T> clazz) {
-        return gameServerGet(StringUtils.split2Int(serverIds), path, clazz);
+    public <T> Map<Integer, T> getUrl(String serverIds, String path, Class<T> clazz) {
+        return getUrl(StringUtils.split2Int(serverIds), path, clazz);
     }
 
     @Override
-    public Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params) {
-        return gameServerGet(serverIds, path, params, Response.class);
+    public Map<Integer, Response> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params) {
+        return getUrl(serverIds, path, params, Response.class);
     }
 
     @Override
-    public <T> Map<String, T> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params, Class<T> clazz) {
-        Map<String, T> responseMap = new ConcurrentHashMap<>(serverIds.size());
-        CountDownLatch latch = new CountDownLatch(serverIds.size());
-        for (String serverId : serverIds) {
-            GameServer gameServer = getById(serverId);
-            if (skipRequest(gameServer)) {
-                latch.countDown();
-                continue;
-            }
-
-            // 异步
-            OkHttpHelper.getAsync(gameServer.getGmUrl() + path, params, new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, IOException e) {
-                    log.error("gameServerGet onFailure, url:" + gameServer.getGmUrl() + path, e);
-                    latch.countDown();
-                }
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
-                        try {
-                            responseMap.put(serverId, JSON.parseObject(response.body().string(), clazz));
-                        } finally {
-                            response.body().close();
-                        }
-                    }
-                    latch.countDown();
-                }
-            });
-        }
-
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            log.error("gameServerGet error", e);
-        }
-        return responseMap;
+    public <T> Map<Integer, T> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params, Class<T> clazz) {
+        return RequestUtils.batchGet(serverIds, path, params, this, GameServer::getGmUrl, GameServer::skipCheck, clazz);
     }
 
     @Override
-    public Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, Object data) {
-        return gameServerPost(serverIds, path, data, Response.class);
+    public Map<Integer, Response> postUrl(Collection<Integer> serverIds, String path, Object data) {
+        return postUrl(serverIds, path, data, Response.class);
     }
 
     @Override
-    public <T> Map<Integer, T> gameServerPost(Collection<Integer> serverIds, String path, Object data, Class<T> clazz) {
-        Map<Integer, T> responseMap = new HashMap<>(serverIds.size());
-        for (Integer serverId : serverIds) {
-            GameServer gameServer = getById(serverId);
-            if (skipRequest(gameServer)) {
-                continue;
-            }
-
-            try {
-                T response = JSON.parseObject(OkHttpHelper.post(gameServer.getGmUrl() + path, data), clazz);
-                responseMap.put(serverId, response);
-            } catch (Exception e) {
-                log.error("gameServerPost error, serverId:" + serverId, e);
-            }
-        }
-        return responseMap;
+    public <T> Map<Integer, T> postUrl(Collection<Integer> serverIds, String path, Object data, Class<T> clazz) {
+        return RequestUtils.batchPost(serverIds, path, data, this, GameServer::getGmUrl, GameServer::skipCheck, clazz);
     }
 
     @Override

@@ -79,11 +79,11 @@ public class FactionController extends ServerDataSourceController<Faction, IFact
         Map<String, Object> params = new HashMap<>();
         params.put("factionId", entity.getFactionId());
         params.put("name", entity.getName());
-        String serverId = entity.getServerId().toString();
-        Map<String, Response> responseMap = gameServerService.gameServerGet(CollUtil.newArrayList(serverId), factionForceRenameUrl, params);
+        Integer serverId = entity.getServerId();
+        Map<Integer, Response> responseMap = gameServerService.getUrl(CollUtil.newArrayList(serverId), factionForceRenameUrl, params);
         Response response = responseMap.get(serverId);
         if (null == response) {
-            return Result.error("请求返回为空");
+            return Result.error("请求失败");
         }
         return response.isSuccess() ? Result.ok("修改成功") : Result.error(response.getDesc());
     }
@@ -100,11 +100,11 @@ public class FactionController extends ServerDataSourceController<Faction, IFact
 
         Map<String, Object> params = new HashMap<>();
         params.put("factionId", entity.getFactionId());
-        String serverId = entity.getServerId().toString();
-        Map<String, Response> responseMap = gameServerService.gameServerGet(CollUtil.newArrayList(serverId), factionForceDissolveUrl, params);
+        Integer serverId = entity.getServerId();
+        Map<Integer, Response> responseMap = gameServerService.getUrl(CollUtil.newArrayList(serverId), factionForceDissolveUrl, params);
         Response response = responseMap.get(serverId);
         if (null == response) {
-            return Result.error("请求返回为空");
+            return Result.error("请求失败");
         }
         return response.isSuccess() ? Result.ok("删除成功") : Result.error(response.getDesc());
     }

@@ -115,7 +115,7 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
             DBHelper.saveBatch(saveRecords, getClass());
             GameStopServerRefundRecordCache.getInstance().put(saveRecords);
             httpEmails.forEach((k, v) -> {
-                Map<Integer, Response> responseMap = gameServerService.gameServerPost(CollUtil.newArrayList(k), sendHttpEmailUrl, v);
+                Map<Integer, Response> responseMap = gameServerService.postUrl(CollUtil.newArrayList(k), sendHttpEmailUrl, v);
                 responseMap.forEach((rspKey, rspValue) -> {
                     if (!rspValue.isSuccess()) {
                         log.error("sendHttpEmail error, serverId={}, response={}", rspKey, rspValue);

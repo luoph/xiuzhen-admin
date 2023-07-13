@@ -21,9 +21,12 @@ import java.util.Map;
  */
 public interface IGameServerGroupService extends IService<GameServerGroup> {
 
-    List<GameServerGroup> getGameServerGroupList(Collection<Integer> serverIds);
+    List<GameServerGroup> selectServerGroupList(Collection<Integer> serverIds);
 
-    Map<Long, Response> gameServerGroupGet(Collection<GameServerGroup> gameServerGroups, String path, Map<String, Object> params);
+    Map<Integer, Response> requestGroupGmByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params);
 
-    Map<Long, Response> gameServerGroupGetByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params);
+    Map<Integer, Response> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params);
+
+    <T> Map<Integer, T> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params, Class<T> clazz);
+
 }

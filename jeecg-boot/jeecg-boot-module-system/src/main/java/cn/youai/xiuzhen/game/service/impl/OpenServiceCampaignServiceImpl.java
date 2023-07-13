@@ -200,9 +200,9 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
     @Override
     public void syncCampaign(OpenServiceCampaign campaign) {
         log.info("syncCampaign id:{}", campaign.getId());
-        Set<String> lastIds = StringUtils.split2Set(campaign.getLastServerIds());
-        Set<String> currentIds = StringUtils.split2Set(campaign.getServerIds());
-        Set<String> allServerIds = new HashSet<>(lastIds);
+        Set<Integer> lastIds = new HashSet<>(StringUtils.split2Int(campaign.getLastServerIds()));
+        Set<Integer> currentIds = new HashSet<>(StringUtils.split2Int(campaign.getServerIds()));
+        Set<Integer> allServerIds = new HashSet<>(lastIds);
         allServerIds.addAll(currentIds);
 
         StopWatch stopWatch = new StopWatch("开服活动同步");
@@ -217,14 +217,13 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
 
         // 2.通知游戏服
         stopWatch.start("通知各游戏服重新加载");
-        Map<String, Response> response = gameServerService.gameServerGet(allServerIds, campaignReloadUrl, params);
-        log.info("sync id:{} response:{}", campaign.getId(), response);
+        Map<Integer, Response> response = gameServerService.getUrl(allServerIds, campaignReloadUrl, params);
+        log.info("syncCampaign id:{} response:{}", campaign.getId(), response);
         stopWatch.stop();
 
         // 3.通知跨服
-        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(allServerIds.stream().map(Integer::parseInt)
-                .collect(Collectors.toSet()), campaignReloadUrl, params);
-        log.info("sync id:{} response:{}", campaign.getId(), gameServerGroupResponse);
+        Map<Integer, Response> responseMap = gameServerGroupService.requestGroupGmByServerIds(allServerIds, campaignReloadUrl, params);
+        log.info("sync id:{} response:{}", campaign.getId(), responseMap);
 
         // 4.更新已刷新的服务器id
         stopWatch.start("更新已刷新的服务器id");

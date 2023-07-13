@@ -3,10 +3,12 @@
  */
 package cn.youai.xiuzhen.game.entity;
 
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -29,7 +31,7 @@ public class GameServerGroup implements Serializable {
      * 自增主键
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private Integer id;
 
     /**
      * GM地址
@@ -76,5 +78,9 @@ public class GameServerGroup implements Serializable {
      */
     private Date updateTime;
 
+    @JSONField(serialize = false, deserialize = false)
+    public boolean skipCheck() {
+        return StringUtils.contains(getGmUrl(), "localhost") || StringUtils.contains(getGmUrl(), "127.0.0.1");
+    }
 
 }

@@ -215,7 +215,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
                 @Override
                 public void onFailure(Call call, IOException e) {
                     latch.countDown();
-                    log.error("gameServerGet onFailure, url:" + gameServer.getGmUrl() + playerVipUrl, e);
+                    log.error("getUrl onFailure, url:" + gameServer.getGmUrl() + playerVipUrl, e);
                 }
 
                 @Override
@@ -228,7 +228,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         try {
             latch.await();
         } catch (InterruptedException e) {
-            log.error("gameServerGet error", e);
+            log.error("getUrl error", e);
         }
     }
 

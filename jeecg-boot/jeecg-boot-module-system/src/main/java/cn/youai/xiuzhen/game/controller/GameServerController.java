@@ -142,7 +142,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @AutoLog(value = "游戏服配置-刷新活动配置")
     @GetMapping(value = "/updateActivity")
     public Result<?> updateActivity(@RequestParam(name = "ids") String ids) {
-        Map<Integer, Response> responseMap = service.gameServerGet(ids, updateActivityUrl);
+        Map<Integer, Response> responseMap = service.getUrl(ids, updateActivityUrl);
         log.info("updateActivity response:{}", responseMap);
         return Result.ok("刷新活动配置成功！");
     }
@@ -150,7 +150,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @AutoLog(value = "游戏服配置-刷新游戏配置")
     @GetMapping(value = "/updateSetting")
     public Result<?> updateSetting(@RequestParam(name = "ids") String ids) {
-        Map<Integer, Response> responseMap = service.gameServerGet(ids, updateSettingUrl);
+        Map<Integer, Response> responseMap = service.getUrl(ids, updateSettingUrl);
         log.info("updateSetting response:{}", responseMap);
         return Result.ok("刷新游戏配置成功！");
     }
@@ -159,7 +159,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @GetMapping(value = "/syncPlayer")
     @RequiresPermissions("game:server:admin")
     public Result<?> syncPlayer(@RequestParam(name = "ids") String ids) {
-        Map<Integer, Response> responseMap = service.gameServerGet(ids, syncPlayerUrl);
+        Map<Integer, Response> responseMap = service.getUrl(ids, syncPlayerUrl);
         log.info("syncPlayer response:{}", responseMap);
         return Result.ok("同步玩家数据成功！");
     }
@@ -242,7 +242,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         channelService.updateAllChannelConfig();
         GameServerCache.getInstance().loadAll();
 
-        Map<Integer, Response> responseMap = service.gameServerGet(serverMap.keySet(), url);
+        Map<Integer, Response> responseMap = service.getUrl(serverMap.keySet(), url);
         log.info("updateServerMaintain serverIds:{}, url:{}, response:{}", serverIds, url, responseMap);
     }
 

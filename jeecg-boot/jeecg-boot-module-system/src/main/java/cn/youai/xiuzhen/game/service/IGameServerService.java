@@ -49,9 +49,9 @@ public interface IGameServerService extends IService<GameServer> {
      * @param path      请求地址
      * @return 响应列表
      */
-    Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path);
+    Map<Integer, Response> getUrl(Collection<Integer> serverIds, String path);
 
-    <T> Map<Integer, T> gameServerGet(Collection<Integer> serverIds, String path, Class<T> clazz);
+    <T> Map<Integer, T> getUrl(Collection<Integer> serverIds, String path, Class<T> clazz);
 
     /**
      * 批量请求 http 接口
@@ -60,9 +60,9 @@ public interface IGameServerService extends IService<GameServer> {
      * @param path      请求地址
      * @return 响应列表
      */
-    Map<Integer, Response> gameServerGet(String serverIds, String path);
+    Map<Integer, Response> getUrl(String serverIds, String path);
 
-    <T> Map<Integer, T> gameServerGet(String serverIds, String path, Class<T> clazz);
+    <T> Map<Integer, T> getUrl(String serverIds, String path, Class<T> clazz);
 
     /**
      * 批量请求 http 接口
@@ -72,9 +72,9 @@ public interface IGameServerService extends IService<GameServer> {
      * @param params    请求参数
      * @return 响应列表
      */
-    Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params);
+    Map<Integer, Response> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params);
 
-    <T> Map<String, T> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params, Class<T> clazz);
+    <T> Map<Integer, T> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params, Class<T> clazz);
 
     /**
      * 批量请求 http 接口
@@ -84,9 +84,9 @@ public interface IGameServerService extends IService<GameServer> {
      * @param data      请求数据
      * @return 响应列表
      */
-    Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, Object data);
+    Map<Integer, Response> postUrl(Collection<Integer> serverIds, String path, Object data);
 
-    <T> Map<Integer, T> gameServerPost(Collection<Integer> serverIds, String path, Object data, Class<T> clazz);
+    <T> Map<Integer, T> postUrl(Collection<Integer> serverIds, String path, Object data, Class<T> clazz);
 
     void updateGameServerMaintain(Collection<GameServer> servers, int isMaintain);
 

@@ -44,10 +44,10 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
     private IGameCampaignSupportService campaignSupportService;
 
     @Autowired
-    private IGameServerService gameServerService;
+    private IGameServerService serverService;
 
     @Autowired
-    private IGameServerGroupService gameServerGroupService;
+    private IGameServerGroupService serverGroupService;
 
     @Value("${app.campaign-update-url:/campaign/update}")
     private String campaignUpdateUrl;
@@ -190,12 +190,12 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
                 .eq(GameCampaignSupport::getCampaignId, campaign.getId()).groupBy(GameCampaignSupport::getServerId);
         List<GameCampaignSupport> supports = campaignSupportService.list(queryWrapper);
         List<Integer> serverIds = supports.stream().map(GameCampaignSupport::getServerId).collect(Collectors.toList());
-        Map<Integer, Response> response = gameServerService.gameServerGet(serverIds, campaignUpdateUrl);
+        Map<Integer, Response> response = serverService.getUrl(serverIds, campaignUpdateUrl);
         log.info("sync to server, campaignId:{} response:{}", campaign.getId(), response);
 
         // 通知跨服
-        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(serverIds, campaignUpdateUrl, null);
-        log.info("sync to server group, campaignId:{} response:{}", campaign.getId(), gameServerGroupResponse);
+        Map<Integer, Response> responseMap = serverGroupService.requestGroupGmByServerIds(serverIds, campaignUpdateUrl, null);
+        log.info("sync to server group, campaignId:{} response:{}", campaign.getId(), responseMap);
     }
 
     @Override

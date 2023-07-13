@@ -128,11 +128,11 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             Set<Integer> serverIds = new HashSet<>();
             playerList.forEach(t -> {
                 mail.setReceiverId(t.getPlayerId());
-                gameServerService.gameServerPost(CollUtil.newArrayList(t.getServerId()), sendMailUrl, mail);
+                gameServerService.postUrl(CollUtil.newArrayList(t.getServerId()), sendMailUrl, mail);
                 serverIds.add(t.getServerId());
             });
 
-            gameServerService.gameServerGet(serverIds, syncMailUrl);
+            gameServerService.getUrl(serverIds, syncMailUrl);
 //            gameServerService.cleanCache(serverIds, "PlayerMailCache");
         } else if (receiverType == MailReceiver.SERVER.getType()) {
             List<Integer> serverIds = StringUtils.split2Int(entity.getReceiverIds());
@@ -155,9 +155,9 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             if (CollUtil.isNotEmpty(affectedServerIds)) {
                 for (Integer serverId : affectedServerIds) {
                     mail.setReceiverId((long) serverId);
-                    gameServerService.gameServerPost(CollUtil.newArrayList(serverId), sendMailUrl, mail);
+                    gameServerService.postUrl(CollUtil.newArrayList(serverId), sendMailUrl, mail);
                 }
-                gameServerService.gameServerGet(affectedServerIds, syncMailUrl);
+                gameServerService.getUrl(affectedServerIds, syncMailUrl);
 //                gameServerService.cleanCache(affectedServerIds, "PlayerMailCache");
             }
         }

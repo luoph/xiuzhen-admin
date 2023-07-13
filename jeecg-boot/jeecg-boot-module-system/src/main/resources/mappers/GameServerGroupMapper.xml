@@ -2,4 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameServerGroupMapper">
 
+    <select id="selectServerGroupList" resultType="cn.youai.xiuzhen.game.entity.GameServerGroup">
+        SELECT g.*
+        FROM `game_server` s
+        LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
+        LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
+        <where>
+            <if test="serverIds != null and serverIds.size > 0">
+                AND `server_id` IN
+                <foreach item="serverId" index="index" collection="serverIds" open="(" close=")" separator=",">
+                    #{serverId}
+                </foreach>
+            </if>
+        </where>
+        GROUP BY g.`id`
+    </select>
+
 </mapper>

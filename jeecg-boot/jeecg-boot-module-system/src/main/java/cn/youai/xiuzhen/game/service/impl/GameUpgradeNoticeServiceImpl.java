@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,17 +38,15 @@ public class GameUpgradeNoticeServiceImpl extends ServiceImpl<GameUpgradeNoticeM
 
     @Override
     public void syncServerAll(GameUpgradeNotice gameUpgradeNotice) {
-
-        Set<String> currentIds = StringUtils.split2Set(gameUpgradeNotice.getServerIds());
-        Set<String> allIds = StringUtils.split2Set(gameUpgradeNotice.getLastServerIds());
+        Set<Integer> currentIds = new HashSet<>(StringUtils.split2Int(gameUpgradeNotice.getServerIds()));
+        Set<Integer> allIds = new HashSet<>(StringUtils.split2Int(gameUpgradeNotice.getLastServerIds()));
         allIds.addAll(currentIds);
 
         Map<String, Object> params = new HashMap<>(allIds.size());
         params.put("id", gameUpgradeNotice.getId());
         params.put("name", "GameUpgradeNotice");
 
-        Map<String, Response> response = gameServerService.gameServerGet(allIds, campaignUpdateUrl, params);
-
+        Map<Integer, Response> response = gameServerService.getUrl(allIds, campaignUpdateUrl, params);
         log.info("sync id:{} response:{}", gameUpgradeNotice.getId(), response);
 
         // 更新已刷新的服务器id

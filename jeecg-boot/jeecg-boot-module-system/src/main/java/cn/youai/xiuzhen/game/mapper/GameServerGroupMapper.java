@@ -5,6 +5,10 @@ package cn.youai.xiuzhen.game.mapper;
 
 import cn.youai.xiuzhen.game.entity.GameServerGroup;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -15,5 +19,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2021-08-03
  */
 public interface GameServerGroupMapper extends BaseMapper<GameServerGroup> {
+
+    List<GameServerGroup> selectServerGroupList(@Param("serverIds") Collection<Integer> serverIds);
 
 }

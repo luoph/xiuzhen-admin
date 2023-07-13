@@ -132,7 +132,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
     public Result<?> updateGoods() {
         service.refreshConfig();
         Set<Integer> onlineServerIds = gameServerService.getOnlineServerIds();
-        Map<Integer, Response> responseMap = gameServerService.gameServerGet(onlineServerIds, goodsRefresh);
+        Map<Integer, Response> responseMap = gameServerService.getUrl(onlineServerIds, goodsRefresh);
         log.info("updateGoods onlineServerIds:{}, responseMap:{}", onlineServerIds, responseMap);
         return Result.ok("刷新成功!");
     }

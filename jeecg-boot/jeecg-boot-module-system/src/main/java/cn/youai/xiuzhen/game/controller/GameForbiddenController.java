@@ -121,7 +121,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @AutoLog(value = "账号封禁-踢下线")
     @GetMapping(value = "/kickOff")
     public Result<?> kickOff(@RequestParam(name = "playerId") Long playerId, @RequestParam(name = "serverId") Integer serverId) {
-        Map<String, Response> response = gameServerService.gameServerGet(CollUtil.newArrayList(String.valueOf(serverId)), kickOffUrl, ImmutableMap.of("playerId", playerId));
+        Map<Integer, Response> response = gameServerService.getUrl(CollUtil.newArrayList(serverId), kickOffUrl, ImmutableMap.of("playerId", playerId));
         log.info("kickOff response:{}", response);
         return Result.ok("成功！");
     }
@@ -175,10 +175,8 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
                 serverIds.add(entity.getServerId());
             }
 
-            for (Integer serverId : serverIds) {
-                Map<Integer, Response> responseMap = gameServerService.gameServerGet(CollUtil.newArrayList(serverId), forbiddenUpdateUrl);
-                log.info("notifyForbiddenUpdate response:{}", responseMap);
-            }
+            Map<Integer, Response> responseMap = gameServerService.getUrl(serverIds, forbiddenUpdateUrl);
+            log.info("notifyForbiddenUpdate response:{}", responseMap);
         }
     }
 
