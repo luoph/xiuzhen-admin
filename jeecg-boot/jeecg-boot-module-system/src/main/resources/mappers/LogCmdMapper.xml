@@ -2,16 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.LogCmdMapper">
 
-    <select id="selectLogCmdList" resultType="cn.youai.log.LogCmd">
+    <select id="selectCmdList" resultType="cn.youai.xiuzhen.game.entity.GameStatCmd">
         SELECT `player_id`, `server_id`, `msg_id`, COUNT(*) AS num, ROUND(AVG(`cost_time`)) AS `cost_time`,
         `create_date` FROM `log_cmd`
         <where>
+            <![CDATA[
             `server_id` = #{serverId}
-            AND `create_date` = #{date}
-            AND `cost_time` >= #{costTime}
+            AND `create_date` = #{date} AND `cost_time` >= #{costTime}
+            AND `create_time` >= #{startTime} AND `create_time` <= #{endTime}
+            ]]>
         </where>
         GROUP BY `server_id`, `msg_id`
-        HAVING COUNT(*) > 1;
+        HAVING COUNT(*) > 1
     </select>
 
 </mapper>

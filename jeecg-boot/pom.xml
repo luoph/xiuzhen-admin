@@ -67,7 +67,9 @@
         <!-- 积木报表-->
         <jimureport-spring-boot-starter.version>1.5.2</jimureport-spring-boot-starter.version>
         <!-- 框架依赖 -->
-        <framework.version>0.0.27</framework.version>
+        <framework.version>0.0.27.1</framework.version>
+        <!-- 协议版本 -->
+        <protocol.version>0.0.27.3</protocol.version>
     </properties>
 
     <dependencies>
@@ -79,6 +81,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>cn.youai.server</groupId>
+            <artifactId>server-protocol</artifactId>
+            <version>${protocol.version}</version>
+        </dependency>
         <dependency>
             <groupId>cn.youai.server</groupId>
             <artifactId>entities</artifactId>

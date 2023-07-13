@@ -1,50 +1,50 @@
 globalConfig:
-    author: buliangliang
-    open: false
-    idType: AUTO
-    dateType: ONLY_DATE
-    enableCache: false
-    activeRecord: false
-    baseResultMap: true
-    baseColumnList: true
-    swagger2: false
-    fileOverride: true
+  author: code-generator
+  open: false
+  idType: AUTO
+  dateType: ONLY_DATE
+  enableCache: false
+  activeRecord: false
+  baseResultMap: true
+  baseColumnList: true
+  swagger2: false
+  fileOverride: true
 
 dataSourceConfig:
-    #  url: jdbc:mysql://192.168.16.159:3306/gamecenter?useSSL=false&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&rewriteBatchedStatements=true
-    url: jdbc:mysql://49.235.114.251:7733/gamecenter?useSSL=false&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&rewriteBatchedStatements=true
-    driverName: com.mysql.jdbc.Driver
-    username: gamecenter
-    password: ubj8sf}xEpb&892P
+  url: jdbc:mysql://10.21.210.246:3306/gamecenter?useSSL=false&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&rewriteBatchedStatements=true
+  #    url: jdbc:mysql://10.21.210.246:3306/xiuzhen_log?useSSL=false&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&rewriteBatchedStatements=true
+  driverName: com.mysql.jdbc.Driver
+  username: gamecenter
+  password: ubj8sf}xEpb&892P
 
 packageConfig:
-    parent: cn.youai.xiuzhen
-    moduleName: game
-    entity: entity
-    service: service
-    serviceImpl: service.impl
-    mapper: mapper
-    xml: mapper
-    #controller: controller
+  parent: cn.youai.xiuzhen
+  moduleName: game
+  entity: entity
+  service: service
+  serviceImpl: service.impl
+  mapper: mapper
+  xml: mapper
+  #controller: controller
 
-    pathInfo:
-        entity_path: src/main/java/cn/youai/xiuzhen/game/entity
-        service_path: src/main/java/cn/youai/xiuzhen/game/service
-        service_impl_path: src/main/java/cn/youai/xiuzhen/game/service/impl
-        mapper_path: src/main/java/cn/youai/xiuzhen/game/mapper
-        xml_path: src/main/resources/mappers
-        #controller_path: src/main/java/org/jeecg/modules/game/controller
+  pathInfo:
+    entity_path: src/main/java/cn/youai/xiuzhen/game/entity
+    service_path: src/main/java/cn/youai/xiuzhen/game/service
+    service_impl_path: src/main/java/cn/youai/xiuzhen/game/service/impl
+    mapper_path: src/main/java/cn/youai/xiuzhen/game/mapper
+    xml_path: src/main/resources/mappers
+    #controller_path: src/main/java/org/jeecg/modules/game/controller
 
 strategyConfig:
-    naming: underline_to_camel
-    columnNaming: underline_to_camel
-    entityLombokModel: true
-    superMapperClass: com.baomidou.mybatisplus.core.mapper.BaseMapper
-    superServiceClass: com.baomidou.mybatisplus.extension.service.IService
-    superServiceImplClass: com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
-    controllerMappingHyphenStyle: true
-    restControllerStyle: true
-    tablePrefix:
-    include:
-        # 表名
-        - game_stop_server_refund_record
+  naming: underline_to_camel
+  columnNaming: underline_to_camel
+  entityLombokModel: true
+  superMapperClass: com.baomidou.mybatisplus.core.mapper.BaseMapper
+  superServiceClass: com.baomidou.mybatisplus.extension.service.IService
+  superServiceImplClass: com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+  controllerMappingHyphenStyle: true
+  restControllerStyle: true
+  tablePrefix:
+  include:
+    # 表名
+    - game_stop_server_refund_record

@@ -15,3 +15,4 @@ jeecg-boot/jeecg-boot-base-common/src/main/java/org/jeecg/config/WebSocketConfig
 jeecg-boot/jeecg-boot-module-system/src/main/java/org/jeecg/modules/system/controller/CommonController.java
 jeecg-boot/jeecg-boot-module-system/src/main/java/org/jeecg/modules/system/controller/LoginController.java
 jeecg-boot/jeecg-boot-module-system/src/main/java/org/jeecg/modules/system/util/RandImageUtil.java
+jeecg-boot/jeecg-boot-base-common/src/main/java/org/jeecg/config/shiro/ShiroConfig.java

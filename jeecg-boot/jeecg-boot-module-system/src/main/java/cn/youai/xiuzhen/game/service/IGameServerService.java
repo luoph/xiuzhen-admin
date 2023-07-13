@@ -6,10 +6,7 @@ import cn.youai.xiuzhen.game.entity.MergeServerVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.system.entity.SysUser;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author jeecg-boot
@@ -18,6 +15,8 @@ import java.util.Set;
  * @date 2019-12-10
  */
 public interface IGameServerService extends IService<GameServer> {
+
+    List<Integer> selectRunningServerIds(Date date);
 
     void applyChange(GameServer entity);
 

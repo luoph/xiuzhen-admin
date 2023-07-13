@@ -62,6 +62,11 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     private ILogAccountService logAccountService;
 
     @Override
+    public List<Integer> selectRunningServerIds(Date date) {
+        return getBaseMapper().selectRunningServerIds(date);
+    }
+
+    @Override
     @SuppressWarnings("DuplicatedCode")
     public void applyChange(GameServer entity) {
         GameServer gameServer = getById(entity.getId());

@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.stat.service;
 
 import cn.youai.log.LogCmd;
+import cn.youai.xiuzhen.game.entity.GameStatCmd;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Date;
@@ -14,6 +15,5 @@ import java.util.List;
  */
 public interface ILogCmdService extends IService<LogCmd> {
 
-    List<LogCmd> selectLogCmdList(int serverId, int costTime, Date date);
-
+    void genReport(int serverId, Date date, int costTime);
 }

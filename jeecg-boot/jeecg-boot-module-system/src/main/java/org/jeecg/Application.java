@@ -16,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -35,6 +36,7 @@ import java.util.Map;
 @EnableCaching
 @EnableScheduling
 @AutoConfigurationPackage
+@ServletComponentScan("cn.youai.xiuzhen.filter")
 @ComponentScan(basePackages = {"org.jeecg", "cn.youai.server", "cn.youai.xiuzhen"},
         excludeFilters = @ComponentScan.Filter(type = FilterType.CUSTOM, classes = {CustomTypeFilter.class}))
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class, JetCacheAutoConfiguration.class})
