@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class WebsocketServiceImpl implements WebsocketService {
 
-    @Value("${app.websocket.test-timeout:5}")
+    @Value("${app.monitor.websocket.test-timeout:5}")
     private Integer timeout;
 
-    @Value("${app.websocket.enable-ssl:false}")
+    @Value("${app.monitor.websocket.enable-ssl:false}")
     private boolean enableSSL;
 
     @Override

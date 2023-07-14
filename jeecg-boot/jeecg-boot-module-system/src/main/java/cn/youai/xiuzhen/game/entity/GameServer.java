@@ -320,6 +320,10 @@ public class GameServer extends BaseEntity {
     private String tag;
 
     @TableField(exist = false)
+    @ApiModelProperty(value = "分组id")
+    private Integer groupId;
+
+    @TableField(exist = false)
     @ApiModelProperty(value = "渠道")
     private String channel;
 

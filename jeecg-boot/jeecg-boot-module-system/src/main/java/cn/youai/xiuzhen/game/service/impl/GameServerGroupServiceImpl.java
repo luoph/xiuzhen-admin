@@ -45,6 +45,11 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
     }
 
     @Override
+    public <T> Map<Integer, T> getUrl(Collection<Integer> serverIds, String path, Class<T> clazz) {
+        return RequestUtils.batchGet(serverIds, path, this, GameServerGroup::getGmUrl, GameServerGroup::skipCheck, clazz);
+    }
+
+    @Override
     public Map<Integer, Response> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params) {
         return getUrl(serverIds, path, params, Response.class);
     }

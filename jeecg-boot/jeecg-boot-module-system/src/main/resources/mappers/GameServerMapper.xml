@@ -25,8 +25,9 @@
     </select>
 
     <select id="selectOnlineGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
-        SELECT s.*
+        SELECT s.*, gt.`group_id`
         FROM `game_server` s
+        LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
         WHERE s.`outdated` = 0
     </select>
 

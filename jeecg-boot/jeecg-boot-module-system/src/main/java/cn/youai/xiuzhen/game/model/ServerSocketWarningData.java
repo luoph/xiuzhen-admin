@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class ServerWarningData {
+public class ServerSocketWarningData {
     private String profile;
     private String serverIds;
     private String jenkinsJobUrl;

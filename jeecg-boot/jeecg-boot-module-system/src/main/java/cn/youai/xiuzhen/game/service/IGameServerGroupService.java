@@ -25,6 +25,8 @@ public interface IGameServerGroupService extends IService<GameServerGroup> {
 
     Map<Integer, Response> requestGroupGmByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params);
 
+    <T> Map<Integer, T> getUrl(Collection<Integer> serverIds, String path, Class<T> clazz);
+
     Map<Integer, Response> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params);
 
     <T> Map<Integer, T> getUrl(Collection<Integer> serverIds, String path, Map<String, Object> params, Class<T> clazz);
