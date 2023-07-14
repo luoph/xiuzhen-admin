@@ -8,10 +8,10 @@
         LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
         LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
         <where>
-            <if test="serverIds != null and serverIds.size > 0">
-                AND `server_id` IN
-                <foreach item="serverId" index="index" collection="serverIds" open="(" close=")" separator=",">
-                    #{serverId}
+            <if test="serverIds != null and serverIds.size() > 0">
+                s.`id` IN
+                <foreach item="item" collection="serverIds" open="(" separator="," close=")">
+                    #{item}
                 </foreach>
             </if>
         </where>

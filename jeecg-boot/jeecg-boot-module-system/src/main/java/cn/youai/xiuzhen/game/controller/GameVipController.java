@@ -201,7 +201,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         for (Integer serverId : groupMap.keySet()) {
             GameServer gameServer = gameServerService.getById(serverId);
             List<GamePlayer> list = groupMap.get(serverId);
-            Set<Long> ids = list.stream().map(GamePlayer::getPlayerId).collect(Collectors.toSet());
+            Set<Long> ids = CollUtil.isNotEmpty(list) ? list.stream().map(GamePlayer::getPlayerId).collect(Collectors.toSet()) : CollUtil.newHashSet();
             if (GameServer.skipCallGm(gameServer) || CollUtil.isEmpty(ids)) {
                 latch.countDown();
                 continue;
