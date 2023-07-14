@@ -2,7 +2,6 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.utils.StringUtils;
-import cn.youai.server.utils.SqlHelper;
 import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.GameSdkChannel;
@@ -10,7 +9,6 @@ import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -63,6 +61,7 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         if (CollUtil.isEmpty(pageList)) {
             return;
         }
+
         Set<Integer> results = pageList.stream().map(GameChannelServer::getServerId).collect(Collectors.toSet());
         Collection<GameServer> servers = gameServerService.listByIds(results);
         Map<Integer, GameServer> serverMap = servers.stream().collect(Collectors.toMap(GameServer::getId, Function.identity()));
@@ -78,16 +77,8 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         }
     }
 
-    private int getPrePosition(String channelId) {
-        GameChannelServer entity = service.getOne(Wrappers.<GameChannelServer>lambdaQuery().
-                eq(GameChannelServer::getChannelId, channelId)
-                .orderByDesc(GameChannelServer::getPosition)
-                .last(SqlHelper.limit()));
-        return null != entity ? entity.getPosition() : 0;
-    }
-
-    @AutoLog(value = "游戏渠道服配置-添加")
     @PostMapping(value = "/add")
+    @AutoLog(value = "游戏渠道服配置-添加")
     public Result<?> add(@RequestBody GameChannelServer entity) {
         String serverIds = entity.getServerIds();
         if (StringUtils.isBlank(serverIds)) {
@@ -117,15 +108,18 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
             }
         }
 
-        List<Integer> serverIdList = new ArrayList<>(serverIdSet).stream().filter(e -> e > 0).sorted(Comparator.comparing(e -> e)).collect(Collectors.toList());
+        List<Integer> serverIdList = new ArrayList<>(serverIdSet).stream().filter(e -> e > 0)
+                .sorted(Comparator.comparing(e -> e)).collect(Collectors.toList());
         if (serverIdList.isEmpty()) {
             return Result.error("请输入区服");
         }
 
         List<GameChannelServer> entities = new ArrayList<>(serverIdList.size());
-        int position = getPrePosition(entity.getChannelId());
+        int position = service.selectLastPosition(entity.getChannelId());
         for (int serverId : serverIdList) {
-            entities.add(new GameChannelServer().setServerId(serverId).setChannelId(entity.getChannelId()).setPosition(++position).setDelFlag(entity.getDelFlag()).setNoNeedCount(entity.getNoNeedCount()));
+            entities.add(new GameChannelServer().setServerId(serverId)
+                    .setChannelId(entity.getChannelId()).setPosition(++position)
+                    .setDelFlag(entity.getDelFlag()).setNoNeedCount(entity.getNoNeedCount()));
         }
 
         if (!service.saveBatch(entities)) {
@@ -190,8 +184,8 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     public Result<?> channelList(HttpServletRequest req) {
         String username = JwtUtil.getUserNameByToken(req);
         SysUser sysUser = sysUserService.getUserByName(username);
-        String channel = sysUser != null ? sysUser.getChannel(): null;
-        String sdkChannel = sysUser != null ? sysUser.getSdkChannel(): null;
+        String channel = sysUser != null ? sysUser.getChannel() : null;
+        String sdkChannel = sysUser != null ? sysUser.getSdkChannel() : null;
 
         List<GameChannel> channels = service.selectChannelList(channel);
         Map<String, GameChannel> map = channels.stream().collect(Collectors.toMap(GameChannel::getSimpleName, Function.identity(), (key1, key2) -> key2));

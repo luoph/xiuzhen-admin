@@ -36,22 +36,28 @@ public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerM
     @Autowired
     private IGameChannelService gameChannelService;
 
+    @Override
+    public int selectLastPosition(int channelId) {
+        return getBaseMapper().selectLastPosition(channelId);
+    }
+
     @Async
     @Override
-    public void autoAddCampaignServerIds(List<GameChannelServer> channelServers) {
+    public void autoAddCampaignServerIds(List<GameChannelServer> list) {
         // setChannelSimpleName
-        Set<Integer> channelIds = channelServers.stream().map(e -> Integer.parseInt(e.getChannelId())).collect(Collectors.toSet());
-        Map<Integer, GameChannel> channelMap = gameChannelService.selectChannelList(channelIds)
-                .stream().collect(Collectors.toMap(GameChannel::getId, Function.identity(), (key1, key2) -> key2));
-        channelServers.forEach(e -> {
-            GameChannel gameChannel = channelMap.get(Integer.parseInt(e.getChannelId()));
-            if (null != gameChannel) {
-                e.setChannelSimpleName(gameChannel.getSimpleName());
+        Set<Integer> channelIds = CollUtil.isNotEmpty(list) ? list.stream().map(GameChannelServer::getChannelId).collect(Collectors.toSet()) : Collections.emptySet();
+        List<GameChannel> channelList = gameChannelService.selectChannelList(channelIds);
+        Map<Integer, GameChannel> channelMap = CollUtil.isNotEmpty(channelList) ? channelList.stream()
+                .collect(Collectors.toMap(GameChannel::getId, Function.identity(), (key1, key2) -> key2)) : Collections.emptyMap();
+        list.forEach(e -> {
+            GameChannel channel = channelMap.get(e.getChannelId());
+            if (null != channel) {
+                e.setChannelSimpleName(channel.getSimpleName());
             }
         });
 
-        gameCampaignService.addCampaignServerIds(channelServers);
-        openServiceCampaignService.addCampaignServerIds(channelServers);
+        gameCampaignService.addCampaignServerIds(list);
+        openServiceCampaignService.addCampaignServerIds(list);
     }
 
     @Override

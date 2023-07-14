@@ -78,16 +78,17 @@
     </select>
 
     <select id="selectChannelSimpleName" resultType="cn.youai.xiuzhen.game.entity.GameServer">
-        select s.id, c.simple_name as `channel`
-        from `game_server` s
-        left join `game_channel_server` cs on cs.server_id = s.id
-        left join `game_channel` c on c.id = cs.channel_id
-        where 1=1
-        <if test="serverIds != null and serverIds != ''">
-            and s.`id` in
-            <foreach item="item" collection="serverIds" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
+        SELECT s.`id`, c.`simple_name` AS `channel`
+        FROM `game_server` s
+        LEFT JOIN `game_channel_server` cs ON cs.`server_id` = s.`id`
+        LEFT JOIN `game_channel` c ON c.`id` = cs.`channel_id`
+        <where>
+            <if test="serverIds != null and serverIds != ''">
+                s.`id` IN
+                <foreach item="item" collection="serverIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
     </select>
 </mapper>

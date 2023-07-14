@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface GameChannelServerMapper extends BaseMapper<GameChannelServer> {
 
+    Integer selectLastPosition(@Param("channelId") Integer channelId);
+
     /**
      * 查询指定渠道的服务器列表
      *

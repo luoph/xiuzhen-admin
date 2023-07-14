@@ -50,13 +50,13 @@ public final class GameStopServerRefundRecordCache extends BaseCache<Integer, Li
         }
     }
 
-    public Set<Long> getRecordPlayerIds(Set<Integer> gameServerIds) {
-        if (CollUtil.isEmpty(gameServerIds)) {
+    public Set<Long> getRecordPlayerIds(Set<Integer> serverIds) {
+        if (CollUtil.isEmpty(serverIds)) {
             return Collections.emptySet();
         }
 
         Set<Long> recordPlayerIds = new HashSet<>();
-        gameServerIds.forEach(gameServerId -> recordPlayerIds.addAll(get(gameServerId).stream().map(GameStopServerRefundRecord::getSourcePlayerId).collect(Collectors.toSet())));
+        serverIds.forEach(t -> recordPlayerIds.addAll(get(t).stream().map(GameStopServerRefundRecord::getSourcePlayerId).collect(Collectors.toSet())));
         return recordPlayerIds;
     }
 }

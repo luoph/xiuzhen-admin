@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.service;
 
 import cn.youai.xiuzhen.game.entity.*;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,7 +15,9 @@ import java.util.List;
  */
 public interface IGameChannelServerService extends IService<GameChannelServer> {
 
-    void autoAddCampaignServerIds(List<GameChannelServer> channelServers);
+    int selectLastPosition(@Param("channelId") int channelId);
+
+    void autoAddCampaignServerIds(List<GameChannelServer> list);
 
     /**
      * 通过渠道id查询对应的服务器

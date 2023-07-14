@@ -156,12 +156,12 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
         return gamePlayerService.list(lambdaQuery).stream().map(GamePlayer::getAccount).collect(Collectors.toSet());
     }
 
-    private Map<String, List<GamePlayer>> getAccount2GamePlayerMap(Set<String> gamePlayerAccounts) {
-        if (CollUtil.isEmpty(gamePlayerAccounts)) {
+    private Map<String, List<GamePlayer>> getAccount2GamePlayerMap(Set<String> accounts) {
+        if (CollUtil.isEmpty(accounts)) {
             return Collections.emptyMap();
         }
-        return gamePlayerService.list(Wrappers.<GamePlayer>lambdaQuery().in(GamePlayer::getAccount, gamePlayerAccounts))
-                .stream().collect(Collectors.groupingBy(GamePlayer::getAccount));
+        List<GamePlayer> list = gamePlayerService.list(Wrappers.<GamePlayer>lambdaQuery().in(GamePlayer::getAccount, accounts));
+        return CollUtil.isNotEmpty(list) ? list.stream().collect(Collectors.groupingBy(GamePlayer::getAccount)) : Collections.emptyMap();
     }
 
     // 需要返还的 players

@@ -121,11 +121,10 @@ public class GameOnlineNumController extends JeecgController<GameOnlineNum, IGam
         Map<String, List<GameOnlineNum>> sortMapDescDaySeconds = gameOnlineNumListSeconds.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors
-                        .toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         for (String s : sortMapDescDaySeconds.keySet()) {
             JSONObject gameOnlineNumListSecondsJsonObject = new JSONObject();
-            Long sum = gameOnlineNumListSeconds.get(s).stream().mapToLong(gameOnlineNum -> gameOnlineNum.getOnlineNum()).sum();
+            Long sum = gameOnlineNumListSeconds.get(s).stream().mapToLong(GameOnlineNum::getOnlineNum).sum();
             gameOnlineNumListSecondsJsonObject.put("onlineNum", sum);
             gameOnlineNumListSecondsJsonObject.put("getTime", s);
             gameOnlineNumList.add(gameOnlineNumListSecondsJsonObject);

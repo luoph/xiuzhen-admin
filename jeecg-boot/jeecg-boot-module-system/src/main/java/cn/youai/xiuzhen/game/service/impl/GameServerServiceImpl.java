@@ -186,13 +186,14 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     @Override
     public Set<Integer> getOnlineServerIds() {
-        return selectOnlineGameServerList().stream().map(GameServer::getId).collect(Collectors.toSet());
+        List<GameServer> list = selectOnlineGameServerList();
+        return CollUtil.isNotEmpty(list) ? list.stream().map(GameServer::getId).collect(Collectors.toSet()) : Collections.emptySet();
     }
 
     @Override
     public Set<Integer> getAllServerIds() {
-        return list(Wrappers.<GameServer>lambdaQuery().select(GameServer::getId))
-                .stream().map(GameServer::getId).collect(Collectors.toSet());
+        List<GameServer> list = list(Wrappers.<GameServer>lambdaQuery().select(GameServer::getId));
+        return CollUtil.isNotEmpty(list) ? list.stream().map(GameServer::getId).collect(Collectors.toSet()) : Collections.emptySet();
     }
 
     @Override
@@ -274,18 +275,19 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
-    public void setChannelSimpleNameList(List<GameServer> gameServerList) {
-        if (CollUtil.isEmpty(gameServerList)) {
+    public void setChannelSimpleNameList(List<GameServer> list) {
+        if (CollUtil.isEmpty(list)) {
             return;
         }
-        List<GameServer> gameServerChannelSimpleNameList = getBaseMapper().selectChannelSimpleName(gameServerList.stream().map(GameServer::getId).collect(Collectors.toList()));
-        Map<Integer, List<GameServer>> gameServerId2ChannelSimpleNameMap = gameServerChannelSimpleNameList.stream().collect(Collectors.groupingBy(GameServer::getId));
-        gameServerList.forEach(gameServer -> {
-            List<GameServer> channelSimpleNameList = gameServerId2ChannelSimpleNameMap.get(gameServer.getId());
+
+        List<GameServer> serverChannelNameList = getBaseMapper().selectChannelSimpleName(list.stream().map(GameServer::getId).collect(Collectors.toList()));
+        Map<Integer, List<GameServer>> serverId2ChannelNameMap = CollUtil.isNotEmpty(serverChannelNameList) ? serverChannelNameList.stream().collect(Collectors.groupingBy(GameServer::getId)) : Collections.emptyMap();
+        list.forEach(t -> {
+            List<GameServer> channelSimpleNameList = serverId2ChannelNameMap.get(t.getId());
             if (CollUtil.isEmpty(channelSimpleNameList)) {
                 return;
             }
-            gameServer.setChannelSimpleNameList(channelSimpleNameList.stream().map(GameServer::getChannel).collect(Collectors.toList()));
+            t.setChannelSimpleNameList(channelSimpleNameList.stream().map(GameServer::getChannel).collect(Collectors.toList()));
         });
     }
 }

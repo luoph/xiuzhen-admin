@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service;
 import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
 import java.util.List;

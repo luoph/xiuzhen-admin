@@ -48,12 +48,13 @@ public class GameChannelServer extends BaseEntity {
     @ExcelIgnore
     @TableField(exist = false)
     private String serverIds;
+
     /**
      * 渠道id
      */
     @Excel(name = "渠道id", width = 15)
     @ApiModelProperty(value = "渠道id")
-    private java.lang.String channelId;
+    private java.lang.Integer channelId;
 
     @Excel(name = "排序", width = 15)
     @ApiModelProperty(value = "排序")

@@ -13,6 +13,12 @@
         ORDER BY b.`position` DESC
     </select>
 
+    <select id="selectLastPosition" resultType="java.lang.Integer">
+        SELECT IFNULL(MAX(`position`), 0)
+        FROM `game_channel_server`
+        WHERE `channel_id` = #{channelId}
+    </select>
+
     <select id="selectChannelList" resultType="cn.youai.xiuzhen.game.entity.GameChannel">
         SELECT c.*
         FROM `game_channel` c

@@ -187,9 +187,10 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
     public void syncCampaign(GameCampaign campaign) {
         // 通知游戏服
         Wrapper<GameCampaignSupport> queryWrapper = Wrappers.<GameCampaignSupport>lambdaQuery()
-                .eq(GameCampaignSupport::getCampaignId, campaign.getId()).groupBy(GameCampaignSupport::getServerId);
+                .eq(GameCampaignSupport::getCampaignId, campaign.getId())
+                .groupBy(GameCampaignSupport::getServerId);
         List<GameCampaignSupport> supports = campaignSupportService.list(queryWrapper);
-        List<Integer> serverIds = supports.stream().map(GameCampaignSupport::getServerId).collect(Collectors.toList());
+        List<Integer> serverIds = CollUtil.isNotEmpty(supports) ? supports.stream().map(GameCampaignSupport::getServerId).collect(Collectors.toList()) : Collections.emptyList();
         Map<Integer, Response> response = serverService.getUrl(serverIds, campaignUpdateUrl);
         log.info("sync to server, campaignId:{} response:{}", campaign.getId(), response);
 

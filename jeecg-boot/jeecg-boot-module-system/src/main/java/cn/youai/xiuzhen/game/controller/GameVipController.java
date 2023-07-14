@@ -155,7 +155,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         List<Long> idList = StringUtils.split2Long(ids);
         List<GameVip> gameVips = service.listByIds(idList);
-        Set<Long> playerIds = gameVips.stream().map(GameVip::getPlayerId).collect(Collectors.toSet());
+        Set<Long> playerIds = CollUtil.isNotEmpty(gameVips) ? gameVips.stream().map(GameVip::getPlayerId).collect(Collectors.toSet()) : Collections.emptySet();
         Result<?> result = super.deleteBatch(ids);
         refreshVipCache();
         notifyVipUpdate(playerIds, false);
@@ -201,7 +201,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         for (Integer serverId : groupMap.keySet()) {
             GameServer gameServer = gameServerService.getById(serverId);
             List<GamePlayer> list = groupMap.get(serverId);
-            Set<Long> ids = CollUtil.isNotEmpty(list) ? list.stream().map(GamePlayer::getPlayerId).collect(Collectors.toSet()) : CollUtil.newHashSet();
+            Set<Long> ids = CollUtil.isNotEmpty(list) ? list.stream().map(GamePlayer::getPlayerId).collect(Collectors.toSet()) : Collections.emptySet();
             if (GameServer.skipCallGm(gameServer) || CollUtil.isEmpty(ids)) {
                 latch.countDown();
                 continue;

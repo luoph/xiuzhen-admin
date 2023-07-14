@@ -170,7 +170,7 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
 
         return CollectionUtil.isNotEmpty(list) ?
                 list.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, GamePlayer::getNickname,
-                        (item1, item2) -> item2)) : new HashMap<>(list.size());
+                        (item1, item2) -> item2)) : Collections.emptyMap();
     }
 
     private Map<Integer, String> getGoodsNameMap(Collection<Integer> goodsIds) {
@@ -184,6 +184,6 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
 
         return CollectionUtil.isNotEmpty(list) ?
                 list.stream().collect(Collectors.toMap(GameRechargeGoods::getGoodsId, GameRechargeGoods::getName,
-                        (item1, item2) -> item2)) : new HashMap<>(list.size());
+                        (item1, item2) -> item2)) : Collections.emptyMap();
     }
 }

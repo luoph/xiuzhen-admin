@@ -40,7 +40,7 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
     @Override
     public Map<Integer, Response> requestGroupGmByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params) {
         List<GameServerGroup> list = selectServerGroupList(serverIds);
-        Set<Integer> ids = CollUtil.isNotEmpty(list) ? list.stream().map(GameServerGroup::getId).collect(Collectors.toSet()) : CollUtil.newHashSet();
+        Set<Integer> ids = CollUtil.isNotEmpty(list) ? list.stream().map(GameServerGroup::getId).collect(Collectors.toSet()) : Collections.emptySet();
         return getUrl(ids, path, params);
     }
 
