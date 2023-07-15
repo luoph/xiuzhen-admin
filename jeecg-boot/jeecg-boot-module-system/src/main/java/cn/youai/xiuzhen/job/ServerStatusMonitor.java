@@ -15,9 +15,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +27,12 @@ public class ServerStatusMonitor {
 
     @Value("${app.monitor.server-status:true}")
     private boolean enable;
+
+    @Value("${app.monitor.retry-times:3}")
+    private int retryTimes;
+
+    @Value("${app.monitor.retry-interval:2000}")
+    private int retryInterval;
 
     @Value("${app.server-status-url:/game/status}")
     private String gameServerStatusUrl;
@@ -66,25 +70,56 @@ public class ServerStatusMonitor {
         List<GameServer> serverList = serverService.selectOnlineGameServerList().stream().filter(t -> !t.skipCheck()).collect(Collectors.toList());
 
         Set<Integer> serverIds = serverList.stream().map(GameServer::getId).collect(Collectors.toSet());
-        Map<Integer, String> serverStatusMap = serverService.getUrl(serverIds, gameServerStatusUrl, String.class);
-
         Set<Integer> groupIds = serverList.stream().map(GameServer::getGroupId).collect(Collectors.toSet());
-        Map<Integer, String> groupStatusMap = serverGroupService.getUrl(groupIds, crossServerStatusUrl, String.class);
 
-        List<Integer> breakdownServerIds = serverIds.stream().filter(t -> serverStatusMap.get(t) == null).sorted().collect(Collectors.toList());
-        List<Integer> breakdownGroupIds = groupIds.stream().filter(t -> groupStatusMap.get(t) == null).sorted().collect(Collectors.toList());
+        List<Integer> failedServerIds = new ArrayList<>(serverIds);
+        List<Integer> failedGroupIds = new ArrayList<>(groupIds);
 
-        if (StrUtil.isNotEmpty(workflowUrl) && (CollUtil.isNotEmpty(breakdownServerIds) || CollUtil.isNotEmpty(breakdownGroupIds))) {
+        int times = 0;
+        while (times++ < retryTimes && (failedServerIds.size() > 0 || failedGroupIds.size() > 0)) {
+            log.info("monitor check times:{}", times);
+            failedServerIds = checkGameServerStatus(failedServerIds);
+            failedGroupIds = checkCrossServerStatus(failedGroupIds);
+
+            try {
+                Thread.sleep(retryInterval);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (StrUtil.isNotEmpty(workflowUrl) && (CollUtil.isNotEmpty(failedServerIds) || CollUtil.isNotEmpty(failedGroupIds))) {
             String url = workflowUrl + "/lark/serverStatus";
             ServerStatusWarningData warningData = new ServerStatusWarningData().setProfile(profile)
-                    .setServerIds(StrUtil.join(",", breakdownServerIds))
-                    .setGroupIds(StrUtil.join(",", breakdownGroupIds))
+                    .setServerIds(StrUtil.join(",", failedServerIds))
+                    .setGroupIds(StrUtil.join(",", failedGroupIds))
                     .setGameServerJobUrl(gameServerJobUrl).setCrossServerJobUrl(crossServerJobUrl);
             String response = OkHttpHelper.post(url, warningData);
             log.info("warning request url:{}, request:{}, response:{}", url, JSON.toJSONString(warningData), response);
         }
 
-        log.info("finish monitor server, failed serverIds:{}, groupIds:{}", breakdownServerIds, breakdownGroupIds);
+        log.info("finish monitor server, failed serverIds:{}, groupIds:{}", failedServerIds, failedGroupIds);
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private List<Integer> checkGameServerStatus(List<Integer> serverIds) {
+        if (CollUtil.isEmpty(serverIds)) {
+            return serverIds;
+        }
+
+        Map<Integer, String> statusMap = serverService.getUrl(serverIds, gameServerStatusUrl, String.class);
+        return serverIds.stream().filter(t -> statusMap.get(t) == null).sorted().collect(Collectors.toList());
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private List<Integer> checkCrossServerStatus(List<Integer> serverIds) {
+        if (CollUtil.isEmpty(serverIds)) {
+            return serverIds;
+        }
+
+        Map<Integer, String> statusMap = serverGroupService.getUrl(serverIds, crossServerStatusUrl, String.class);
+        return serverIds.stream().filter(t -> statusMap.get(t) == null).sorted().collect(Collectors.toList());
     }
 
 }
