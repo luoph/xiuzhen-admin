@@ -4,12 +4,15 @@
 package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.youai.basics.model.DateRange;
 import cn.youai.basics.model.Response;
 import cn.youai.xiuzhen.game.entity.GameServerGroup;
 import cn.youai.xiuzhen.game.mapper.GameServerGroupMapper;
 import cn.youai.xiuzhen.game.service.IGameServerGroupService;
 import cn.youai.xiuzhen.utils.RequestUtils;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -29,17 +32,25 @@ import java.util.stream.Collectors;
 public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMapper, GameServerGroup> implements IGameServerGroupService {
 
     @Override
-    public List<GameServerGroup> selectServerGroupList(Collection<Integer> serverIds) {
+    public IPage<GameServerGroup> queryList(Page<?> page,
+                                             GameServerGroup entity,
+                                             DateRange createTimeRange,
+                                             DateRange crossSettleTimeRange) {
+        return getBaseMapper().queryList(page, entity, createTimeRange, crossSettleTimeRange);
+    }
+
+    @Override
+    public List<GameServerGroup> selectByServerId(Collection<Integer> serverIds) {
         if (CollUtil.isEmpty(serverIds)) {
             return Collections.emptyList();
         }
 
-        return getBaseMapper().selectServerGroupList(serverIds);
+        return getBaseMapper().selectByServerId(serverIds);
     }
 
     @Override
     public Map<Integer, Response> requestGroupGmByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params) {
-        List<GameServerGroup> list = selectServerGroupList(serverIds);
+        List<GameServerGroup> list = selectByServerId(serverIds);
         Set<Integer> ids = CollUtil.isNotEmpty(list) ? list.stream().map(GameServerGroup::getId).collect(Collectors.toSet()) : Collections.emptySet();
         return getUrl(ids, path, params);
     }

@@ -3,8 +3,11 @@
  */
 package cn.youai.xiuzhen.game.service;
 
+import cn.youai.basics.model.DateRange;
 import cn.youai.basics.model.Response;
 import cn.youai.xiuzhen.game.entity.GameServerGroup;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Collection;
@@ -21,7 +24,12 @@ import java.util.Map;
  */
 public interface IGameServerGroupService extends IService<GameServerGroup> {
 
-    List<GameServerGroup> selectServerGroupList(Collection<Integer> serverIds);
+    IPage<GameServerGroup> queryList(Page<?> page,
+                                     GameServerGroup entity,
+                                     DateRange createTimeRange,
+                                     DateRange crossSettleTimeRange);
+
+    List<GameServerGroup> selectByServerId(Collection<Integer> serverIds);
 
     Map<Integer, Response> requestGroupGmByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params);
 

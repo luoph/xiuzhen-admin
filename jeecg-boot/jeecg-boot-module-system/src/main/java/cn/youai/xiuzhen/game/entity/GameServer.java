@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_server")
 @Accessors(chain = true)
-@ApiModel(value = "GameServer", description = "游戏服配置")
 public class GameServer extends BaseEntity {
 
     /**

@@ -5,10 +5,11 @@ package cn.youai.xiuzhen.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
+import org.jeecg.common.system.base.entity.BaseEntity;
 
 /**
  * <p>
@@ -20,7 +21,9 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-public class GameServerGroupItem implements Serializable {
+@TableName("game_server_group_item")
+@EqualsAndHashCode(callSuper = true)
+public class GameServerGroupItem extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

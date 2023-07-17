@@ -5,12 +5,15 @@ package cn.youai.xiuzhen.game.entity;
 
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
+import org.jeecg.common.system.base.entity.BaseEntity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,7 +26,9 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-public class GameServerGroup implements Serializable {
+@TableName("game_server_group")
+@EqualsAndHashCode(callSuper = true)
+public class GameServerGroup extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +37,11 @@ public class GameServerGroup implements Serializable {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
+    /**
+     * host
+     */
+    private String host;
 
     /**
      * GM地址
@@ -54,29 +64,38 @@ public class GameServerGroup implements Serializable {
     private Integer crossFactionWar;
 
     /**
+     * 跨服结算时间
+     */
+    private Date crossSettleTime;
+
+    /**
      * 备注
      */
     private String remark;
 
     /**
-     * 创建人
+     * 区服id
      */
-    private String createBy;
+    @TableField(exist = false)
+    private String serverIds;
 
     /**
-     * 创建时间
+     * 区服数
      */
-    private Date createTime;
+    @TableField(exist = false)
+    private Integer serverNum;
 
     /**
-     * 修改人
+     * 在线数
      */
-    private String updateBy;
+    @TableField(exist = false)
+    private Integer onlineNum;
 
     /**
-     * 修改时间
+     * hostname
      */
-    private Date updateTime;
+    @TableField(exist = false)
+    private String hostname;
 
     @JSONField(serialize = false, deserialize = false)
     public boolean skipCheck() {

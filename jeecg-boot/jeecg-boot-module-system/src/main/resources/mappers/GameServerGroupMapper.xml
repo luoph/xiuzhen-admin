@@ -2,7 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameServerGroupMapper">
 
-    <select id="selectServerGroupList" resultType="cn.youai.xiuzhen.game.entity.GameServerGroup">
+    <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GameServerGroup">
+        SELECT g.*, GROUP_CONCAT(s.`id`) AS server_ids, v.`hostname`
+        FROM `game_server_group` g
+        LEFT JOIN `game_server_group_item` gt ON g.`id` = gt.`group_id`
+        LEFT JOIN `game_server` s ON s.`id` = gt.`server_id`
+        LEFT JOIN `game_vps` v ON g.`host` = v.`ip`
+        <where>
+            s.`outdated` = 0
+            <if test="entity != null">
+                <if test="entity.id != null and entity.id > 0">
+                    AND g.`id` = #{entity.id}
+                </if>
+                <if test="entity.serverIds != null and entity.serverIds != ''">
+                    AND s.`id` IN
+                    <foreach item="item" index="index" collection="entity.serverIds.split(',')" open="(" separator=","
+                             close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="entity.host != null and entity.host != ''">
+                    AND g.`host` LIKE CONCAT('%', #{entity.host}, '%')
+                </if>
+                <if test="entity.crossServerUrl != null and entity.crossServerUrl != ''">
+                    AND g.`cross_server_url` LIKE CONCAT('%', #{entity.crossServerUrl}, '%')
+                </if>
+                <if test="entity.gmUrl != null and entity.gmUrl != ''">
+                    AND g.`gm_url` LIKE CONCAT('%', #{entity.gmUrl}, '%')
+                </if>
+            </if>
+            <if test="createTimeRange != null">
+                <if test="null != createTimeRange.start">
+                    <![CDATA[AND g.`create_time` >= #{createTimeRange.start}]]></if>
+                <if test="null != createTimeRange.end"><![CDATA[AND g.`create_time` <= #{createTimeRange.end}]]></if>
+            </if>
+            <if test="crossSettleTimeRange != null">
+                <if test="null != createTimeRange.start">
+                    <![CDATA[AND g.`cross_settle_time` >= #{crossSettleTimeRange.start}]]></if>
+                <if test="null != createTimeRange.end">
+                    <![CDATA[AND g.`cross_settle_time` <= #{crossSettleTimeRange.end}]]></if>
+            </if>
+        </where>
+        GROUP BY g.`id`
+        ORDER BY g.`id` DESC
+    </select>
+
+    <select id="selectByServerId" resultType="cn.youai.xiuzhen.game.entity.GameServerGroup">
         SELECT g.*
         FROM `game_server` s
         LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
