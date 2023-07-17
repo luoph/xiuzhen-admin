@@ -148,13 +148,15 @@ export default {
         {
           title: '耗时（ms）',
           align: 'center',
+          sorter: true,
           dataIndex: 'costTime',
           scopedSlots: { customRender: 'costTimeSlot' }
         },
         {
           title: '次数',
           align: 'center',
-          dataIndex: 'num'
+          sorter: true,
+          dataIndex: 'num',
         },
         {
           // title: '玩家ID',

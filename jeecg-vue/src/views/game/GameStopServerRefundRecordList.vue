@@ -10,7 +10,7 @@
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
-            <a-form-item label="停服的玩家ID">
+            <a-form-item label="停服玩家ID">
               <a-input placeholder="请输入停服的玩家ID" v-model="queryParam.sourcePlayerId" />
             </a-form-item>
           </a-col>
@@ -20,7 +20,7 @@
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
-            <a-form-item label="返还的玩家ID">
+            <a-form-item label="返还玩家ID">
               <a-input placeholder="请输入返还的玩家ID" v-model="queryParam.targetPlayerId" />
             </a-form-item>
           </a-col>
@@ -107,7 +107,7 @@
         class="j-table-force-nowrap"
         @change="handleTableChange"
       >
-      <span slot="copySlot" slot-scope="text">
+        <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
         <template slot="imgSlot" slot-scope="text, record">
@@ -284,5 +284,4 @@ export default {
   white-space: nowrap;
   color: rgba(0, 0, 0, 0.65);
 }
-
 </style>

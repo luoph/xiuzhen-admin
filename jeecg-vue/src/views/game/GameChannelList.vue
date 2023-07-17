@@ -104,13 +104,13 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <span slot="splitTags" slot-scope="text, record">
+        <span slot="splitTags" slot-scope="text">
           <div class="tag-container">
             <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
             <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
           </div>
         </span>
-        <span slot="switchSlot" slot-scope="text, record">
+        <span slot="switchSlot" slot-scope="text">
           <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
         <span slot="simpleNameTitle">唯一标识 <a-icon type="copy" /></span>
@@ -176,6 +176,7 @@ export default {
           title: '渠道id',
           align: 'center',
           width: 80,
+          sorter: true,
           dataIndex: 'id'
         },
         {
@@ -246,11 +247,17 @@ export default {
           scopedSlots: { customRender: 'splitTags' }
         },
         {
-          title: '版本更新时间',
+          title: '更新时间',
           align: 'center',
+          sorter: true,
           dataIndex: 'versionUpdateTime'
         },
-
+        {
+          title: '创建时间',
+          align: 'center',
+          sorter: true,
+          dataIndex: 'createTime'
+        },
         {
           title: '操作',
           dataIndex: 'action',
