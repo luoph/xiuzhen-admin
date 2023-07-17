@@ -26,10 +26,10 @@
             <a-select-option :value="0">0-否</a-select-option>
           </a-select>
         </a-form-item> -->
-        <a-form-item label="自动添加新服的渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="自动添加新服渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-multi-select-tag
             v-decorator="['autoAddServerChannels', validatorRules.autoAddServerChannels]"
-            placeholder="请选择自动添加新服的渠道"
+            placeholder="请选择自动添加新服渠道"
             dictCode="game_channel,name,simple_name"
           >
           </j-multi-select-tag>
@@ -39,8 +39,8 @@
         </a-form-item>
         <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择活动类型" @change="handleTimeTypeChange" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
-            <a-select-option :value="1">1-时间范围</a-select-option>
-            <a-select-option :value="2">2-开服第N天</a-select-option>
+            <a-select-option :value="1">时间范围[1]</a-select-option>
+            <a-select-option :value="2">开服第N天[2]</a-select-option>
           </a-select>
           <a-form-item style="color: red">单日仙玉返利活动，（按日期配置时间）结束时间需配置多1天5分钟；（按开服配置时间）需配置多1天</a-form-item>
         </a-form-item>
@@ -76,7 +76,7 @@
 
       <a-tabs v-if="isEdit" defaultActiveKey="1">
         <a-tab-pane tab="页签配置" key="1">
-          <game-campaign-tab-list ref="tabList"></game-campaign-tab-list>
+          <game-campaign-tab-list ref="tabList" />
         </a-tab-pane>
       </a-tabs>
     </a-spin>
@@ -123,7 +123,7 @@ export default {
         name: { rules: [{ required: true, message: '请输入活动名称（备注）!' }] },
         description: { rules: [{ required: true, message: '请输入活动标语（描述）!' }] },
         serverIds: { rules: [{ required: true, message: '请选择区服ID！' }] },
-        autoAddServerChannels: { rules: [{ required: false, message: '请选择自动添加新服的渠道!' }] },
+        autoAddServerChannels: { rules: [{ required: false, message: '请选择自动添加新服渠道!' }] },
         showName: { rules: [{ required: true, message: '请输入活动展示名称!' }] },
         icon: { rules: [{ required: true, message: '请输入活动图标!' }] },
         banner: { rules: [{ required: true, message: '请输入活动宣传图!' }] },

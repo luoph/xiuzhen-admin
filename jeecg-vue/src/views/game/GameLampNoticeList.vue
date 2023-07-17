@@ -81,7 +81,7 @@
           <a @click="resumeJob(record)" v-if="record.status === 1">已启动</a>
           <a @click="resumeJob(record)" v-else>已关闭</a>
         </span>
-        <span slot="serverIdSlot" slot-scope="text, record">
+        <span slot="tagSlot" slot-scope="text" class="tag-container">
           <a-tag v-if="!text" color="red">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
@@ -140,7 +140,7 @@ export default {
           title: '投放服务器',
           align: 'left',
           dataIndex: 'gameServerList',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: { customRender: 'tagSlot' }
         },
         {
           title: '播放频率',

@@ -86,17 +86,17 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <span slot="blueTags" slot-scope="text">
-          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue" class="ant-tag-no-margin">{{ tag }}</a-tag>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
         </span>
-        <span slot="greenTags" slot-scope="text">
-          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green" class="ant-tag-no-margin">{{ tag }}</a-tag>
+        <span slot="serverIdsSlot" slot-scope="text" class="tag-container">
+          <a-tag v-if="!text">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
         </span>
         <span slot="loadSlot" class="load-container" slot-scope="text, record">
-          <a-tag class="ant-tag-no-margin" :color="getLoadColor(record.fiveLoad, record.cpuCoreNum)"> {{ record.fiveLoad || '--' }} </a-tag>&nbsp;/&nbsp;
-          <a-tag class="ant-tag-no-margin" :color="getLoadColor(record.fifteenLoad, record.cpuCoreNum)">
+          <a-tag :color="getLoadColor(record.fiveLoad, record.cpuCoreNum)"> {{ record.fiveLoad || '--' }} </a-tag>/<a-tag
+            :color="getLoadColor(record.fifteenLoad, record.cpuCoreNum)"
+          >
             {{ record.fifteenLoad || '--' }}
           </a-tag>
         </span>
@@ -112,21 +112,21 @@
           />
         </span>
         <span slot="ipSlot" class="ip-container" slot-scope="text, record">
-          <a-tag class="ant-tag-no-margin">公网</a-tag><a @click="copyText(record.ip)" class="copy-text"> {{ record.ip }} <a-icon type="copy" /></a>
+          <a-tag>公网</a-tag><a @click="copyText(record.ip)" class="copy-text"> {{ record.ip }} <a-icon type="copy" /></a>
           <a-divider />
-          <a-tag class="ant-tag-no-margin">内网</a-tag><a @click="copyText(record.lan)" class="copy-text"> {{ record.lan }} <a-icon type="copy" /></a>
+          <a-tag>内网</a-tag><a @click="copyText(record.lan)" class="copy-text"> {{ record.lan }} <a-icon type="copy" /></a>
         </span>
         <span slot="serverNumSlot" slot-scope="text, record" class="server-num-container">
-          <a-tag class="ant-tag-no-margin">区服</a-tag> {{ record.gameServerNum }}
+          <a-tag>区服</a-tag> {{ record.gameServerNum }}
           <a-divider />
-          <a-tag class="ant-tag-no-margin">跨服</a-tag> {{ record.crossServerNum }}
+          <a-tag>跨服</a-tag> {{ record.crossServerNum }}
         </span>
         <span slot="diskSlot" class="disk-usage-container" slot-scope="text">
           <li v-for="(item, index) in text" :key="item.fileSystem">
             <div style="white-space: nowrap">
-              <a-tag class="ant-tag-no-margin">{{ item.fileSystem }}</a-tag
-              >&nbsp; <a-tag class="ant-tag-no-margin" :color="getPercentColor(item.usedPer)">{{ item.avail }}</a-tag
-              >&nbsp; <a-tag class="ant-tag-no-margin">{{ item.diskSize }} </a-tag>
+              <a-tag>{{ item.fileSystem }}</a-tag>
+              <a-tag :color="getPercentColor(item.usedPer)">{{ item.avail }}</a-tag>
+              <a-tag>{{ item.diskSize }} </a-tag>
             </div>
             <div class="disk-usage-progress">
               <a-progress size="small" :strokeWidth="8" stroke-linecap="square" :percent="item.usedPer" :stroke-color="getPercentColor(item.usedPer)" />
@@ -211,28 +211,24 @@ export default {
         {
           title: '区跨服数',
           align: 'center',
-          width: 100,
           scopedSlots: { customRender: 'serverNumSlot' }
         },
         {
           title: '在线数',
           align: 'center',
-          width: 60,
           dataIndex: 'onlineNum'
         },
         {
           title: '区服ID',
           align: 'center',
-          width: 100,
           dataIndex: 'gameServerIds',
-          scopedSlots: { customRender: 'blueTags' }
+          scopedSlots: { customRender: 'serverIdsSlot' }
         },
         {
           title: '跨服ID',
           align: 'center',
-          width: 100,
           dataIndex: 'crossServerIds',
-          scopedSlots: { customRender: 'blueTags' }
+          scopedSlots: { customRender: 'serverIdsSlot' }
         },
         {
           title: 'CPU核数',
@@ -313,10 +309,10 @@ export default {
       this.queryParam.createTime_end = dateString[1];
     },
     getPercentColor(value) {
-      return value >= 80 ? '#FF5252' : value >= 60 ? '#FFAB00' : '#00C853';
+      return value >= 80 ? '#f5222d' : value >= 60 ? '#fa8c16' : '#52c41a';
     },
     getLoadColor(value, cpuNum) {
-      return value >= cpuNum * 0.5 ? '#FF5252' : value >= 1.0 ? '#FFAB00' : '#00C853';
+      return value >= cpuNum * 0.5 ? 'red' : value >= 1.0 ? 'orange' : 'green';
     }
   }
 };
@@ -325,23 +321,19 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
 .ant-divider-horizontal {
   margin: 6px 0 6px 0;
   padding: 0 10px 0 10px;
 }
 
-.ant-tag-no-margin {
-  margin-right: auto !important;
+.tag-container {
+  min-width: 80px;
+  max-width: 240px;
 }
 
 .ip-container {
-  min-width: 170px;
   max-width: 240px;
+  min-width: 170px;
   white-space: nowrap;
 }
 

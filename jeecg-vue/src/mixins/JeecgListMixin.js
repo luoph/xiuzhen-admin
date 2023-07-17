@@ -37,6 +37,21 @@ export const JeecgListMixin = {
         column: 'createTime',
         order: 'desc',
       },
+      tagColors: [
+        'magenta',
+        'lime',
+        'gold',
+        'blue',
+        'geekblue',
+        'green',
+        'cyan',
+        'orange',
+        'yellow',
+        'pink',
+        'purple',
+        'volcano',
+        'red',
+      ],
       /* 筛选参数 */
       filters: {},
       /* table加载状态 */
@@ -492,6 +507,14 @@ export const JeecgListMixin = {
           this.serverList = [];
         }
       });
+    },
+    tagColor(value) {
+      if (!value) {
+        return this.tagColors[0];
+      }
+
+      let index = Math.round(value / 1000) % this.tagColors.length
+      return this.tagColors[index];
     }
   }
 }

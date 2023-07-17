@@ -71,10 +71,19 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <span slot="costTimeSlot" slot-scope="text">
-          <a-tag v-if="text >= 1000" color="red" class="ant-tag-no-margin">{{ text }}</a-tag>
-          <a-tag v-else-if="text >= 200" color="orange" class="ant-tag-no-margin">{{ text }}</a-tag>
-          <a-tag v-else color="green" class="ant-tag-no-margin">{{ text }}</a-tag>
+          <a-tag v-if="text >= 1000" color="red">{{ text }}</a-tag>
+          <a-tag v-else-if="text >= 200" color="orange">{{ text }}</a-tag>
+          <a-tag v-else color="green">{{ text }}</a-tag>
         </span>
         <span slot="msgIdTitle">消息ID <a-icon type="copy" /></span>
         <span slot="msgNameTitle">接口名 <a-icon type="copy" /></span>
@@ -129,7 +138,7 @@ export default {
           width: '80',
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           // title: '消息ID',
@@ -156,7 +165,7 @@ export default {
           title: '次数',
           align: 'center',
           sorter: true,
-          dataIndex: 'num',
+          dataIndex: 'num'
         },
         {
           // title: '玩家ID',
@@ -240,13 +249,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
 </style>

@@ -199,11 +199,6 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
 .large-text-container {
   display: flex;
   overflow-x: hidden;
@@ -212,6 +207,7 @@ export default {
 }
 
 .large-text {
+  text-align: left;
   white-space: normal;
   word-break: break-word;
 }

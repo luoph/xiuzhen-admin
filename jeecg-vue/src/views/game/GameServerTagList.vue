@@ -48,9 +48,6 @@
         :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
@@ -60,7 +57,7 @@
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="tagSlot" slot-scope="text, record">
-          <a-tag color="orange" class="ant-tag-no-margin">{{ text }}</a-tag>
+          <a-tag :color="tagColor(record.id * 1000)">{{ text }}</a-tag>
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
@@ -166,8 +163,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
 </style>

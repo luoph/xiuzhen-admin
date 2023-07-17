@@ -143,37 +143,46 @@
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
         <span slot="tagSlot" slot-scope="text, record">
-          <a-tag color="orange" class="ant-tag-no-margin">{{ text }}</a-tag>
+          <a-tag :key="text" :color="tagColor(record.tagId * 1000)">{{ text }}</a-tag>
         </span>
-        <span slot="channelSlot" slot-scope="text, record">
-          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue" class="ant-tag-no-margin">{{ tag }}</a-tag>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
         </span>
-        <span slot="versionTypeSlot" slot-scope="text, record">
-          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
+        <span slot="channelSlot" slot-scope="text" class="tag-container">
+          <a-tag v-if="!text">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        </span>
+        <span slot="versionSlot" slot-scope="text">
+          <a-tag v-if="!text">未配置</a-tag>
           <!-- <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag> -->
           <span v-else v-for="tag in text.split(',').sort()" :key="tag">
-            <a-tag v-if="tag == 1" color="blue" class="ant-tag-no-margin">{{ tag }}-普通服</a-tag>
-            <a-tag v-if="tag == 2" color="blue" class="ant-tag-no-margin">{{ tag }}-BT服</a-tag>
+            <a-tag v-if="tag == 1" color="blue">{{ tag }}-普通服</a-tag>
+            <a-tag v-if="tag == 2" color="blue">{{ tag }}-BT服</a-tag>
           </span>
         </span>
         <span slot="maintainSlot" slot-scope="text, record">
-          <a-tag v-if="record.isMaintain === 1" color="red" class="ant-tag-no-margin">维护中</a-tag>
-          <a-tag v-else color="green" class="ant-tag-no-margin">运行中</a-tag>
+          <a-tag v-if="record.isMaintain === 1" color="red">维护中</a-tag>
+          <a-tag v-else color="green">运行中</a-tag>
         </span>
-        <span slot="switchSlot" slot-scope="text, record">
+        <span slot="switchSlot" slot-scope="text">
           <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
         <span slot="statusSlot" slot-scope="text, record">
-          <a-tag v-if="record.status === 0" color="blue" class="ant-tag-no-margin">正常</a-tag>
-          <a-tag v-else-if="record.status === 1" color="green" class="ant-tag-no-margin">流畅</a-tag>
-          <a-tag v-else-if="record.status === 2" color="red" class="ant-tag-no-margin">火爆</a-tag>
-          <a-tag v-else-if="record.status === 3" color="gray" class="ant-tag-no-margin">维护</a-tag>
+          <a-tag v-if="record.status === 0" color="blue">正常</a-tag>
+          <a-tag v-else-if="record.status === 1" color="green">流畅</a-tag>
+          <a-tag v-else-if="record.status === 2" color="red">火爆</a-tag>
+          <a-tag v-else-if="record.status === 3" color="gray">维护</a-tag>
         </span>
         <span slot="outdatedSlot" slot-scope="text, record">
-          <a-tag v-if="record.outdated === 0" color="green" class="ant-tag-no-margin">上线中</a-tag>
-          <a-tag v-else-if="record.outdated === 1" color="red" class="ant-tag-no-margin">已合并</a-tag>
-          <a-tag v-else-if="record.outdated === 2" color="red" class="ant-tag-no-margin">已下线</a-tag>
+          <a-tag v-if="record.outdated === 0" color="green">上线中</a-tag>
+          <a-tag v-else-if="record.outdated === 1" color="red">已合并</a-tag>
+          <a-tag v-else-if="record.outdated === 2" color="red">已下线</a-tag>
         </span>
         <span slot="idTitle">区服ID <a-icon type="copy" /></span>
         <span slot="hostTitle">服务器IP <a-icon type="copy" /></span>
@@ -230,7 +239,7 @@ export default {
           dataIndex: 'id',
           sorter: true,
           slots: { title: 'idTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           title: '名字',
@@ -286,8 +295,8 @@ export default {
         },
         {
           title: '开服时间',
-          align: 'center',
           width: 120,
+          align: 'center',
           sorter: true,
           dataIndex: 'openTime'
         },
@@ -313,34 +322,34 @@ export default {
         },
         {
           title: '推荐标识',
-          align: 'center',
           width: 80,
+          align: 'center',
           dataIndex: 'recommend_dictText'
         },
         {
           title: '类型',
-          align: 'center',
           width: 60,
+          align: 'center',
           dataIndex: 'type_dictText'
         },
         {
           title: '删档返还渠道',
-          align: 'center',
           width: 80,
+          align: 'center',
           dataIndex: 'stopServerRefundChannel',
           scopedSlots: { customRender: 'channelSlot' }
         },
         {
           title: '删档返还版本',
-          align: 'center',
           width: 80,
+          align: 'center',
           dataIndex: 'stopServerRefundVersionType',
-          scopedSlots: { customRender: 'versionTypeSlot' }
+          scopedSlots: { customRender: 'versionSlot' }
         },
         {
           title: 'GM开关',
-          align: 'center',
           width: 80,
+          align: 'center',
           dataIndex: 'gmStatus',
           scopedSlots: { customRender: 'switchSlot' }
         },
@@ -362,16 +371,16 @@ export default {
         // },
         {
           title: '备注',
+          width: 120,
           align: 'center',
           fixed: 'right',
-          width: 120,
           dataIndex: 'remark'
         },
         {
           title: '操作',
+          width: 120,
           align: 'center',
           fixed: 'right',
-          width: 120,
           dataIndex: 'action',
           scopedSlots: { customRender: 'action' }
         }
@@ -480,13 +489,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
 </style>

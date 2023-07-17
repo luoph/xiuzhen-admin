@@ -98,13 +98,12 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <span slot="blueTags" slot-scope="text">
-          <a-tag v-if="!text" class="ant-tag">未配置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue" class="ant-tag">{{ tag }}</a-tag>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
         </span>
-        <span slot="greenTags" slot-scope="text">
-          <a-tag v-if="!text" class="ant-tag">未配置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green" class="ant-tag">{{ tag }}</a-tag>
+        <span slot="serverIdsSlot" slot-scope="text" class="tag-container">
+          <a-tag v-if="!text">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
         </span>
         <span slot="idTitle">跨服ID <a-icon type="copy" /></span>
         <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
@@ -155,14 +154,14 @@ export default {
           align: 'center',
           dataIndex: 'id',
           slots: { title: 'idTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           title: '区服ID',
           align: 'center',
           width: 160,
           dataIndex: 'serverIds',
-          scopedSlots: { customRender: 'blueTags' }
+          scopedSlots: { customRender: 'serverIdsSlot' }
         },
         {
           title: 'IP',
@@ -248,22 +247,13 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
 .ant-divider-horizontal {
   margin: 6px 0 6px 0;
   padding: 0 10px 0 10px;
 }
 
-.ant-tag {
-  margin-left: 4px;
-  margin-right: 4px;
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
+.tag-container {
+  min-width: 80px;
+  max-width: 240px;
 }
 </style>

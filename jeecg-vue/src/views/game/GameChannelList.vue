@@ -104,11 +104,9 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <span slot="splitTags" slot-scope="text">
-          <div class="tag-container">
-            <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
-            <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
-          </div>
+        <span slot="tagSlot" slot-scope="text" class="tag-container">
+          <a-tag v-if="!text">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
         <span slot="switchSlot" slot-scope="text">
           <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
@@ -244,7 +242,7 @@ export default {
           title: 'IP白名单',
           align: 'left',
           dataIndex: 'ipWhitelist',
-          scopedSlots: { customRender: 'splitTags' }
+          scopedSlots: { customRender: 'tagSlot' }
         },
         {
           title: '更新时间',
@@ -373,17 +371,8 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
-
 .tag-container {
-  min-width: 240px;
-  max-width: 400px;
+  min-width: 160px;
+  max-width: 480px;
 }
 </style>

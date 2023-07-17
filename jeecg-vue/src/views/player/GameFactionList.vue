@@ -43,6 +43,15 @@
         :scroll="{ x: 'max-content' }"
         @change="handleTableChange"
       >
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">改名</a>
           <a-divider type="vertical" />
@@ -97,7 +106,8 @@ export default {
         {
           title: '区服ID',
           align: 'center',
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           title: '仙宗id',

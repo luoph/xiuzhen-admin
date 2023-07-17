@@ -112,6 +112,15 @@
             <span @click="copyText(text)" class="large-text">{{ text || '--' }}</span>
           </div>
         </template>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
@@ -176,7 +185,7 @@ export default {
           width: 80,
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           title: '封禁功能',
@@ -337,12 +346,6 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
 .large-text-container {
   display: flex;
   overflow-x: hidden;
@@ -351,6 +354,7 @@ export default {
 }
 
 .large-text {
+  text-align: left;
   white-space: normal;
   word-break: break-word;
 }

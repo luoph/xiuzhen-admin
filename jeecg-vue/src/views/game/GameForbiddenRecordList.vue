@@ -112,14 +112,15 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <template slot="imgSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
-        </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
-        </template>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
             <span @click="copyText(text)" class="large-text">{{ text || '--' }}</span>
@@ -192,7 +193,7 @@ export default {
           width: 80,
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           title: '封禁功能',
@@ -303,11 +304,6 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
 .large-text-container {
   display: flex;
   overflow-x: hidden;
@@ -316,6 +312,7 @@ export default {
 }
 
 .large-text {
+  text-align: left;
   white-space: normal;
   word-break: break-word;
 }

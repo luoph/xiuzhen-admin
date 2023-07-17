@@ -112,27 +112,33 @@
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="statusSlot" slot-scope="text">
-          <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
-          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
+          <a-tag v-if="text === 0" color="red">无效</a-tag>
+          <a-tag v-else color="green">有效</a-tag>
         </span>
-        <span slot="serverIdSlot" slot-scope="text, record">
-          <a-tag v-if="!text" class="ant-tag-no-margin">未设置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
         </span>
-        <span slot="sdkChannelsSlot" slot-scope="text, record">
-          <a-tag v-if="!text" class="ant-tag-no-margin">未设置</a-tag>
+        <span slot="largeTextSlot" slot-scope="text" @click="copyText(text)" class="large-text-container">
+          {{ text || '--' }}
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
+        <span slot="channelSlot" slot-scope="text" class="channel-container">
+          <a-tag v-if="!text">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
         <span slot="timeSlot" slot-scope="text, record">
           <div v-if="record.timeType == 1">
-            <a-tag color="blue" class="ant-tag-no-margin">{{ record.startTime }}</a-tag>
-            &nbsp;
-            <a-tag color="blue" class="ant-tag-no-margin">{{ record.endTime }}</a-tag>
+            <a-tag color="blue">{{ record.startTime }}</a-tag>
+            <a-tag color="blue">{{ record.endTime }}</a-tag>
           </div>
           <div v-if="record.timeType == 2">
-            <a-tag color="green" class="ant-tag-no-margin">开服第{{ record.startDay }}天</a-tag>
-            &nbsp;
-            <a-tag color="green" class="ant-tag-no-margin">持续{{ record.duration }}天</a-tag>
+            <a-tag color="green">开服第{{ record.startDay }}天</a-tag>
+            <a-tag color="green">持续{{ record.duration }}天</a-tag>
           </div>
         </span>
         <span slot="action" slot-scope="text, record">
@@ -202,33 +208,32 @@ export default {
         {
           title: '主活动id',
           align: 'center',
-          width: 80,
           dataIndex: 'id'
         },
         {
           title: '活动名称',
           align: 'center',
-          width: 100,
-          dataIndex: 'name'
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           title: '活动标语（描述）',
           align: 'left',
-          width: 100,
-          dataIndex: 'description'
+          dataIndex: 'description',
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           title: '活动图标',
+          width: 80,
           align: 'center',
           dataIndex: 'icon',
-          width: 80,
           scopedSlots: { customRender: 'imgSlot' }
         },
         {
           title: '活动宣传图',
+          width: 240,
           align: 'center',
           dataIndex: 'banner',
-          width: 240,
           scopedSlots: { customRender: 'imgSlot' }
         },
         {
@@ -240,29 +245,26 @@ export default {
         {
           title: '优先级',
           align: 'center',
-          width: 60,
           dataIndex: 'priority'
         },
         {
           title: '区服ID',
-          align: 'center',
-          width: 150,
+          align: 'left',
           dataIndex: 'serverIds',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: { customRender: 'serverIdsSlot' }
         },
         {
-          title: '自动添加新服的渠道',
+          title: '自动添加新服渠道',
           align: 'center',
-          width: 50,
           dataIndex: 'autoAddServerChannels',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: { customRender: 'channelSlot' }
         },
         {
           title: 'Sdk渠道',
           align: 'center',
           width: 100,
           dataIndex: 'sdkChannels',
-          scopedSlots: { customRender: 'sdkChannelsSlot' }
+          scopedSlots: { customRender: 'channelSlot' }
         },
         // {
         //     title: "自动开启",
@@ -282,14 +284,13 @@ export default {
         {
           title: '时间类型',
           align: 'center',
-          width: 120,
           dataIndex: 'timeType',
           customRender: (value) => {
             let text = '--';
             if (value === 1) {
-              text = '1-时间范围';
+              text = '时间范围[1]';
             } else if (value === 2) {
-              text = '2-开服第N天';
+              text = '开服第N天[2]';
             }
             return text;
           }
@@ -445,29 +446,19 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
-
-.image {
-  width: 100%;
-  height: 100px;
-  object-fit: scale-down;
+.channel-container {
+  width: auto;
+  height: auto;
+  display: block;
+  min-width: 80px;
+  max-width: 200px;
 }
 
 .large-text-container {
-  display: flex;
-  overflow-x: hidden;
+  display: block;
+  min-width: 80px;
+  max-width: 280px;
   overflow-y: auto;
-  max-height: 200px;
-}
-
-.large-text {
   white-space: normal;
   word-break: break-word;
 }

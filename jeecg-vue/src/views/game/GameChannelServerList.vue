@@ -49,6 +49,15 @@
               <a-tag v-if="record.isMaintain == 1" color="red">维护中</a-tag>
               <a-tag v-else color="green">运行中</a-tag>
             </span>
+            <span slot="idTagSlot" slot-scope="text">
+              <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+            </span>
+            <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+              <span class="scroll-span">
+                <a-tag v-if="!text">未设置</a-tag>
+                <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+              </span>
+            </div>
             <span slot="statSlot" slot-scope="text, record">
               <a-tag v-if="record.serverStatus == 0" color="blue">正常</a-tag>
               <a-tag v-else-if="record.serverStatus == 1" color="green">流畅</a-tag>
@@ -112,7 +121,8 @@ export default {
         {
           title: '区服ID',
           align: 'center',
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           title: '区服名称',

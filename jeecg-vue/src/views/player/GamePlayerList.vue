@@ -141,14 +141,19 @@
             ><a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a></span
           >
         </span>
-        <span slot="statusSlot" slot-scope="text, record">
-          <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
-          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
+        <span slot="statusSlot" slot-scope="text">
+          <a-tag v-if="text === 0" color="red">无效</a-tag>
+          <a-tag v-else color="green">有效</a-tag>
         </span>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
-        </template>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <span slot="action" slot-scope="text, record">
           <a-dropdown>
             <a class="ant-dropdown-link">更多<a-icon type="down" /></a>
@@ -237,14 +242,14 @@ export default {
           align: 'center',
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           // title: '创角区服',
           align: 'center',
           dataIndex: 'sid',
           slots: { title: 'sidTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           // title: '渠道',
@@ -478,13 +483,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
 </style>

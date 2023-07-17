@@ -277,10 +277,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.list-image {
-  width: 100%;
-  height: 100px;
-  object-fit: scale-down;
-}
 </style>

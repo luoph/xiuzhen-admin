@@ -92,9 +92,9 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
-        <span slot="serverIdSlot" slot-scope="text, record">
-          <a-tag v-if="!text" color="red" class="ant-tag-no-margin">未设置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue" class="ant-tag-no-margin">{{ tag }}</a-tag>
+        <span slot="tagSlot" slot-scope="text" class="tag-container">
+          <a-tag v-if="!text">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
@@ -165,7 +165,7 @@ export default {
           title: '服务器',
           align: 'center',
           dataIndex: 'serverIds',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: { customRender: 'tagSlot' }
         },
         {
           title: '开始时间',
@@ -273,13 +273,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
 </style>

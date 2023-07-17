@@ -147,12 +147,12 @@
           </div>
         </template>
         <span slot="buyTypeSlot" slot-scope="text">
-          <a-tag v-if="!text" color="red" class="ant-tag-no-margin">未设置</a-tag>
+          <a-tag v-if="!text" color="red">未设置</a-tag>
           <!-- <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag> -->
           <span v-else v-for="tag in text.split(',').sort()" :key="tag">
-            <a-tag v-if="tag == 1" color="green" class="ant-tag-no-margin">{{ tag }}-真实充值</a-tag>
-            <a-tag v-if="tag == 2" color="yellow" class="ant-tag-no-margin">{{ tag }}-GM额度</a-tag>
-            <a-tag v-if="tag == 3" color="orange" class="ant-tag-no-margin">{{ tag }}-代金券</a-tag>
+            <a-tag v-if="tag == 1" color="green">{{ tag }}-真实充值</a-tag>
+            <a-tag v-if="tag == 2" color="yellow">{{ tag }}-GM额度</a-tag>
+            <a-tag v-if="tag == 3" color="orange">{{ tag }}-代金券</a-tag>
           </span>
         </span>
         <span slot="action" slot-scope="text, record">
@@ -175,32 +175,32 @@
           <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
         <span slot="skuSlot" slot-scope="text, record">
-          <a-tag class="ant-tag-no-margin">内购</a-tag><a @click="copyText(record.sku)" class="copy-text"> {{ record.sku || '--' }} <a-icon type="copy" /></a>
+          <a-tag>内购</a-tag><a @click="copyText(record.sku)" class="copy-text"> {{ record.sku || '--' }} <a-icon type="copy" /></a>
           <a-divider />
-          <a-tag class="ant-tag-no-margin">网页</a-tag><a @click="copyText(record.webSku)" class="copy-text"> {{ record.webSku || '--' }} <a-icon type="copy" /></a>
+          <a-tag>网页</a-tag><a @click="copyText(record.webSku)" class="copy-text"> {{ record.webSku || '--' }} <a-icon type="copy" /></a>
         </span>
         <span slot="localPriceSlot" slot-scope="text, record">
-          <a-tag class="ant-tag-no-margin">内购</a-tag><a class="copy-text"> {{ record.localPrice || '--' }}</a>
+          <a-tag>内购</a-tag><a class="copy-text"> {{ record.localPrice || '--' }}</a>
           <a-divider />
-          <a-tag class="ant-tag-no-margin">网页</a-tag><a class="copy-text"> {{ record.webLocalPrice || '--' }} </a>
+          <a-tag>网页</a-tag><a class="copy-text"> {{ record.webLocalPrice || '--' }} </a>
         </span>
         <span slot="displayPriceSlot" slot-scope="text, record">
-          <a-tag class="ant-tag-no-margin">内购</a-tag><a class="copy-text"> {{ record.displayPrice || '--' }} </a>
+          <a-tag>内购</a-tag><a class="copy-text"> {{ record.displayPrice || '--' }} </a>
           <a-divider />
-          <a-tag class="ant-tag-no-margin">网页</a-tag><a class="copy-text"> {{ record.webDisplayPrice || '--' }} </a>
+          <a-tag>网页</a-tag><a class="copy-text"> {{ record.webDisplayPrice || '--' }} </a>
         </span>
         <span slot="recommendSlot" slot-scope="text">
-          <a-tag v-if="text === 1" class="ant-tag-no-margin" color="green">推荐</a-tag>
-          <a-tag v-else-if="text === 2" class="ant-tag-no-margin" color="orange">礼包</a-tag>
-          <a-tag v-else class="ant-tag-no-margin">未配置</a-tag>
+          <a-tag v-if="text === 1" color="green">推荐</a-tag>
+          <a-tag v-else-if="text === 2" color="orange">礼包</a-tag>
+          <a-tag v-else>未配置</a-tag>
         </span>
         <span slot="goodsGroupSlot" slot-scope="text">
-          <a-tag v-if="text === 1" class="ant-tag-no-margin" color="green">直充</a-tag>
-          <a-tag v-else-if="text === 2" class="ant-tag-no-margin" color="blue">礼包</a-tag>
-          <a-tag v-else class="ant-tag-no-margin">未配置</a-tag>
+          <a-tag v-if="text === 1" color="green">直充</a-tag>
+          <a-tag v-else-if="text === 2" color="blue">礼包</a-tag>
+          <a-tag v-else>未配置</a-tag>
         </span>
         <span slot="tagSlot" slot-scope="text">
-          <a-tag color="blue" class="ant-tag-no-margin">{{ text }}</a-tag>
+          <a-tag color="blue">{{ text }}</a-tag>
         </span>
         <span slot="goodsIdTitle">商品ID <a-icon type="copy" /></span>
         <span slot="nameTitle">名称 <a-icon type="copy" /></span>
@@ -514,15 +514,6 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
 
 .ant-divider-horizontal {
   margin: 6px 0 6px 0;

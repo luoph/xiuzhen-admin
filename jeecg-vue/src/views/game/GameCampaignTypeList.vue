@@ -131,27 +131,23 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image" />
         </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
-        </template>
+        <span slot="crossSlot" slot-scope="text">
+          <a-tag v-if="text === 0" color="green">本服</a-tag>
+          <a-tag v-else-if="text === 1" color="blue">跨服</a-tag>
+          <a-tag v-else>未设置</a-tag>
+        </span>
         <span slot="timeSlot" slot-scope="text, record">
           <div v-if="record.timeType == 1">
-            <a-tag color="blue" class="ant-tag-no-margin">{{ record.startTime }}</a-tag>
-            &nbsp;
-            <a-tag color="blue" class="ant-tag-no-margin">{{ record.endTime }}</a-tag>
+            <a-tag color="blue">{{ record.startTime }}</a-tag>
+            <a-tag color="blue">{{ record.endTime }}</a-tag>
           </div>
           <div v-if="record.timeType == 2">
-            <a-tag color="green" class="ant-tag-no-margin">开服第{{ record.startDay }}天</a-tag>
-            &nbsp;
-            <a-tag color="green" class="ant-tag-no-margin">持续{{ record.duration }}天</a-tag>
+            <a-tag color="green">开服第{{ record.startDay }}天</a-tag>
+            <a-tag color="green">持续{{ record.duration }}天</a-tag>
           </div>
         </span>
         <span slot="action" slot-scope="text, record">
@@ -311,17 +307,8 @@ export default {
         {
           title: '是否跨服',
           align: 'center',
-          width: 80,
           dataIndex: 'cross',
-          customRender: (value) => {
-            let text = '--';
-            if (value === 0) {
-              text = '本服';
-            } else if (value === 1) {
-              text = '跨服';
-            }
-            return text;
-          }
+          scopedSlots: { customRender: 'crossSlot' }
         },
         {
           title: '活动时间',
@@ -403,19 +390,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
-
-.list-image {
-  width: 100%;
-  height: 100px;
-  object-fit: scale-down;
-}
 </style>

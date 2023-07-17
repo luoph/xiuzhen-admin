@@ -92,35 +92,46 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
           <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
         </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
-        </template>
-        <span slot="serverIdSlot" slot-scope="text">
-          <a-tag v-if="!text" class="ant-tag-no-margin">未设置</a-tag>
+        <span slot="switchSlot" slot-scope="text">
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
+        </span>
+        <span slot="crossSlot" slot-scope="text">
+          <a-tag v-if="text === 0" color="green">本服</a-tag>
+          <a-tag v-else-if="text === 1" color="blue">跨服</a-tag>
+          <a-tag v-else>未设置</a-tag>
+        </span>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
+        <span slot="channelSlot" slot-scope="text" class="channel-container">
+          <a-tag v-if="!text">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        </span>
+        <span slot="tagSlot" slot-scope="text" class="tag-container">
+          <a-tag v-if="!text">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
         <span slot="statusSlot" slot-scope="text">
-          <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
-          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
+          <a-tag v-if="text === 0" color="red">无效</a-tag>
+          <a-tag v-else color="green">有效</a-tag>
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">活动信息</a>
           <a-divider type="vertical" />
-          <a @click="handleDuplicate(record)">复制</a>
-          <a-divider type="vertical" />
+          <a @click="handleDuplicate(record)">复制</a><br />
           <!-- <a @click="handleTabList(record)">页签配置</a> -->
-          <a @click="handleSync(record)">同步到区服</a>
-          <a-divider type="vertical" />
-          <a @click="removeCompletedServer(record)">移除已结束区服</a>
-          <a-divider type="vertical" />
+          <a @click="handleSync(record)">同步到区服</a><br />
+          <a @click="removeCompletedServer(record)">移除已结束区服</a><br />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -188,28 +199,19 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'cross',
-          customRender: (value) => {
-            let text = '--';
-            if (value === 0) {
-              text = '本服';
-            } else if (value === 1) {
-              text = '跨服';
-            }
-            return text;
-          }
+          scopedSlots: { customRender: 'crossSlot' }
         },
         {
-          title: '服务器id',
-          align: 'center',
+          title: '区服ID',
+          align: 'left',
           dataIndex: 'serverIds',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: { customRender: 'serverIdsSlot' }
         },
         {
-          title: '自动添加新服的渠道',
+          title: '自动添加新服渠道',
           align: 'center',
-          width: 50,
           dataIndex: 'autoAddServerChannels',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: { customRender: 'channelSlot' }
         },
         {
           title: '活动图标',
@@ -226,26 +228,16 @@ export default {
         {
           title: '优先级',
           align: 'center',
-          width: 60,
           dataIndex: 'priority'
         },
         {
           title: '自动开启',
           align: 'center',
           dataIndex: 'autoOpen',
-          customRender: (value) => {
-            let text = '--';
-            if (value === 0) {
-              text = '关闭';
-            } else if (value === 1) {
-              text = '开启';
-            }
-            return text;
-          }
+          scopedSlots: { customRender: 'switchSlot' }
         },
         {
           title: '活动备注',
-          align: 'center',
           dataIndex: 'remark'
         },
         {
@@ -260,6 +252,7 @@ export default {
         // },
         {
           title: '操作',
+          width: 140,
           dataIndex: 'action',
           align: 'center',
           scopedSlots: { customRender: 'action' }
@@ -372,18 +365,11 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
-
-.image {
-  width: 100%;
-  height: 100px;
-  object-fit: scale-down;
+.channel-container {
+  width: auto;
+  height: auto;
+  display: block;
+  min-width: 80px;
+  max-width: 200px;
 }
 </style>

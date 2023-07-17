@@ -113,12 +113,12 @@
           </div>
         </template>
         <span slot="stateSlot" slot-scope="text, record">
-          <a-tag v-if="record.state === 0" color="red" class="ant-tag-no-margin">待审核</a-tag>
-          <a-tag v-else-if="record.state === 1" color="green" class="ant-tag-no-margin">已发送</a-tag>
+          <a-tag v-if="record.state === 0" color="red">待审核</a-tag>
+          <a-tag v-else-if="record.state === 1" color="green">已发送</a-tag>
         </span>
         <span slot="receiverTypeSlot" slot-scope="text, record">
-          <a-tag v-if="record.receiverType === 1" color="blue" class="ant-tag-no-margin">玩家</a-tag>
-          <a-tag v-else-if="record.receiverType === 2" color="green" class="ant-tag-no-margin">区服</a-tag>
+          <a-tag v-if="record.receiverType === 1" color="blue">玩家</a-tag>
+          <a-tag v-else-if="record.receiverType === 2" color="green">区服</a-tag>
         </span>
         <span slot="titleTitle">标题 <a-icon type="copy" /></span>
         <span slot="describeTitle">描述 <a-icon type="copy" /></span>
@@ -340,13 +340,8 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
+.ant-divider-horizontal {
+  margin: 6px 0 6px 0;
 }
 
 .large-text-container {
@@ -359,9 +354,5 @@ export default {
 .large-text {
   white-space: normal;
   word-break: break-word;
-}
-
-.ant-divider-horizontal {
-  margin: 6px 0 6px 0;
 }
 </style>

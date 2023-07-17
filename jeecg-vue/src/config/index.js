@@ -10,6 +10,7 @@ if (document.location.hostname === 'localhost') {
 } else {
   window._CONFIG['domainURL'] = window.location.protocol + '//' + document.location.host + '/jeecg-boot';
 }
+console.debug(`domainURL: ${window._CONFIG['domainURL']}`)
 
 // 单点登录地址
 window._CONFIG['casPrefixUrl'] = window._CONFIG.VUE_APP_CAS_BASE_URL ? window._CONFIG.VUE_APP_CAS_BASE_URL : process.env.VUE_APP_CAS_BASE_URL

@@ -110,14 +110,15 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <template slot="imgSlot" slot-scope="text, record">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无图片</span>
-          <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt="" style="max-width: 80px; font-size: 12px; font-style: italic" />
-        </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadFile(text)"> 下载 </a-button>
-        </template>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <span slot="sourceServerIdTitle">停服区服ID <a-icon type="copy" /></span>
         <span slot="sourcePlayerIdTitle">停服玩家ID <a-icon type="copy" /></span>
         <span slot="targetServerIdTitle">返还区服ID <a-icon type="copy" /></span>
@@ -164,7 +165,7 @@ export default {
           align: 'center',
           dataIndex: 'sourceServerId',
           slots: { title: 'sourceServerIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           // title: '停服玩家ID',
@@ -178,7 +179,7 @@ export default {
           align: 'center',
           dataIndex: 'targetServerId',
           slots: { title: 'targetServerIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           // title: '返还的玩家ID',
@@ -279,9 +280,4 @@ export default {
 </script>
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
 </style>

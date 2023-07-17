@@ -42,16 +42,30 @@
               @change="handleTableChange"
               :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
+              <span slot="idTagSlot" slot-scope="text">
+                <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+              </span>
+              <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+                <span class="scroll-span">
+                  <a-tag v-if="!text">未设置</a-tag>
+                  <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+                </span>
+              </div>
+              <span slot="statusSlot" slot-scope="text">
+                <a-tag v-if="text === 1" color="green">开启</a-tag>
+                <a-tag v-else-if="text === 0" color="red">关闭</a-tag>
+                <a-tag v-else>未设置</a-tag>
+              </span>
               <span slot="action" slot-scope="text, record">
                 <a v-if="record.status === 1" @click="switchServer(record, 0)">关闭</a>
                 <a v-else @click="switchServer(record, 1)">开启</a>
               </span>
-              <template slot="statusSlot" slot-scope="text">
-                <a-tag v-if="text === -1" color="#f1ab52">未开启</a-tag>
-                <a-tag v-else-if="text === 0" color="#f50">已关闭</a-tag>
-                <a-tag v-else-if="text === 1" color="#aaaaaa">未开始</a-tag>
-                <a-tag v-else-if="text === 2" color="#87d068">进行中</a-tag>
-                <a-tag v-else-if="text === 3" color="#595959">已结束</a-tag>
+              <template slot="campaignStatusSlot" slot-scope="text">
+                <a-tag v-if="text === -1" color="orange">未开启</a-tag>
+                <a-tag v-else-if="text === 0" color="red">已关闭</a-tag>
+                <a-tag v-else-if="text === 1" color="gray">未开始</a-tag>
+                <a-tag v-else-if="text === 2" color="green">进行中</a-tag>
+                <a-tag v-else-if="text === 3" color="black">已结束</a-tag>
                 <span v-else>{{ text }}</span>
               </template>
             </a-table>
@@ -94,7 +108,8 @@ export default {
         {
           title: '区服ID',
           align: 'center',
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
           title: '区服名',
@@ -110,21 +125,13 @@ export default {
           title: '活动开关',
           align: 'center',
           dataIndex: 'status',
-          customRender: function (text) {
-            if (text === -1) {
-              return '未设置';
-            } else if (text === 0) {
-              return '关闭';
-            } else if (text === 1) {
-              return '开启';
-            }
-          }
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '活动状态',
           align: 'center',
           dataIndex: 'campaignStatus',
-          scopedSlots: { customRender: 'statusSlot' }
+          scopedSlots: { customRender: 'campaignStatusSlot' }
         },
         {
           title: '操作',

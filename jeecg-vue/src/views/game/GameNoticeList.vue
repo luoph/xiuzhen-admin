@@ -106,8 +106,8 @@
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="statusSlot" slot-scope="text, record">
-          <a-tag v-if="0" color="red" class="ant-tag-no-margin">无效</a-tag>
-          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
+          <a-tag v-if="0" color="red">无效</a-tag>
+          <a-tag v-else color="green">有效</a-tag>
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
@@ -280,9 +280,5 @@ export default {
   max-height: 240px;
   overflow-y: auto;
   overflow-x: hidden;
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
 }
 </style>

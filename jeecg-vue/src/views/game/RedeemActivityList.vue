@@ -86,8 +86,8 @@
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="statusSlot" slot-scope="text">
-          <a-tag v-if="text === 0" color="red" class="ant-tag-no-margin">无效</a-tag>
-          <a-tag v-else color="green" class="ant-tag-no-margin">有效</a-tag>
+          <a-tag v-if="text === 0" color="red">无效</a-tag>
+          <a-tag v-else color="green">有效</a-tag>
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
@@ -286,13 +286,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
 </style>

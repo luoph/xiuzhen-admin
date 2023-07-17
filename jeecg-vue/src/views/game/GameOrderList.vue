@@ -89,14 +89,15 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <template slot="imgSlot" slot-scope="status">
-          <span v-if="!status" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(status)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
-        </template>
-        <template slot="fileSlot" slot-scope="status">
-          <span v-if="!status" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(status)"> 下载 </a-button>
-        </template>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <span slot="action" slot-scope="status, record">
           <a @click="handleEdit(record)">详情</a>
           <a-divider type="vertical" v-has="'game:vip:admin'" />
@@ -108,13 +109,22 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="largeText" slot-scope="text" @click="copyText(text)" class="large-text-container">
+        <span slot="orderStatusSlot" slot-scope="text">
+          <!-- 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放 -->
+          <a-tag v-if="text === 0" color="gray">待支付</a-tag>
+          <a-tag v-else-if="text === 1" color="blue">已支付</a-tag>
+          <a-tag v-else-if="text === 2" color="orange">已转发</a-tag>
+          <a-tag v-else-if="text === 3" color="red">发放中</a-tag>
+          <a-tag v-else-if="text === 4" color="green">已发放</a-tag>
+          <a-tag v-else>未知</a-tag>
+        </span>
+        <span slot="largeTextSlot" slot-scope="text" @click="copyText(text)" class="large-text-container">
           {{ text || '--' }}
         </span>
         <span slot="playerSlot" slot-scope="text, record" style="white-space: nowrap">
-          <a-tag class="ant-tag-no-margin">ID</a-tag><a @click="copyText(record.playerId)" class="copy-text"> {{ record.playerId }} <a-icon type="copy" /></a>
+          <a-tag>ID</a-tag><a @click="copyText(record.playerId)" class="copy-text"> {{ record.playerId }} <a-icon type="copy" /></a>
           <a-divider />
-          <a-tag class="ant-tag-no-margin">昵称</a-tag><a @click="copyText(record.nickname)" class="copy-text"> {{ record.nickname }} <a-icon type="copy" /></a>
+          <a-tag>昵称</a-tag><a @click="copyText(record.nickname)" class="copy-text"> {{ record.nickname }} <a-icon type="copy" /></a>
         </span>
         <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
         <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
@@ -166,7 +176,6 @@ export default {
           title: 'ID',
           align: 'center',
           dataIndex: 'id',
-          slots: { title: 'serverIdTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
         {
@@ -175,7 +184,7 @@ export default {
           width: 80,
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         // {
         //   title: '玩家',
@@ -200,9 +209,10 @@ export default {
         {
           // title: '账号',
           // width: 120,
+          align: 'center',
           dataIndex: 'account',
           slots: { title: 'accountTitle' },
-          scopedSlots: { customRender: 'largeText' }
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           // title: '渠道',
@@ -244,12 +254,12 @@ export default {
           // title: '平台订单号',
           dataIndex: 'queryId',
           slots: { title: 'queryIdTitle' },
-          scopedSlots: { customRender: 'largeText' }
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           title: '支付金额',
-          align: 'center',
           width: 80,
+          align: 'center',
           dataIndex: 'payAmount'
         },
         // {
@@ -267,24 +277,8 @@ export default {
         {
           title: '订单状态',
           align: 'center',
-          width: 80,
           dataIndex: 'orderStatus',
-          // <!-- 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放 -->
-          customRender: (status) => {
-            let re = '未知';
-            if (status === 0) {
-              re = '待支付';
-            } else if (status === 1) {
-              re = '已支付';
-            } else if (status === 2) {
-              re = '已转发,未回复';
-            } else if (status === 3) {
-              re = '发放中';
-            } else if (status === 4) {
-              re = '已发放';
-            }
-            return re;
-          }
+          scopedSlots: { customRender: 'orderStatusSlot' }
         },
         // {
         //   title: 'ip地址',
@@ -387,11 +381,6 @@ export default {
 <style scoped>
 @import '~@assets/less/common.less';
 
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
 .ant-divider-horizontal {
   margin: 6px 0 6px 0;
   padding: 0 10px 0 10px;
@@ -399,7 +388,8 @@ export default {
 
 .large-text-container {
   display: block;
-  max-width: 280px;
+  min-width: 80px;
+  max-width: 320px;
   overflow-y: auto;
   white-space: normal;
   word-break: break-word;

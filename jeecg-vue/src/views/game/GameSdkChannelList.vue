@@ -86,7 +86,7 @@
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
         <span slot="splitTags" slot-scope="text, record">
-          <a-tag v-if="!text" class="ant-tag-no-margin">未配置</a-tag>
+          <a-tag v-if="!text">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
         <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
@@ -213,13 +213,4 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
-
-.copy-text {
-  white-space: nowrap;
-  color: rgba(0, 0, 0, 0.65);
-}
-
-.ant-tag-no-margin {
-  margin-right: auto !important;
-}
 </style>
