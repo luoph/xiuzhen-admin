@@ -95,9 +95,9 @@
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green" class="ant-tag-no-margin">{{ tag }}</a-tag>
         </span>
         <span slot="loadSlot" class="load-container" slot-scope="text, record">
-          <a-tag class="ant-tag-no-margin" :color="getPercentColor(record.fiveLoad, record.cpuCoreNum)"> {{ record.fiveLoad }} </a-tag>&nbsp;/&nbsp;
-          <a-tag class="ant-tag-no-margin" :color="getPercentColor(record.fifteenLoad, record.cpuCoreNum)">
-            {{ record.fifteenLoad }}
+          <a-tag class="ant-tag-no-margin" :color="getLoadColor(record.fiveLoad, record.cpuCoreNum)"> {{ record.fiveLoad || '--' }} </a-tag>&nbsp;/&nbsp;
+          <a-tag class="ant-tag-no-margin" :color="getLoadColor(record.fifteenLoad, record.cpuCoreNum)">
+            {{ record.fifteenLoad || '--' }}
           </a-tag>
         </span>
         <span slot="perSlot" slot-scope="text">
@@ -193,14 +193,6 @@ export default {
           scopedSlots: { customRender: 'ipSlot' }
         },
         // {
-        //   title: '内网ip',
-        //   align: 'center',
-        //   dataIndex: 'lan',
-        //   customRender: (value) => {
-        //     return value || '--';
-        //   }
-        // },
-        // {
         //   title: '系统',
         //   align: 'center',
         //   dataIndex: 'platform',
@@ -217,7 +209,7 @@ export default {
         //   }
         // },
         {
-          title: '区服/跨服数',
+          title: '区跨服数',
           align: 'center',
           width: 100,
           scopedSlots: { customRender: 'serverNumSlot' }
@@ -262,16 +254,16 @@ export default {
           scopedSlots: { customRender: 'perSlot' }
         },
         {
-          title: '磁盘占用',
-          align: 'center',
-          dataIndex: 'diskList',
-          scopedSlots: { customRender: 'diskSlot' }
-        },
-        {
           title: '负载(5/15)',
           align: 'center',
           dataIndex: '',
           scopedSlots: { customRender: 'loadSlot' }
+        },
+        {
+          title: '磁盘占用',
+          align: 'center',
+          dataIndex: 'diskList',
+          scopedSlots: { customRender: 'diskSlot' }
         },
         // {
         //   title: '启动时间',
@@ -282,6 +274,7 @@ export default {
         {
           title: '状态更新',
           align: 'center',
+          width: 100,
           dataIndex: 'uploadTime'
         },
         {
@@ -323,7 +316,7 @@ export default {
       return value >= 80 ? '#FF5252' : value >= 60 ? '#FFAB00' : '#00C853';
     },
     getLoadColor(value, cpuNum) {
-      return value >= cpuNum ? '#FF5252' : value >= 1 ? '#FFAB00' : '#00C853';
+      return value >= cpuNum * 0.5 ? '#FF5252' : value >= 1.0 ? '#FFAB00' : '#00C853';
     }
   }
 };

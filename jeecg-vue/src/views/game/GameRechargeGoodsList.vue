@@ -291,7 +291,7 @@ export default {
         },
         {
           title: '商品类型',
-          align: 'left',
+          align: 'center',
           dataIndex: 'goodsType',
           customRender: (value) => {
             let text = '--';

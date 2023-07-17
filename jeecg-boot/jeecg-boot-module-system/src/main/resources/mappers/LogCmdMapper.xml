@@ -4,7 +4,7 @@
 
     <select id="selectCmdList" resultType="cn.youai.xiuzhen.game.entity.GameStatCmd">
         SELECT `player_id`, `server_id`, `msg_id`, COUNT(*) AS num, ROUND(AVG(`cost_time`)) AS `cost_time`,
-        `create_date` FROM `log_cmd`
+        `create_date`, MIN(`create_time`) AS `create_time` FROM `log_cmd`
         <where>
             <![CDATA[
             `server_id` = #{serverId}

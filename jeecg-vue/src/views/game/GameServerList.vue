@@ -295,6 +295,20 @@ export default {
           dataIndex: 'onlineTime'
         },
         {
+          title: '版本类型',
+          align: 'center',
+          dataIndex: 'versionType',
+          customRender: (text) => {
+            return text === 1 ? '普通服' : text === 2 ? 'BT服' : 'N/A';
+          }
+        },
+        {
+          title: '删档返还',
+          align: 'center',
+          dataIndex: 'stopServerRefund',
+          scopedSlots: { customRender: 'switchSlot' }
+        },
+        {
           title: '推荐标识',
           align: 'center',
           width: 80,
@@ -305,12 +319,6 @@ export default {
           align: 'center',
           width: 60,
           dataIndex: 'type_dictText'
-        },
-        {
-          title: '删档返还',
-          align: 'center',
-          dataIndex: 'stopServerRefund',
-          scopedSlots: { customRender: 'switchSlot' }
         },
         {
           title: '删档返还渠道',
@@ -325,14 +333,6 @@ export default {
           width: 80,
           dataIndex: 'stopServerRefundVersionType',
           scopedSlots: { customRender: 'versionTypeSlot' }
-        },
-        {
-          title: '版本类型',
-          align: 'center',
-          dataIndex: 'versionType',
-          customRender: (text) => {
-            return text === 1 ? '普通服' : text === 2 ? 'BT服' : 'N/A';
-          }
         },
         {
           title: 'GM开关',

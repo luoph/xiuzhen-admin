@@ -108,11 +108,14 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <template slot="largeText" slot-scope="text">
-          <div class="large-text-container">
-            <span class="large-text" @click="copyText(text)">{{ text || '--' }}</span>
-          </div>
-        </template>
+        <span slot="largeText" slot-scope="text" @click="copyText(text)" class="large-text-container">
+          {{ text || '--' }}
+        </span>
+        <span slot="playerSlot" slot-scope="text, record" style="white-space: nowrap">
+          <a-tag class="ant-tag-no-margin">ID</a-tag><a @click="copyText(record.playerId)" class="copy-text"> {{ record.playerId }} <a-icon type="copy" /></a>
+          <a-divider />
+          <a-tag class="ant-tag-no-margin">昵称</a-tag><a @click="copyText(record.nickname)" class="copy-text"> {{ record.nickname }} <a-icon type="copy" /></a>
+        </span>
         <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
         <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
         <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
@@ -160,6 +163,13 @@ export default {
           }
         },
         {
+          title: 'ID',
+          align: 'center',
+          dataIndex: 'id',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
+        },
+        {
           // title: '区服ID',
           align: 'center',
           width: 80,
@@ -167,6 +177,12 @@ export default {
           slots: { title: 'serverIdTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
+        // {
+        //   title: '玩家',
+        //   align: 'center',
+        //   dataIndex: 'playerId',
+        //   scopedSlots: { customRender: 'playerSlot' }
+        // },
         {
           // title: '玩家ID',
           align: 'center',
@@ -183,7 +199,6 @@ export default {
         },
         {
           // title: '账号',
-          align: 'center',
           // width: 120,
           dataIndex: 'account',
           slots: { title: 'accountTitle' },
@@ -203,6 +218,22 @@ export default {
           slots: { title: 'sdkChannelTitle' },
           scopedSlots: { customRender: 'copySlot' }
         },
+        {
+          title: '商品',
+          align: 'center',
+          dataIndex: 'productName',
+          customRender: (text, record) => {
+            return `${text}（${record.productId}）`;
+          }
+        },
+        // {
+        //   // title: '商品名称',
+        //   align: 'center',
+        //   width: 120,
+        //   dataIndex: 'productName',
+        //   slots: { title: 'productNameTitle' },
+        //   scopedSlots: { customRender: 'copySlot' }
+        // },
         // {
         //     title: "支付订单号",
         //     align: "center",
@@ -210,26 +241,10 @@ export default {
         //     dataIndex: "orderId"
         // },
         {
-          // title: '商品ID',
-          align: 'center',
-          width: 80,
-          dataIndex: 'productId',
-          slots: { title: 'productIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
-        },
-        {
-          // title: '商品名称',
-          align: 'center',
-          width: 120,
-          dataIndex: 'productName',
-          slots: { title: 'productNameTitle' },
-          scopedSlots: { customRender: 'copySlot' }
-        },
-        {
           // title: '平台订单号',
           dataIndex: 'queryId',
           slots: { title: 'queryIdTitle' },
-          scopedSlots: { customRender: 'copySlot' }
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '支付金额',
@@ -377,14 +392,15 @@ export default {
   color: rgba(0, 0, 0, 0.65);
 }
 
-.large-text-container {
-  display: block;
-  width: auto;
-  max-width: 360px;
-  overflow-y: auto;
+.ant-divider-horizontal {
+  margin: 6px 0 6px 0;
+  padding: 0 10px 0 10px;
 }
 
-.large-text {
+.large-text-container {
+  display: block;
+  max-width: 280px;
+  overflow-y: auto;
   white-space: normal;
   word-break: break-word;
 }
