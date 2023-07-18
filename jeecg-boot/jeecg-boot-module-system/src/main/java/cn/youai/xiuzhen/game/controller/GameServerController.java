@@ -5,6 +5,7 @@ import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.enums.OutdatedType;
 import cn.youai.server.springboot.component.OkHttpHelper;
+import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerTag;
@@ -27,10 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -121,8 +119,13 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @AutoLog(value = "游戏服配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameServer entity) {
+        Date onlineDate = DateUtils.dateOnly(entity.getOnlineTime());
+        Date openDate = DateUtils.dateOnly(entity.getOpenTime());
+        if (onlineDate.before(openDate)) {
+            return Result.error("上线时间不可早于开服日期!");
+        }
+
         service.applyChange(entity);
-        GameServerCache.getInstance().reload(entity.getId());
         OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         return Result.ok("编辑成功!");
     }
