@@ -17,7 +17,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -33,9 +32,9 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
 
     @Override
     public IPage<GameServerGroup> queryList(Page<?> page,
-                                             GameServerGroup entity,
-                                             DateRange createTimeRange,
-                                             DateRange crossSettleTimeRange) {
+                                            GameServerGroup entity,
+                                            DateRange createTimeRange,
+                                            DateRange crossSettleTimeRange) {
         return getBaseMapper().queryList(page, entity, createTimeRange, crossSettleTimeRange);
     }
 
@@ -51,7 +50,14 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
     @Override
     public Map<Integer, Response> requestGroupGmByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params) {
         List<GameServerGroup> list = selectByServerId(serverIds);
-        Set<Integer> ids = CollUtil.isNotEmpty(list) ? list.stream().map(GameServerGroup::getId).collect(Collectors.toSet()) : Collections.emptySet();
+        Set<Integer> ids = new HashSet<>();
+        for (GameServerGroup entity : list) {
+            if (entity.getId() == null) {
+                log.error("group config error, serverIds:" + entity.getServerIds(), new RuntimeException("requestGroupGmByServerIds error, serverIds:" + serverIds + ", path:" + path));
+            } else {
+                ids.add(entity.getId());
+            }
+        }
         return getUrl(ids, path, params);
     }
 

@@ -48,7 +48,7 @@
     </select>
 
     <select id="selectByServerId" resultType="cn.youai.xiuzhen.game.entity.GameServerGroup">
-        SELECT g.*
+        SELECT g.*, GROUP_CONCAT(s.`id`) AS server_ids
         FROM `game_server` s
         LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
         LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
