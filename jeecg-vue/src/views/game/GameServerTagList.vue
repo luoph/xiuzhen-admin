@@ -108,6 +108,11 @@ export default {
           }
         },
         {
+          title: '标签ID',
+          align: 'center',
+          dataIndex: 'id'
+        },
+        {
           title: '标签名',
           align: 'center',
           dataIndex: 'name',
