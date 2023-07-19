@@ -53,8 +53,9 @@
         LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
         LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
         <where>
+            s.`outdated` = 0
             <if test="serverIds != null and serverIds.size() > 0">
-                s.`id` IN
+                AND s.`id` IN
                 <foreach item="item" collection="serverIds" open="(" separator="," close=")">
                     #{item}
                 </foreach>
