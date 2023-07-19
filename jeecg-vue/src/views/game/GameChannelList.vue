@@ -104,6 +104,9 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
+        <span slot="largeTextSlot" slot-scope="text" @click="copyText(text)" class="large-text-container">
+          {{ text || '--' }}
+        </span>
         <span slot="tagSlot" slot-scope="text" class="tag-container">
           <a-tag v-if="!text">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
@@ -171,7 +174,7 @@ export default {
           }
         },
         {
-          title: '渠道id',
+          title: '渠道ID',
           align: 'center',
           width: 80,
           sorter: true,
@@ -180,12 +183,14 @@ export default {
         {
           title: '名称',
           align: 'center',
-          dataIndex: 'name'
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           title: '备注',
           align: 'center',
-          dataIndex: 'remark'
+          dataIndex: 'remark',
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           // title: '唯一标识',
@@ -206,6 +211,7 @@ export default {
         {
           title: '公告id',
           align: 'center',
+          width: 80,
           dataIndex: 'noticeId'
         },
         {
@@ -232,9 +238,9 @@ export default {
         //   }
         // },
         {
-          title: '网页登录',
+          title: '禁用白名单',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'testLogin',
           scopedSlots: { customRender: 'switchSlot' }
         },
@@ -374,5 +380,14 @@ export default {
 .tag-container {
   min-width: 160px;
   max-width: 480px;
+}
+
+.large-text-container {
+  display: block;
+  min-width: 100px;
+  max-width: 280px;
+  overflow-y: auto;
+  white-space: normal;
+  word-break: break-word;
 }
 </style>

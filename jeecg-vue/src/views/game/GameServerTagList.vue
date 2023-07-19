@@ -109,6 +109,7 @@ export default {
         },
         {
           title: '标签ID',
+          sorter: true,
           align: 'center',
           dataIndex: 'id'
         },
@@ -120,6 +121,7 @@ export default {
         },
         {
           title: '排序',
+          sorter: true,
           align: 'center',
           dataIndex: 'position'
         },
@@ -130,11 +132,13 @@ export default {
         },
         {
           title: '创建时间',
+          sorter: true,
           align: 'center',
           dataIndex: 'createTime'
         },
         {
           title: '修改时间',
+          sorter: true,
           align: 'center',
           dataIndex: 'updateTime'
         },

@@ -34,8 +34,8 @@
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="网页登录" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="网页登录" v-decorator="['testLogin', validatorRules.testLogin]" initialValue="0">
+        <a-form-item label="禁用IP白名单" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select placeholder="启用后IP白名单失效，所有地址均可访问，谨慎开启！！！" v-decorator="['testLogin', validatorRules.testLogin]" initialValue="0">
             <a-select-option :value="0">关闭</a-select-option>
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
@@ -87,7 +87,7 @@ export default {
         versionCode: { rules: [{ required: true, message: '请输入版本号!' }] },
         versionName: { rules: [{ required: true, message: '请输入版本名!' }] },
         versionUpdateTime: { rules: [{ required: true, message: '请选择版本更新时间!' }] },
-        testLogin: { rules: [{ required: true, message: '请选择网页登录开关!' }] },
+        testLogin: { rules: [{ required: true, message: '请选择禁用白名单开关!' }] },
         taStatistics: { rules: [{ required: true, message: '请选择数数统计开关!' }] },
         ipWhitelist: {},
         remark: {},

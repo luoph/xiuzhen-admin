@@ -237,7 +237,7 @@ export default {
           fixed: 'left',
           align: 'center',
           dataIndex: 'id',
-          sorter: true,
+          // sorter: true,
           slots: { title: 'idTitle' },
           scopedSlots: { customRender: 'idTagSlot' }
         },
@@ -296,14 +296,14 @@ export default {
         {
           title: '开服时间',
           width: 120,
-          align: 'center',
           sorter: true,
+          align: 'center',
           dataIndex: 'openTime'
         },
         {
           title: '上线时间',
-          align: 'center',
           sorter: true,
+          align: 'center',
           dataIndex: 'onlineTime'
         },
         {
