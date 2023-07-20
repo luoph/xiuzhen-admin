@@ -64,7 +64,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @PostMapping(value = "/add")
     @PermissionData(value = "game/GameChannelList")
     public Result<?> add(@RequestBody GameEmail entity, HttpServletRequest req) {
-        entity.setState(0).setReviewBy(null).setReviewTime(null);
+        entity.setState(0).setReviewBy(null).setReviewTime(null).sortReceiverIds();
         List<Long> receiverIds = StringUtils.split2Long(entity.getReceiverIds());
         if (CollUtil.isEmpty(receiverIds)) {
             return Result.error("目标主体未设置！");

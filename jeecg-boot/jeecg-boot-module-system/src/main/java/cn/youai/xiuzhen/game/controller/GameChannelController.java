@@ -63,14 +63,14 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @PostMapping(value = "/add")
     @RequiresPermissions("game:channel:admin")
     public Result<?> add(@RequestBody GameChannel entity) {
-        return super.add(entity);
+        return super.add(entity.sortIpWhitelist());
     }
 
     @AutoLog(value = "游戏渠道-编辑")
     @PutMapping(value = "/edit")
     @RequiresPermissions("game:channel:admin")
     public Result<?> edit(@RequestBody GameChannel entity) {
-        return super.edit(entity);
+        return super.edit(entity.sortIpWhitelist());
     }
 
     @AutoLog(value = "游戏渠道-通过id删除")

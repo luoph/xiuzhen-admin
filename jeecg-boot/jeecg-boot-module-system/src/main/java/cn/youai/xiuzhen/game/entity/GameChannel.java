@@ -1,5 +1,7 @@
 package cn.youai.xiuzhen.game.entity;
 
+import cn.hutool.core.util.StrUtil;
+import cn.youai.basics.utils.StringUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -15,6 +17,8 @@ import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -135,4 +139,13 @@ public class GameChannel extends BaseEntity {
 
     @TableField(exist = false)
     private List<GameSdkChannel> sdkChannelList;
+
+    public GameChannel sortIpWhitelist() {
+        if (StringUtils.isNotEmpty(getIpWhitelist())) {
+            List<String> ipList = new ArrayList<>(StringUtils.split2Set(getIpWhitelist()));
+            Collections.sort(ipList);
+            setIpWhitelist(StrUtil.join(",", ipList));
+        }
+        return this;
+    }
 }

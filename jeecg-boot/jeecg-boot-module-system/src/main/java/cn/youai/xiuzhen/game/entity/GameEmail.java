@@ -1,5 +1,7 @@
 package cn.youai.xiuzhen.game.entity;
 
+import cn.hutool.core.util.StrUtil;
+import cn.youai.basics.utils.StringUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,7 +16,10 @@ import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author buliangliang
@@ -120,4 +125,13 @@ public class GameEmail extends BaseEntity {
 
     @TableField(exist = false)
     private Long receiverId;
+
+    public GameEmail sortReceiverIds() {
+        if (StringUtils.isNotEmpty(getReceiverIds())) {
+            List<String> list = new ArrayList<>(StringUtils.split2Set(getReceiverIds()));
+            Collections.sort(list);
+            setReceiverIds(StrUtil.join(",", list));
+        }
+        return this;
+    }
 }
