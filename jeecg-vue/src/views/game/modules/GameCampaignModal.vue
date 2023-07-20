@@ -7,6 +7,9 @@
             <a-select-option :value="1">1-节日活动</a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item label="活动分组" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <j-search-select-tag placeholder="请选择活动分组" v-decorator="['groupId', validatorRules.groupId]" dict="game_campaign_group,name,id" />
+        </a-form-item>
         <a-form-item label="活动展示名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称" />
         </a-form-item>
@@ -169,6 +172,7 @@ export default {
         this.form.setFieldsValue(
           pick(
             this.model,
+            'groupId',
             'type',
             'name',
             'description',
@@ -271,6 +275,7 @@ export default {
       this.form.setFieldsValue(
         pick(
           row,
+          'groupId',
           'type',
           'name',
           'description',

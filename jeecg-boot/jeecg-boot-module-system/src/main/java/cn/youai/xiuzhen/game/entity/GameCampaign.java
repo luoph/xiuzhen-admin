@@ -39,6 +39,8 @@ public class GameCampaign extends BaseEntity {
     }
 
     public GameCampaign(GameCampaign other) {
+        this.groupId = other.getGroupId();
+        this.groupName = other.getGroupName();
         this.type = other.getType();
         this.name = other.getName();
         this.description = other.getDescription();
@@ -62,6 +64,19 @@ public class GameCampaign extends BaseEntity {
      */
     @TableId(type = IdType.AUTO)
     private Long id;
+
+    /**
+     * 分组id
+     */
+    @Excel(name = "分组id", width = 15)
+    private Long groupId;
+
+    /**
+     * 分组名称
+     */
+    @TableField(exist = false)
+    @Excel(name = "分组名称", width = 15)
+    private String groupName;
 
     /**
      * 活动类型: 1.节日活动

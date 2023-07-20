@@ -1,10 +1,12 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.CampaignStatus;
 import cn.youai.xiuzhen.game.constant.SwitchStatus;
 import cn.youai.xiuzhen.game.constant.TimeType;
 import cn.youai.xiuzhen.game.entity.*;
+import cn.youai.xiuzhen.game.service.IGameCampaignGroupService;
 import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameCampaignSupportService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
@@ -22,9 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -43,6 +44,9 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @Autowired
     private IGameCampaignSupportService campaignSupportService;
 
+    @Autowired
+    private IGameCampaignGroupService gameCampaignGroupService;
+
     @AutoLog(value = "节日活动信息-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameCampaign entity,
@@ -50,6 +54,17 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
+    }
+
+    @Override
+    protected void onload(List<GameCampaign> pageList) {
+        if (CollUtil.isEmpty(pageList)) {
+            return;
+        }
+        Set<Long> groupIdSet = pageList.stream().map(GameCampaign::getGroupId).collect(Collectors.toSet());
+        Map<Long, String> gameCampaignGroupMap = gameCampaignGroupService.list(Wrappers.<GameCampaignGroup>lambdaQuery().in(GameCampaignGroup::getId, groupIdSet))
+                .stream().collect(Collectors.toMap(GameCampaignGroup::getId, GameCampaignGroup::getName, (key1, key2) -> key2));
+        pageList.forEach(e -> e.setGroupName(gameCampaignGroupMap.get(e.getGroupId())));
     }
 
     @GetMapping(value = "/serverList")

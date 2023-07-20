@@ -4,6 +4,12 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+          <a-col :md="4" :sm="8">
+            <a-form-item label="活动分组">
+              <j-search-select-tag placeholder="请选择活动分组" v-model="queryParam.groupId"
+                dict="game_campaign_group,name,id" />
+            </a-form-item>
+          </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="活动展示名称">
               <j-input placeholder="活动展示名称" v-model="queryParam.showName" />
@@ -83,8 +89,7 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -205,6 +210,11 @@ export default {
         //     return parseInt(index) + 1;
         //   }
         // },
+        {
+          title: '活动分组',
+          align: 'center',
+          dataIndex: 'groupName'
+        },
         {
           title: '主活动id',
           align: 'center',
