@@ -65,7 +65,7 @@
           <span class="scroll-span" @click="copyText(text)">{{ text || '--' }}</span>
         </div>
         <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
-          <span class="scroll-span">
+          <span class="scroll-span" @click="copyText(tag)">
             <a-tag v-if="!text">未设置</a-tag>
             <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
           </span>

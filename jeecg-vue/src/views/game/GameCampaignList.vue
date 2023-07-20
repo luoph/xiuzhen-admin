@@ -6,8 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="活动分组">
-              <j-search-select-tag placeholder="请选择活动分组" v-model="queryParam.groupId"
-                dict="game_campaign_group,name,id" />
+              <j-search-select-tag placeholder="请选择活动分组" v-model="queryParam.groupId" dict="game_campaign_group,name,id" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -89,7 +88,8 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -127,7 +127,7 @@
           {{ text || '--' }}
         </span>
         <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
-          <span class="scroll-span">
+          <span class="scroll-span" @click="copyText(tag)">
             <a-tag v-if="!text">未设置</a-tag>
             <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
           </span>
