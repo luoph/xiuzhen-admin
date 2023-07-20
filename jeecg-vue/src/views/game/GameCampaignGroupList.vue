@@ -6,11 +6,11 @@
         <a-row :gutter="24">
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="分组名称">
-              <j-input placeholder="请输入分组名称模糊查询" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入分组名称模糊查询" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+            <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
@@ -32,8 +32,7 @@
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload> -->
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal"
-        @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
@@ -44,35 +43,28 @@
 
     <!-- table区域-begin -->
     <div>
-      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
-          selectedRowKeys.length }}</a>项
+      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
-      <a-table ref="table" size="middle" :scroll="{ x: true }" bordered rowKey="id" :columns="columns"
-        :dataSource="dataSource" :pagination="ipagination" :loading="loading"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" class="j-table-force-nowrap"
-        @change="handleTableChange">
-
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
-        <template slot="imgSlot" slot-scope="text,record">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt=""
-            style="max-width:80px;font-size: 12px;font-style: italic;" />
-        </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadFile(text)">
-            下载
-          </a-button>
-        </template>
-
+      <a-table
+        ref="table"
+        size="middle"
+        :scroll="{ x: true }"
+        bordered
+        rowKey="id"
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="ipagination"
+        :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        class="j-table-force-nowrap"
+        @change="handleTableChange"
+      >
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
           <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
@@ -88,22 +80,18 @@
             </a-menu>
           </a-dropdown>
         </span>
-
       </a-table>
     </div>
-
-    <game-campaign-group-modal ref="modalForm" @ok="modalFormOk"></game-campaign-group-modal>
+    <game-campaign-group-modal ref="modalForm" @ok="modalFormOk" />
   </a-card>
 </template>
 
 <script>
-
-import '@/assets/less/TableExpand.less'
-import { mixinDevice } from '@/utils/mixin'
-import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-import { getAction } from '../../api/manage'
-import { filterObj } from '@/utils/util'
-import GameCampaignGroupModal from './modules/GameCampaignGroupModal'
+import '@/assets/less/TableExpand.less';
+import { mixinDevice } from '@/utils/mixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { filterObj } from '@/utils/util';
+import GameCampaignGroupModal from './modules/GameCampaignGroupModal';
 
 export default {
   name: 'GameCampaignGroupList',
@@ -129,41 +117,74 @@ export default {
         // },
         {
           title: '分组id',
-          align: "center",
-          dataIndex: 'id',
-          width: 100
+          align: 'center',
+          dataIndex: 'id'
         },
         {
           title: '分组名称',
-          align: "center",
+          align: 'center',
           dataIndex: 'name',
-          width: 300
+          customRender: (value) => {
+            return value || '--';
+          }
+        },
+        {
+          title: '备注',
+          align: 'center',
+          dataIndex: 'remark',
+          customRender: (value) => {
+            return value || '--';
+          }
+        },
+        {
+          title: '创建人',
+          align: 'center',
+          dataIndex: 'createBy',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '创建时间',
-          align: "center",
+          align: 'center',
           dataIndex: 'createTime',
-          width: 200
+          customRender: (value) => {
+            return value || '--';
+          }
+        },
+        {
+          title: '更新人',
+          align: 'center',
+          dataIndex: 'updateBy',
+          customRender: (value) => {
+            return value || '--';
+          }
+        },
+        {
+          title: '更新时间',
+          align: 'center',
+          dataIndex: 'updateTime',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '操作',
+          align: 'center',
           dataIndex: 'action',
-          align: "center",
-          fixed: "right",
-          width: 147,
           scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
-        list: "/game/gameCampaignGroup/list",
-        delete: "/game/gameCampaignGroup/delete",
-        deleteBatch: "/game/gameCampaignGroup/deleteBatch",
-        exportXlsUrl: "/game/gameCampaignGroup/exportXls",
-        importExcelUrl: "game/gameCampaignGroup/importExcel"
+        list: '/game/gameCampaignGroup/list',
+        delete: '/game/gameCampaignGroup/delete',
+        deleteBatch: '/game/gameCampaignGroup/deleteBatch',
+        exportXlsUrl: '/game/gameCampaignGroup/exportXls',
+        importExcelUrl: 'game/gameCampaignGroup/importExcel'
       },
       dictOptions: {},
-      superFieldList: [],
-    }
+      superFieldList: []
+    };
   },
   created() {
     this.getSuperFieldList();
@@ -171,7 +192,7 @@ export default {
   computed: {
     importExcelUrl: function () {
       return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
-    },
+    }
   },
   methods: {
     // handleAdd() {
@@ -191,15 +212,15 @@ export default {
       }
       return `${window._CONFIG['domainURL']}/${text}`;
     },
-    initDictConfig() {
-    },
+    initDictConfig() {},
     getSuperFieldList() {
       let fieldList = [];
-      fieldList.push({ type: 'string', value: 'name', text: '分组名称', dictCode: '' })
-      this.superFieldList = fieldList
+      fieldList.push({ type: 'string', value: 'name', text: '分组名称', dictCode: '' });
+      fieldList.push({ type: 'string', value: 'remark', text: '备注', dictCode: '' });
+      this.superFieldList = fieldList;
     }
   }
-}
+};
 </script>
 <style scoped>
 @import '~@assets/less/common.less';

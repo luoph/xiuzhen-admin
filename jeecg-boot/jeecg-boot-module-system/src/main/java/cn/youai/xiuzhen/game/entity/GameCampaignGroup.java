@@ -38,4 +38,11 @@ public class GameCampaignGroup extends BaseEntity {
     @Excel(name = "分组名称", width = 15)
     @ApiModelProperty(value = "分组名称")
     private String name;
+
+    /**
+     * 备注
+     */
+    @Excel(name = "备注", width = 15)
+    @ApiModelProperty(value = "备注")
+    private String remark;
 }

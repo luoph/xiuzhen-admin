@@ -1,13 +1,20 @@
 <template>
-  <j-modal :title="title" :width="width" :visible="visible" switchFullscreen @ok="handleOk"
-    :okButtonProps="{ class: { 'jee-hidden': disableSubmit } }" @cancel="handleCancel" cancelText="关闭">
-    <game-campaign-group-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></game-campaign-group-form>
+  <j-modal
+    :title="title"
+    :width="width"
+    :visible="visible"
+    switchFullscreen
+    @ok="handleOk"
+    :okButtonProps="{ class: { 'jee-hidden': disableSubmit } }"
+    @cancel="handleCancel"
+    cancelText="关闭"
+  >
+    <game-campaign-group-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit" />
   </j-modal>
 </template>
 
 <script>
-
-import GameCampaignGroupForm from './GameCampaignGroupForm'
+import GameCampaignGroupForm from './GameCampaignGroupForm';
 export default {
   name: 'GameCampaignGroupModal',
   components: {
@@ -19,7 +26,7 @@ export default {
       width: 800,
       visible: false,
       disableSubmit: false
-    }
+    };
   },
   methods: {
     add(record) {
@@ -30,10 +37,10 @@ export default {
       this.edit(record);
     },
     edit(record) {
-      this.visible = true
+      this.visible = true;
       this.$nextTick(() => {
         this.$refs.realForm.edit(record);
-      })
+      });
     },
     close() {
       this.$emit('close');
@@ -47,8 +54,8 @@ export default {
       this.visible = false;
     },
     handleCancel() {
-      this.close()
+      this.close();
     }
   }
-}
+};
 </script>
