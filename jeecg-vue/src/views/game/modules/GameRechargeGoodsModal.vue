@@ -37,10 +37,10 @@
           <a-input-number v-decorator="['webDisplayPrice', validatorRules.webDisplayPrice]" placeholder="显示价格(网页)" style="width: 100%" />
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['items']" rows="4" placeholder="请输入奖励列表" />
+          <a-textarea :rows="4" v-decorator="['items']" rows="4" placeholder="请输入奖励列表" />
         </a-form-item>
         <a-form-item label="首次额外赠送" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['addition']" rows="4" placeholder="首次额外赠送" />
+          <a-textarea :rows="4" v-decorator="['addition']" rows="4" placeholder="首次额外赠送" />
         </a-form-item>
         <a-form-item label="商品组别" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择商品组别" v-decorator="['goodsGroup', validatorRules.goodsGroup]" initialValue="1">

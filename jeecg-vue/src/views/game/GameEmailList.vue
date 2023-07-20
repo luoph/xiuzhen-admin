@@ -107,23 +107,32 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <template slot="largeText" slot-scope="text">
-          <div class="large-text-container">
-            <span class="large-text" @click="copyText(text)">{{ text || '--' }}</span>
-          </div>
-        </template>
-        <span slot="stateSlot" slot-scope="text, record">
-          <a-tag v-if="record.state === 0" color="red">待审核</a-tag>
-          <a-tag v-else-if="record.state === 1" color="green">已发送</a-tag>
+        <div slot="largeTextSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span" @click="copyText(text)">{{ text || '--' }}</span>
+        </div>
+        <div slot="receiverIdsSlot" slot-scope="text, record" @click="copyText(text)" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else-if="record.receiverType === 1" v-for="tag in text.split(',')" :key="tag" :color="playerIdColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+            <a-tag v-else-if="record.receiverType === 2" v-for="tag in text.split(',')" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
+        <span slot="stateSlot" slot-scope="text">
+          <a-tag v-if="text === 0" color="red">待审核</a-tag>
+          <a-tag v-else-if="text === 1" color="green">已发送</a-tag>
         </span>
-        <span slot="receiverTypeSlot" slot-scope="text, record">
-          <a-tag v-if="record.receiverType === 1" color="blue">玩家</a-tag>
-          <a-tag v-else-if="record.receiverType === 2" color="green">区服</a-tag>
+        <span slot="typeSlot" slot-scope="text">
+          <a-tag v-if="text === 1" color="green">有道具</a-tag>
+          <a-tag v-else>无道具</a-tag>
         </span>
-        <span slot="titleTitle">标题 <a-icon type="copy" /></span>
-        <span slot="describeTitle">描述 <a-icon type="copy" /></span>
-        <span slot="contentTitle">附件 <a-icon type="copy" /></span>
-        <span slot="receiverIdsTitle">目标主体 <a-icon type="copy" /></span>
+        <span slot="receiverTypeSlot" slot-scope="text">
+          <a-tag v-if="text === 1" color="blue">玩家</a-tag>
+          <a-tag v-else-if="text === 2" color="green">区服</a-tag>
+        </span>
+        <span slot="titleTitle" class="copy-text">标题 <a-icon type="copy" /></span>
+        <span slot="describeTitle" class="copy-text">描述 <a-icon type="copy" /></span>
+        <span slot="contentTitle" class="copy-text">附件 <a-icon type="copy" /></span>
+        <span slot="receiverIdsTitle" class="copy-text">目标主体 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <game-email-modal ref="modalForm" @ok="modalFormOk" />
@@ -152,89 +161,80 @@ export default {
   },
   data() {
     return {
-      description: '游戏下发邮件管理页面',
+      description: '邮件列表',
       queryParam: {
         state: undefined,
         receiverType: undefined
       },
-
+      /* 排序参数 */
+      isorter: {
+        column: 'id',
+        order: 'desc'
+      },
       // 表头
       columns: [
         {
           title: '#',
           dataIndex: '',
-          key: 'rowIndex',
           width: 60,
+          key: 'rowIndex',
           align: 'center',
-          /* 排序参数 */
-          isorter: {
-            column: 'id',
-            order: 'desc'
-          },
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
         {
           title: '邮件id',
-          align: 'left',
           width: 80,
+          align: 'center',
           dataIndex: 'id'
         },
         {
           // title: '标题',
-          width: 200,
           dataIndex: 'title',
           slots: { title: 'titleTitle' },
-          scopedSlots: { customRender: 'largeText' }
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           // title: '描述',
-          width: 240,
           dataIndex: 'describe',
           slots: { title: 'describeTitle' },
-          scopedSlots: { customRender: 'largeText' }
-        },
-        {
-          title: '类型',
-          align: 'center',
-          width: 100,
-          dataIndex: 'type',
-          customRender: function (text) {
-            return text === 1 ? '有附件' : '无附件';
-          }
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           // title: '附件',
-          width: 240,
           dataIndex: 'content',
           slots: { title: 'contentTitle' },
-          scopedSlots: { customRender: 'largeText' }
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           title: '状态',
           align: 'center',
-          width: 100,
           dataIndex: 'state',
           scopedSlots: { customRender: 'stateSlot' }
         },
         {
           title: '目标类型',
           align: 'center',
-          width: 100,
           dataIndex: 'receiverType',
           scopedSlots: { customRender: 'receiverTypeSlot' }
         },
         {
           // title: '目标主体',
-          width: 240,
           dataIndex: 'receiverIds',
           slots: { title: 'receiverIdsTitle' },
-          scopedSlots: { customRender: 'largeText' }
+          scopedSlots: { customRender: 'receiverIdsSlot' }
+        },
+        {
+          title: '类型',
+          align: 'center',
+          dataIndex: 'type',
+          scopedSlots: { customRender: 'typeSlot' }
         },
         {
           title: '生效时间',
           align: 'center',
+          width: 100,
           dataIndex: 'sendTime',
           customRender: (value) => {
             return value || '--';
@@ -243,6 +243,7 @@ export default {
         {
           title: '开始时间',
           align: 'center',
+          width: 100,
           dataIndex: 'startTime',
           customRender: (value) => {
             return value || '--';
@@ -251,6 +252,7 @@ export default {
         {
           title: '结束时间',
           align: 'center',
+          width: 100,
           dataIndex: 'endTime',
           customRender: (value) => {
             return value || '--';
@@ -260,7 +262,7 @@ export default {
           title: '创建时间',
           align: 'center',
           fixed: 'right',
-          width: 120,
+          width: 100,
           dataIndex: 'createTime',
           customRender: (value) => {
             return value || '--';
@@ -344,15 +346,8 @@ export default {
   margin: 6px 0 6px 0;
 }
 
-.large-text-container {
-  display: flex;
-  overflow-x: hidden;
-  overflow-y: auto;
-  max-height: 200px;
-}
-
-.large-text {
-  white-space: normal;
-  word-break: break-word;
+.scroll-container {
+  min-width: 80px;
+  max-width: 240px;
 }
 </style>

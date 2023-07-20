@@ -94,36 +94,23 @@
         class="j-table-force-nowrap"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
-        <template slot="imgSlot" slot-scope="text, record">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无图片</span>
-          <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt="" style="max-width: 80px; font-size: 12px; font-style: italic" />
-        </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadFile(text)"> 下载 </a-button>
-        </template>
-
+        <span slot="copySlot" slot-scope="text">
+          <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
+        </span>
+        <span slot="idTagSlot" slot-scope="text">
+          <a-tag :key="text" :color="tagColor(text)" @click="copyText(text)">{{ text }}</a-tag>
+        </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
           <a-divider type="vertical" />
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a @click="handleDetail(record)">详情</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          <a @click="handleDetail(record)">详情</a>
         </span>
+        <span slot="playerIdTitle" class="copy-text">玩家ID <a-icon type="copy" /></span>
+        <span slot="nicknameTitle" class="copy-text">角色名 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="combatPowerTitle" class="copy-text">战力 <a-icon type="copy" /></span>
+        <span slot="combatPowerCompensationTitle" class="copy-text">战力补偿 <a-icon type="copy" /></span>
+        <span slot="totalCombatPowerTitle" class="copy-text">总战力 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -160,19 +147,25 @@ export default {
           }
         },
         {
-          title: '服务器id',
+          // title: '区服ID',
           align: 'center',
-          dataIndex: 'serverId'
+          dataIndex: 'serverId',
+          slots: { title: 'serverIdTitle' },
+          scopedSlots: { customRender: 'idTagSlot' }
         },
         {
-          title: '玩家ID',
+          // title: '玩家ID',
           align: 'center',
-          dataIndex: 'playerId'
+          dataIndex: 'playerId',
+          slots: { title: 'playerIdTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '角色名',
+          // title: '角色名',
           align: 'center',
-          dataIndex: 'nickname'
+          dataIndex: 'nickname',
+          slots: { title: 'nicknameTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '境界等级',
@@ -180,19 +173,25 @@ export default {
           dataIndex: 'level'
         },
         {
-          title: '战力',
+          // title: '战力',
           align: 'center',
-          dataIndex: 'combatPower'
+          dataIndex: 'combatPower',
+          slots: { title: 'combatPowerTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '战力补偿',
+          // title: '战力补偿',
           align: 'center',
-          dataIndex: 'combatPowerCompensation'
+          dataIndex: 'combatPowerCompensation',
+          slots: { title: 'combatPowerCompensationTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '总战力',
+          // title: '总战力',
           align: 'center',
-          dataIndex: 'totalCombatPower'
+          dataIndex: 'totalCombatPower',
+          slots: { title: 'totalCombatPowerTitle' },
+          scopedSlots: { customRender: 'copySlot' }
         },
         {
           title: '累计充值',

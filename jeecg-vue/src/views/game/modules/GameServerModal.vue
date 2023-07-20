@@ -53,10 +53,10 @@
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="推荐标识">
           <a-select placeholder="请选择推荐标识" v-decorator="['recommend', validatorRules.recommend]">
-            <a-select-option :value="0">普通</a-select-option>
-            <a-select-option :value="1">推荐</a-select-option>
-            <a-select-option :value="2">新服</a-select-option>
-            <a-select-option :value="3">推荐新服</a-select-option>
+            <a-select-option :value="0">普通[0]</a-select-option>
+            <a-select-option :value="1">推荐[1]</a-select-option>
+            <a-select-option :value="2">新服[2]</a-select-option>
+            <a-select-option :value="3">推荐[3]</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服类型">
@@ -66,26 +66,26 @@
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
-          <a-date-picker showTime format="YYYY-MM-DD" v-decorator="['openTime', {}]" />
+          <a-date-picker placeholder="开服时间" showTime format="YYYY-MM-DD" v-decorator="['openTime', {}]" style="width: 100%" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上线时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['onlineTime', {}]" />
+          <a-date-picker placeholder="上线时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['onlineTime', {}]" style="width: 100%" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合并状态">
-          <a-select placeholder="合并状态" v-decorator="['outdated', validatorRules.outdated]" initialValue="0">
+          <a-select placeholder="合并状态" v-decorator="['outdated', validatorRules.outdated]" :initialValue="0">
             <a-select-option :value="0">上线中</a-select-option>
             <a-select-option :value="1">已合并</a-select-option>
             <a-select-option :value="2">已下线</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="数数统计" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="" v-decorator="['taStatistics', validatorRules.taStatistics]" initialValue="1">
+          <a-select placeholder="" v-decorator="['taStatistics', validatorRules.taStatistics]" :initialValue="0">
             <a-select-option :value="0">关闭</a-select-option>
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="在线统计开关">
-          <a-select placeholder="在线统计开关" v-decorator="['onlineStat', validatorRules.payCallbackStatus]" initialValue="1">
+          <a-select placeholder="在线统计开关" v-decorator="['onlineStat', validatorRules.payCallbackStatus]" :initialValue="1">
             <a-select-option :value="0">关闭</a-select-option>
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
@@ -102,18 +102,18 @@
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="删档返还的渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="删档返还渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-multi-select-tag
             v-decorator="['stopServerRefundChannel', validatorRules.stopServerRefundChannel]"
-            placeholder="请选择删档返还的渠道"
+            placeholder="请选择删档返还渠道"
             dictCode="game_channel, name, simple_name"
           >
           </j-multi-select-tag>
         </a-form-item>
         <a-form-item label="删档返还的区服版本" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select mode="multiple" placeholder="选择删档返还的区服版本" v-decorator="['stopServerRefundVersionType', validatorRules.stopServerRefundVersionType]">
-            <a-select-option value="1">普通服</a-select-option>
-            <a-select-option value="2">BT服</a-select-option>
+            <a-select-option value="1">普通版</a-select-option>
+            <a-select-option value="2">BT版</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="版本类型">
@@ -150,16 +150,13 @@
           <a-input-number v-decorator="['reservePlayerId', {}]" style="width: 100%" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['mergeTime', {}]" />
+          <a-date-picker placeholder="合服时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['mergeTime', {}]" style="width: 100%;"/>
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="单服活动结算时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['singleSettleTime', {}]" />
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="活动结算时间">
+          <a-date-picker placeholder="活动结算时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['singleSettleTime', {}]" style="width: 100%;"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
           <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
-        </a-form-item>
-        <a-form-item v-if="isEdit" :labelCol="labelCol" :wrapperCol="wrapperCol" label="创建时间">
-          <a-date-picker :disabled="isEdit" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['createTime', {}]" />
         </a-form-item>
       </a-form>
     </a-spin>

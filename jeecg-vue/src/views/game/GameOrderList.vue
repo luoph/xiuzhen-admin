@@ -98,6 +98,30 @@
             <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
           </span>
         </div>
+        <span slot="orderStatusSlot" slot-scope="text">
+          <!-- 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放 -->
+          <a-tag v-if="text === 0" color="gray">待支付</a-tag>
+          <a-tag v-else-if="text === 1" color="blue">已支付</a-tag>
+          <a-tag v-else-if="text === 2" color="orange">已转发</a-tag>
+          <a-tag v-else-if="text === 3" color="red">发放中</a-tag>
+          <a-tag v-else-if="text === 4" color="green">已发放</a-tag>
+          <a-tag v-else>未知</a-tag>
+        </span>
+        <span slot="accountSlot" slot-scope="text" @click="copyText(text)" style="min-width: 100px">
+          {{ text || '--' }}
+        </span>
+        <span slot="productSlot" slot-scope="text, record" @click="copyText(text)" style="min-width: 100px"> {{ record.productName }}（{{ text }}） </span>
+        <span slot="orderIdSlot" slot-scope="text" @click="copyText(text)" style="min-width: 140px">
+          {{ text || '--' }}
+        </span>
+        <div slot="largeTextSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span" @click="copyText(text)">{{ text || '--' }}</span>
+        </div>
+        <span slot="playerSlot" slot-scope="text, record" style="white-space: nowrap">
+          <a-tag>ID</a-tag><a @click="copyText(record.playerId)" class="copy-text"> {{ record.playerId }} <a-icon type="copy" /></a>
+          <a-divider />
+          <a-tag>昵称</a-tag><a @click="copyText(record.nickname)" class="copy-text"> {{ record.nickname }} <a-icon type="copy" /></a>
+        </span>
         <span slot="action" slot-scope="status, record">
           <a @click="handleEdit(record)">详情</a>
           <a-divider type="vertical" v-has="'game:vip:admin'" />
@@ -109,32 +133,15 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="orderStatusSlot" slot-scope="text">
-          <!-- 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放 -->
-          <a-tag v-if="text === 0" color="gray">待支付</a-tag>
-          <a-tag v-else-if="text === 1" color="blue">已支付</a-tag>
-          <a-tag v-else-if="text === 2" color="orange">已转发</a-tag>
-          <a-tag v-else-if="text === 3" color="red">发放中</a-tag>
-          <a-tag v-else-if="text === 4" color="green">已发放</a-tag>
-          <a-tag v-else>未知</a-tag>
-        </span>
-        <span slot="largeTextSlot" slot-scope="text" @click="copyText(text)" class="large-text-container">
-          {{ text || '--' }}
-        </span>
-        <span slot="playerSlot" slot-scope="text, record" style="white-space: nowrap">
-          <a-tag>ID</a-tag><a @click="copyText(record.playerId)" class="copy-text"> {{ record.playerId }} <a-icon type="copy" /></a>
-          <a-divider />
-          <a-tag>昵称</a-tag><a @click="copyText(record.nickname)" class="copy-text"> {{ record.nickname }} <a-icon type="copy" /></a>
-        </span>
-        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
-        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
-        <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
-        <span slot="accountTitle">账号 <a-icon type="copy" /></span>
-        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
-        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
-        <span slot="productIdTitle">商品ID <a-icon type="copy" /></span>
-        <span slot="productNameTitle">商品名 <a-icon type="copy" /></span>
-        <span slot="queryIdTitle">平台订单号 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="playerIdTitle" class="copy-text">玩家ID <a-icon type="copy" /></span>
+        <span slot="nicknameTitle" class="copy-text">角色名 <a-icon type="copy" /></span>
+        <span slot="accountTitle" class="copy-text">账号 <a-icon type="copy" /></span>
+        <span slot="channelTitle" class="copy-text">渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle" class="copy-text">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="productIdTitle" class="copy-text">商品ID <a-icon type="copy" /></span>
+        <span slot="productNameTitle" class="copy-text">商品 <a-icon type="copy" /></span>
+        <span slot="queryIdTitle" class="copy-text">平台订单号 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
@@ -181,7 +188,6 @@ export default {
         {
           // title: '区服ID',
           align: 'center',
-          width: 80,
           dataIndex: 'serverId',
           slots: { title: 'serverIdTitle' },
           scopedSlots: { customRender: 'idTagSlot' }
@@ -212,7 +218,7 @@ export default {
           align: 'center',
           dataIndex: 'account',
           slots: { title: 'accountTitle' },
-          scopedSlots: { customRender: 'largeTextSlot' }
+          scopedSlots: { customRender: 'accountSlot' }
         },
         {
           // title: '渠道',
@@ -229,12 +235,11 @@ export default {
           scopedSlots: { customRender: 'copySlot' }
         },
         {
-          title: '商品',
+          // title: '商品',
           align: 'center',
-          dataIndex: 'productName',
-          customRender: (text, record) => {
-            return `${text}（${record.productId}）`;
-          }
+          dataIndex: 'productId',
+          slots: { title: 'productIdTitle' },
+          scopedSlots: { customRender: 'productSlot' }
         },
         // {
         //   // title: '商品名称',
@@ -254,11 +259,10 @@ export default {
           // title: '平台订单号',
           dataIndex: 'queryId',
           slots: { title: 'queryIdTitle' },
-          scopedSlots: { customRender: 'largeTextSlot' }
+          scopedSlots: { customRender: 'orderIdSlot' }
         },
         {
           title: '支付金额',
-          width: 80,
           align: 'center',
           dataIndex: 'payAmount'
         },
@@ -294,18 +298,12 @@ export default {
         {
           title: '支付时间',
           align: 'center',
-          dataIndex: 'payTime',
-          customRender: (value) => {
-            return value || '--';
-          }
+          dataIndex: 'payTime'
         },
         {
           title: '发货时间',
           align: 'center',
-          dataIndex: 'sendTime',
-          customRender: (value) => {
-            return value || '--';
-          }
+          dataIndex: 'sendTime'
         },
         // },
         // {
@@ -317,7 +315,8 @@ export default {
         //   title: '创建时间',
         //   align: 'center',
         //   width: 120,
-        //   dataIndex: 'createTime'
+        //   dataIndex: 'createTime',
+        //   scopedSlots: { customRender: 'textSlot' }
         // },
         {
           title: '操作',
@@ -383,15 +382,10 @@ export default {
 
 .ant-divider-horizontal {
   margin: 6px 0 6px 0;
-  padding: 0 10px 0 10px;
 }
 
-.large-text-container {
-  display: block;
-  min-width: 80px;
+.scroll-container {
+  min-width: 140px;
   max-width: 320px;
-  overflow-y: auto;
-  white-space: normal;
-  word-break: break-word;
 }
 </style>

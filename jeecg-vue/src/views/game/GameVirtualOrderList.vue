@@ -92,11 +92,11 @@
           <a-tag v-if="text === 0" color="red">无效</a-tag>
           <a-tag v-else color="green">有效</a-tag>
         </span>
-        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
-        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
-        <span slot="playerNameTitle">玩家名 <a-icon type="copy" /></span>
-        <span slot="goodsIdTitle">商品ID <a-icon type="copy" /></span>
-        <span slot="goodsNameTitle">商品名称 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="playerIdTitle" class="copy-text">玩家ID <a-icon type="copy" /></span>
+        <span slot="playerNameTitle" class="copy-text">玩家名 <a-icon type="copy" /></span>
+        <span slot="goodsIdTitle" class="copy-text">商品ID <a-icon type="copy" /></span>
+        <span slot="goodsNameTitle" class="copy-text">商品名称 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

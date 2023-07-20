@@ -134,8 +134,8 @@
             <a-divider v-if="index !== text.length - 1" />
           </li>
         </span>
-        <span slot="nameTitle">名称 <a-icon type="copy" /></span>
-        <span slot="hostnameTitle">主机名 <a-icon type="copy" /></span>
+        <span slot="nameTitle" class="copy-text">名称 <a-icon type="copy" /></span>
+        <span slot="hostnameTitle" class="copy-text">主机名 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->

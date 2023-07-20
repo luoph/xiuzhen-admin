@@ -89,8 +89,8 @@
           <a-tag v-if="!text">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
-        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
-        <span slot="channelTitle">父渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle" class="copy-text">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="channelTitle" class="copy-text">父渠道 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->

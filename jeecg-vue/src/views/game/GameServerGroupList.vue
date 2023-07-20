@@ -105,14 +105,14 @@
           <a-tag v-if="!text">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
         </span>
-        <span slot="idTitle">跨服ID <a-icon type="copy" /></span>
-        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
-        <span slot="hostTitle">IP <a-icon type="copy" /></span>
-        <span slot="gmUrlTitle">GM地址 <a-icon type="copy" /></span>
-        <span slot="crossServerUrlTitle">跨服地址 <a-icon type="copy" /></span>
-        <span slot="chatServerUrlTitle">聊天服地址 <a-icon type="copy" /></span>
-        <span slot="nameTitle">名称 <a-icon type="copy" /></span>
-        <span slot="hostnameTitle">主机名 <a-icon type="copy" /></span>
+        <span slot="idTitle" class="copy-text">跨服ID <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="hostTitle" class="copy-text">IP <a-icon type="copy" /></span>
+        <span slot="gmUrlTitle" class="copy-text">GM地址 <a-icon type="copy" /></span>
+        <span slot="crossServerUrlTitle" class="copy-text">跨服地址 <a-icon type="copy" /></span>
+        <span slot="chatServerUrlTitle" class="copy-text">聊天服地址 <a-icon type="copy" /></span>
+        <span slot="nameTitle" class="copy-text">名称 <a-icon type="copy" /></span>
+        <span slot="hostnameTitle" class="copy-text">主机名 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->

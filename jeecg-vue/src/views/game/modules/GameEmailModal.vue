@@ -32,19 +32,19 @@
           </a-radio-group>
         </a-form-item>
         <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['receiverIds', { initialValue: '' }]" placeholder="请以英文“,”分割输入多个玩家ID" style="width: 100%" :autoSize="{ minRows: 2, maxRows: 6 }" />
+          <a-textarea :rows="4" v-decorator="['receiverIds', { initialValue: '' }]" placeholder="请以英文“,”分割输入多个玩家ID" style="width: 100%" :autoSize="{ minRows: 2, maxRows: 6 }" />
         </a-form-item>
         <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <game-server-selector v-decorator="['receiverIds', { initialValue: '' }]" @onSelectServer="onServerSelected" />
         </a-form-item>
         <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker placeholder="请选择生效时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%" />
+          <a-date-picker placeholder="生效时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%" />
         </a-form-item>
         <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
+          <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
         </a-form-item>
         <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
+          <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
         </a-form-item>
       </a-form>
     </a-spin>

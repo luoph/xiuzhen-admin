@@ -75,16 +75,16 @@
 
         <a-form-item v-if="model.type === 11" label="砸蛋积分商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea
+          rows="4"
             v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]"
-            rows="4"
             placeholder='活动类型"11-砸蛋" 时必填,格式如下:"[{"goodsId":1,"itemId":1001,"integral":1,"stack":1,"num":100}]"'
           />
         </a-form-item>
 
         <a-form-item v-if="model.type === 14" label="节日派对大奖" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea
-            v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]"
             rows="4"
+            v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]"
             placeholder='活动类型"14-节日派对" 时必填,格式如下:"[{"itemId":1001,"num":100}]"'
           />
         </a-form-item>

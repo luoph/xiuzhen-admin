@@ -93,13 +93,13 @@
             <a>删除</a>
           </a-popconfirm>
         </span>
-        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
-        <span slot="nicknameTitle">角色名 <a-icon type="copy" /></span>
-        <span slot="accountTitle">账号 <a-icon type="copy" /></span>
-        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
-        <span slot="sidTitle">创角区服 <a-icon type="copy" /></span>
-        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
-        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="playerIdTitle" class="copy-text">玩家ID <a-icon type="copy" /></span>
+        <span slot="nicknameTitle" class="copy-text">角色名 <a-icon type="copy" /></span>
+        <span slot="accountTitle" class="copy-text">账号 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="sidTitle" class="copy-text">创角区服 <a-icon type="copy" /></span>
+        <span slot="channelTitle" class="copy-text">渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle" class="copy-text">Sdk渠道 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

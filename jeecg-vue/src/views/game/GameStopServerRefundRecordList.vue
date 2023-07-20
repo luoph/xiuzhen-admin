@@ -119,12 +119,12 @@
             <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
           </span>
         </div>
-        <span slot="sourceServerIdTitle">停服区服ID <a-icon type="copy" /></span>
-        <span slot="sourcePlayerIdTitle">停服玩家ID <a-icon type="copy" /></span>
-        <span slot="targetServerIdTitle">返还区服ID <a-icon type="copy" /></span>
-        <span slot="targetPlayerIdTitle">返还的玩家ID <a-icon type="copy" /></span>
-        <span slot="accountTitle">返还玩家账号 <a-icon type="copy" /></span>
-        <span slot="nicknameTitle">返还玩家角色名 <a-icon type="copy" /></span>
+        <span slot="sourceServerIdTitle" class="copy-text">停服区服ID <a-icon type="copy" /></span>
+        <span slot="sourcePlayerIdTitle" class="copy-text">停服玩家ID <a-icon type="copy" /></span>
+        <span slot="targetServerIdTitle" class="copy-text">返还区服ID <a-icon type="copy" /></span>
+        <span slot="targetPlayerIdTitle" class="copy-text">返还的玩家ID <a-icon type="copy" /></span>
+        <span slot="accountTitle" class="copy-text">返还玩家账号 <a-icon type="copy" /></span>
+        <span slot="nicknameTitle" class="copy-text">返还玩家角色名 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

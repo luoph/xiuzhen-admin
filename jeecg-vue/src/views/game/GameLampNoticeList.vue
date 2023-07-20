@@ -61,18 +61,15 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"
       >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
-        <template slot="imgSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
-        </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
-        </template>
-
+        <div slot="largeTextSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span" @click="copyText(text)">{{ text || '--' }}</span>
+        </div>
+        <div slot="serverIdsSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort().reverse()" :key="tag" :color="tagColor(tag)" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
@@ -80,10 +77,6 @@
           <a-divider type="vertical" />
           <a @click="resumeJob(record)" v-if="record.status === 1">已启动</a>
           <a @click="resumeJob(record)" v-else>已关闭</a>
-        </span>
-        <span slot="tagSlot" slot-scope="text" class="tag-container">
-          <a-tag v-if="!text" color="red">未设置</a-tag>
-          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
       </a-table>
     </div>
@@ -129,23 +122,24 @@ export default {
           title: '标题',
           align: 'left',
           width: 240,
-          dataIndex: 'noticeTitle'
+          dataIndex: 'noticeTitle',
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           title: '正文',
           align: 'left',
-          dataIndex: 'noticeText'
+          dataIndex: 'noticeText',
+          scopedSlots: { customRender: 'largeTextSlot' }
         },
         {
           title: '投放服务器',
           align: 'left',
           dataIndex: 'gameServerList',
-          scopedSlots: { customRender: 'tagSlot' }
+          scopedSlots: { customRender: 'serverIdsSlot' }
         },
         {
           title: '播放频率',
           align: 'center',
-          width: 120,
           dataIndex: 'frequency',
           customRender: (value) => {
             return value || '--';
@@ -154,7 +148,6 @@ export default {
         {
           title: '循环播放周期',
           align: 'center',
-          width: 120,
           dataIndex: 'cyclePeriod',
           customRender: (value) => {
             return value || '--';
@@ -163,7 +156,6 @@ export default {
         {
           title: '开始时间',
           align: 'center',
-          width: 200,
           dataIndex: 'beginTime',
           customRender: (value) => {
             return value || '--';
@@ -172,7 +164,6 @@ export default {
         {
           title: '结束时间',
           align: 'center',
-          width: 200,
           dataIndex: 'endTime',
           customRender: (value) => {
             return value || '--';
@@ -233,4 +224,9 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.scroll-container {
+  min-width: 80px;
+  max-width: 240px;
+}
 </style>

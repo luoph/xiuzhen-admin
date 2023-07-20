@@ -7,7 +7,7 @@
           <a-input v-decorator="['noticeTitle', validatorRules.noticeTitle]" placeholder="请输入标题" />
         </a-form-item>
         <a-form-item label="正文" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['noticeText']" rows="4" placeholder="请输入正文" />
+          <a-textarea :rows="4" v-decorator="['noticeText']" rows="4" placeholder="请输入正文" />
         </a-form-item>
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-if="isEdit" v-decorator="['gameServerList', validatorRules.gameServerList]" placeholder="区服ID" />

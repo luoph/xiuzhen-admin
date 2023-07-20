@@ -150,13 +150,13 @@
           <a-tag v-else-if="text === 3" color="orange">分享</a-tag>
           <a-tag v-else color="red">未知</a-tag>
         </span>
-        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
-        <span slot="accountTitle">账号 <a-icon type="copy" /></span>
-        <span slot="senderIdTitle">发送者id <a-icon type="copy" /></span>
-        <span slot="senderNameTitle">发送者 <a-icon type="copy" /></span>
-        <span slot="receiverIdTitle">接收者id <a-icon type="copy" /></span>
-        <span slot="receiverNameTitle">接收者 <a-icon type="copy" /></span>
-        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="accountTitle" class="copy-text">账号 <a-icon type="copy" /></span>
+        <span slot="senderIdTitle" class="copy-text">发送者id <a-icon type="copy" /></span>
+        <span slot="senderNameTitle" class="copy-text">发送者 <a-icon type="copy" /></span>
+        <span slot="receiverIdTitle" class="copy-text">接收者id <a-icon type="copy" /></span>
+        <span slot="receiverNameTitle" class="copy-text">接收者 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle" class="copy-text">Sdk渠道 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

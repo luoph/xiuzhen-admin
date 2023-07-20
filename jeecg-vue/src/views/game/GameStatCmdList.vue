@@ -85,10 +85,10 @@
           <a-tag v-else-if="text >= 200" color="orange">{{ text }}</a-tag>
           <a-tag v-else color="green">{{ text }}</a-tag>
         </span>
-        <span slot="msgIdTitle">消息ID <a-icon type="copy" /></span>
-        <span slot="msgNameTitle">接口名 <a-icon type="copy" /></span>
-        <span slot="serverIdTitle">区服 <a-icon type="copy" /></span>
-        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
+        <span slot="msgIdTitle" class="copy-text">消息ID <a-icon type="copy" /></span>
+        <span slot="msgNameTitle" class="copy-text">接口名 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服 <a-icon type="copy" /></span>
+        <span slot="playerIdTitle" class="copy-text">玩家ID <a-icon type="copy" /></span>
       </a-table>
     </div>
   </a-card>
@@ -177,6 +177,7 @@ export default {
         {
           title: '时间',
           align: 'center',
+          sorter: true,
           dataIndex: 'createTime'
         }
       ],

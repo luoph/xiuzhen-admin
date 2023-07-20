@@ -109,8 +109,8 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="nameTitle">文件名 <a-icon type="copy" /></span>
-        <span slot="imgUrlTitle">图片地址 <a-icon type="copy" /></span>
+        <span slot="nameTitle" class="copy-text">文件名 <a-icon type="copy" /></span>
+        <span slot="imgUrlTitle" class="copy-text">图片地址 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

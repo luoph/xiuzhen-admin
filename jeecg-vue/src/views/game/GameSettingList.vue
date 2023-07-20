@@ -102,8 +102,8 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="keyTitle">键 <a-icon type="copy" /></span>
-        <span slot="valueTitle">值 <a-icon type="copy" /></span>
+        <span slot="keyTitle" class="copy-text">键 <a-icon type="copy" /></span>
+        <span slot="valueTitle" class="copy-text">值 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

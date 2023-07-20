@@ -184,10 +184,10 @@
           <a-tag v-else-if="record.outdated === 1" color="red">已合并</a-tag>
           <a-tag v-else-if="record.outdated === 2" color="red">已下线</a-tag>
         </span>
-        <span slot="idTitle">区服ID <a-icon type="copy" /></span>
-        <span slot="hostTitle">服务器IP <a-icon type="copy" /></span>
-        <span slot="loginUrlTitle">连接地址 <a-icon type="copy" /></span>
-        <span slot="gmUrlTitle">GM地址 <a-icon type="copy" /></span>
+        <span slot="idTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="hostTitle" class="copy-text">服务器IP <a-icon type="copy" /></span>
+        <span slot="loginUrlTitle" class="copy-text">连接地址 <a-icon type="copy" /></span>
+        <span slot="gmUrlTitle" class="copy-text">GM地址 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->

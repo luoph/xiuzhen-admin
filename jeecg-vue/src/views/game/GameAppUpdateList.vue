@@ -127,10 +127,10 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="appNameTitle">应用名称 <a-icon type="copy" /></span>
-        <span slot="packageNameTitle">应用包名 <a-icon type="copy" /></span>
-        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
-        <span slot="downloadUrlTitle">下载地址 <a-icon type="copy" /></span>
+        <span slot="appNameTitle" class="copy-text">应用名称 <a-icon type="copy" /></span>
+        <span slot="packageNameTitle" class="copy-text">应用包名 <a-icon type="copy" /></span>
+        <span slot="channelTitle" class="copy-text">渠道 <a-icon type="copy" /></span>
+        <span slot="downloadUrlTitle" class="copy-text">下载地址 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

@@ -137,9 +137,9 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
-        <span slot="banValueTitle">封禁值 <a-icon type="copy" /></span>
-        <span slot="reasonTitle">封禁原因 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="banValueTitle" class="copy-text">封禁值 <a-icon type="copy" /></span>
+        <span slot="reasonTitle" class="copy-text">封禁原因 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

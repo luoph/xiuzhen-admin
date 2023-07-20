@@ -80,15 +80,15 @@
         <span slot="copySlot" slot-scope="text">
           <a @click="copyText(text)" class="copy-text">{{ text || '--' }}</a>
         </span>
-        <span slot="simpleNameTitle">唯一标识 <a-icon type="copy" /></span>
-        <span slot="reviewChannelTitle">审核渠道 <a-icon type="copy" /></span>
-        <span slot="roleUrlTitle">角色信息地址 <a-icon type="copy" /></span>
-        <span slot="loginUrlTitle">帐号登录地址 <a-icon type="copy" /></span>
-        <span slot="authUrlTitle">实名认证地址 <a-icon type="copy" /></span>
-        <span slot="checkTextUrlTitle">敏感词检测地址 <a-icon type="copy" /></span>
-        <span slot="accountLoginUrlTitle">账号登录地址 <a-icon type="copy" /></span>
-        <span slot="serverUrlTitle">区服列表地址 <a-icon type="copy" /></span>
-        <span slot="noticeUrlTitle">公告地址 <a-icon type="copy" /></span>
+        <span slot="simpleNameTitle" class="copy-text">唯一标识 <a-icon type="copy" /></span>
+        <span slot="reviewChannelTitle" class="copy-text">审核渠道 <a-icon type="copy" /></span>
+        <span slot="roleUrlTitle" class="copy-text">角色信息地址 <a-icon type="copy" /></span>
+        <span slot="loginUrlTitle" class="copy-text">帐号登录地址 <a-icon type="copy" /></span>
+        <span slot="authUrlTitle" class="copy-text">实名认证地址 <a-icon type="copy" /></span>
+        <span slot="checkTextUrlTitle" class="copy-text">敏感词检测地址 <a-icon type="copy" /></span>
+        <span slot="accountLoginUrlTitle" class="copy-text">账号登录地址 <a-icon type="copy" /></span>
+        <span slot="serverUrlTitle" class="copy-text">区服列表地址 <a-icon type="copy" /></span>
+        <span slot="noticeUrlTitle" class="copy-text">公告地址 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->

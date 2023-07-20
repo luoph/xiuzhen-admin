@@ -75,7 +75,7 @@
             :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
 
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
-        <span slot="action" slot-scope="text, record">
+        <span slot="action" slot-scope="text, record" class="action-container">
           <a @click="handleEdit(record)" v-has="'game:channel:admin'">编辑</a>
           <a-divider type="vertical" v-has="'game:channel:admin'" />
           <a @click="handleCopy(record)" v-has="'game:channel:admin'">复制</a>
@@ -107,6 +107,12 @@
         <span slot="largeTextSlot" slot-scope="text" @click="copyText(text)" class="large-text-container">
           {{ text || '--' }}
         </span>
+        <div slot="ipSlot" slot-scope="text" class="scroll-container">
+          <span class="scroll-span">
+            <a-tag v-if="!text">未设置</a-tag>
+            <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" @click="copyText(tag)">{{ tag }}</a-tag>
+          </span>
+        </div>
         <span slot="tagSlot" slot-scope="text" class="tag-container">
           <a-tag v-if="!text">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
@@ -114,7 +120,7 @@
         <span slot="switchSlot" slot-scope="text">
           <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
-        <span slot="simpleNameTitle">唯一标识 <a-icon type="copy" /></span>
+        <span slot="simpleNameTitle" class="copy-text">唯一标识 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -240,7 +246,7 @@ export default {
         {
           title: '禁用白名单',
           align: 'center',
-          width: 100,
+          width: 90,
           dataIndex: 'testLogin',
           scopedSlots: { customRender: 'switchSlot' }
         },
@@ -248,7 +254,7 @@ export default {
           title: 'IP白名单',
           align: 'left',
           dataIndex: 'ipWhitelist',
-          scopedSlots: { customRender: 'tagSlot' }
+          scopedSlots: { customRender: 'ipSlot' }
         },
         {
           title: '更新时间',
@@ -266,7 +272,6 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          width: 240,
           scopedSlots: { customRender: 'action' }
         }
       ],
@@ -376,6 +381,19 @@ export default {
 </script>
 <style scoped>
 @import '~@assets/less/common.less';
+
+.action-container {
+  display: block;
+  min-width: 120px;
+  max-width: 320px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.scroll-container {
+  min-width: 120px;
+  max-width: 800px;
+}
 
 .tag-container {
   min-width: 160px;

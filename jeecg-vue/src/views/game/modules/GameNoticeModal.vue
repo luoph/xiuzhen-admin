@@ -16,13 +16,13 @@
           <a-input placeholder="请输入标题" v-decorator="['title', validatorRules.title]" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告内容">
-          <a-textarea placeholder="请输入公告内容" v-decorator="['content', validatorRules.content]" size="large" allowClear showCount :auto-size="{ minRows: 5, maxRows: 30 }" />
+          <a-textarea :rows="5" placeholder="请输入公告内容" v-decorator="['content', validatorRules.content]" size="large" allowClear showCount :auto-size="{ minRows: 5, maxRows: 30 }" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开始时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['beginTime', validatorRules.beginTime]" />
+          <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['beginTime', validatorRules.beginTime]" style="width: 100%;"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="结束时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
+          <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%;" />
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
           <a-select placeholder="请选择状态" v-decorator="['status', validatorRules.status]" initialValue="1">

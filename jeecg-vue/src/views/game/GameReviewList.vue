@@ -101,8 +101,8 @@
           <a-tag v-if="!text">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
-        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
-        <span slot="versionTitle">版本号 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle" class="copy-text">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="versionTitle" class="copy-text">版本号 <a-icon type="copy" /></span>
       </a-table>
     </div>
     <!-- table区域-end -->

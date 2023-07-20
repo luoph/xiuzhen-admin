@@ -202,13 +202,13 @@
         <span slot="tagSlot" slot-scope="text">
           <a-tag color="blue">{{ text }}</a-tag>
         </span>
-        <span slot="goodsIdTitle">商品ID <a-icon type="copy" /></span>
-        <span slot="nameTitle">名称 <a-icon type="copy" /></span>
-        <span slot="remarkTitle">备注 <a-icon type="copy" /></span>
-        <span slot="skuTitle">内购SKU <a-icon type="copy" /></span>
-        <span slot="webSkuTitle">网页支付SKU <a-icon type="copy" /></span>
-        <span slot="itemsTitle">奖励列表 <a-icon type="copy" /></span>
-        <span slot="additionTitle">首次额外赠送 <a-icon type="copy" /></span>
+        <span slot="goodsIdTitle" class="copy-text">商品ID <a-icon type="copy" /></span>
+        <span slot="nameTitle" class="copy-text">名称 <a-icon type="copy" /></span>
+        <span slot="remarkTitle" class="copy-text">备注 <a-icon type="copy" /></span>
+        <span slot="skuTitle" class="copy-text">内购SKU <a-icon type="copy" /></span>
+        <span slot="webSkuTitle" class="copy-text">网页支付SKU <a-icon type="copy" /></span>
+        <span slot="itemsTitle" class="copy-text">奖励列表 <a-icon type="copy" /></span>
+        <span slot="additionTitle" class="copy-text">首次额外赠送 <a-icon type="copy" /></span>
       </a-table>
     </div>
 

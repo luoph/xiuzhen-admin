@@ -515,6 +515,9 @@ export const JeecgListMixin = {
 
       let index = Math.round(value / 1000) % this.tagColors.length
       return this.tagColors[index];
+    },
+    playerIdColor(value) {
+      return this.tagColor(Math.round(value / 10000000))
     }
   }
 }

@@ -112,13 +112,13 @@
                         </a-menu>
                     </a-dropdown> -->
         </span>
-        <span slot="serverIdTitle">区服ID <a-icon type="copy" /></span>
-        <span slot="playerIdTitle">玩家ID <a-icon type="copy" /></span>
-        <span slot="nameTitle">角色名 <a-icon type="copy" /></span>
-        <span slot="accountTitle">帐号 <a-icon type="copy" /></span>
-        <span slot="ipTitle">注册IP <a-icon type="copy" /></span>
-        <span slot="channelTitle">渠道 <a-icon type="copy" /></span>
-        <span slot="sdkChannelTitle">Sdk渠道 <a-icon type="copy" /></span>
+        <span slot="serverIdTitle" class="copy-text">区服ID <a-icon type="copy" /></span>
+        <span slot="playerIdTitle" class="copy-text">玩家ID <a-icon type="copy" /></span>
+        <span slot="nameTitle" class="copy-text">角色名 <a-icon type="copy" /></span>
+        <span slot="accountTitle" class="copy-text">帐号 <a-icon type="copy" /></span>
+        <span slot="ipTitle" class="copy-text">注册IP <a-icon type="copy" /></span>
+        <span slot="channelTitle" class="copy-text">渠道 <a-icon type="copy" /></span>
+        <span slot="sdkChannelTitle" class="copy-text">Sdk渠道 <a-icon type="copy" /></span>
       </a-table>
     </div>
 
