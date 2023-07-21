@@ -2098,5 +2098,35 @@
         "module_id": 14004,
         "request": 0,
         "name": "领取开局奖励"
+    },
+    {
+        "id": 351,
+        "module_id": 150,
+        "request": 0,
+        "name": "仙侣神通"
+    },
+    {
+        "id": 352,
+        "module_id": 15001,
+        "request": 0,
+        "name": "XXXXX仙侣神通达到N星"
+    },
+    {
+        "id": 353,
+        "module_id": 15002,
+        "request": 0,
+        "name": "成功激活N个仙侣神通"
+    },
+    {
+        "id": 354,
+        "module_id": 15003,
+        "request": 0,
+        "name": "神通共鸣上阵N个仙侣"
+    },
+    {
+        "id": 355,
+        "module_id": 15004,
+        "request": 0,
+        "name": "共鸣等阶达到N阶"
     }
 ]
