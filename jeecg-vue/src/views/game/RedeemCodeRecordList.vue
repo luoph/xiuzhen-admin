@@ -35,7 +35,7 @@
             <a-col :md="6" :sm="16">
               <a-form-item label="创建时间">
                 <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
-                <span class="query-group-split-cust"></span>
+                <span class="query-group-split-cust" />
                 <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createTime_end"></j-date>
               </a-form-item>
             </a-col>

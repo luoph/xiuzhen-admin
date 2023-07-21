@@ -53,7 +53,7 @@
             <a-col :md="6" :sm="8">
               <a-form-item label="金额">
                 <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin" />
-                <span class="query-group-split-cust"></span>
+                <span class="query-group-split-cust" />
                 <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end" />
               </a-form-item>
             </a-col>

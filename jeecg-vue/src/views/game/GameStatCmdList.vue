@@ -4,28 +4,11 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="16" :sm="8">
-            <channel-server-selector
-              ref="channelServerSelector"
-              :show-sdk-channel="true"
-              @onSelectChannel="onSelectChannel"
-              @onSelectSdkChannel="onSelectSdkChannel"
-              @onSelectServer="onSelectServer"
-            />
-          </a-col>
-          <a-col :md="8" :sm="8">
-            <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
-            </a-form-item>
-          </a-col>
-          <a-col :md="5" :sm="8">
-            <a-form-item label="玩家ID">
-              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
-            </a-form-item>
-          </a-col>
-          <a-col :md="5" :sm="8">
-            <a-form-item label="消息ID">
-              <a-input placeholder="请输入消息ID" v-model="queryParam.msgId" />
+          <a-col :md="6" :sm="8">
+            <a-form-item label="区服ID">
+              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.serverId_begin" />
+              <span class="query-group-split-cust" />
+              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.serverId_end" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -40,6 +23,21 @@
               <a-input placeholder="最小次数" class="query-group-cust" v-model="queryParam.num_begin" />
               <span class="query-group-split-cust" />
               <a-input placeholder="最大次数" class="query-group-cust" v-model="queryParam.num_end" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="8" :sm="8">
+            <a-form-item label="统计日期">
+              <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="5" :sm="8">
+            <a-form-item label="玩家ID">
+              <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="5" :sm="8">
+            <a-form-item label="消息ID">
+              <a-input placeholder="请输入消息ID" v-model="queryParam.msgId" />
             </a-form-item>
           </a-col>
           <a-col :md="10" :sm="8">
@@ -125,9 +123,8 @@ export default {
         },
         {
           title: '日期',
-          dataIndex: 'createDate',
           align: 'center',
-          width: '140',
+          dataIndex: 'createDate',
           customRender: function (text) {
             return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
           }

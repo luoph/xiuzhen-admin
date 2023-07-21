@@ -28,14 +28,14 @@
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="充值总金额">
                 <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sourceAmount_begin" />
-                <span class="query-group-split-cust"></span>
+                <span class="query-group-split-cust" />
                 <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sourceAmount_end" />
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="返还总仙玉">
                 <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.targetNum_begin" />
-                <span class="query-group-split-cust"></span>
+                <span class="query-group-split-cust" />
                 <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.targetNum_end" />
               </a-form-item>
             </a-col>
@@ -43,7 +43,7 @@
               <a-form-item label="创建时间">
                 <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                 <!-- <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
-                <span class="query-group-split-cust"></span>
+                <span class="query-group-split-cust" />
                 <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createTime_end"></j-date> -->
               </a-form-item>
             </a-col>

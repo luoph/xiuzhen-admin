@@ -61,7 +61,7 @@
             <!-- <a-col :md="12" :sm="8">
                             <a-form-item label="排序">
                                 <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sort_begin"/>
-                                <span class="query-group-split-cust"></span>
+                                <span class="query-group-split-cust" />
                                 <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sort_end"/>
                             </a-form-item>
                         </a-col> -->
