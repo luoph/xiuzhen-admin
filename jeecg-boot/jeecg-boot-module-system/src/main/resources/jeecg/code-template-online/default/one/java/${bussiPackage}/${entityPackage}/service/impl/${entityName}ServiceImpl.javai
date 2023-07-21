@@ -3,14 +3,13 @@ package ${bussiPackage}.${entityPackage}.service.impl;
 import ${bussiPackage}.${entityPackage}.entity.${entityName};
 import ${bussiPackage}.${entityPackage}.mapper.${entityName}Mapper;
 import ${bussiPackage}.${entityPackage}.service.I${entityName}Service;
-import org.springframework.stereotype.Service;
-
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 /**
  * @Description: ${tableVo.ftlDescription}
  * @Author: jeecg-boot
- * @Date:   ${.now?string["yyyy-MM-dd"]}
+ * @Date: ${.now?string["yyyy-MM-dd"]}
  * @Version: V1.0
  */
 @Service
