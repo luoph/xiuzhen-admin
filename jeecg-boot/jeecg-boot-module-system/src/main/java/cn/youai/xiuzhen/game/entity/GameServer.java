@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -287,7 +286,13 @@ public class GameServer extends BaseEntity {
      */
     @Excel(name = "版本类型", width = 15)
     @ApiModelProperty(value = "版本类型")
-    private java.lang.Integer versionType;
+    private Integer versionType;
+
+    /**
+     * 商品版本
+     */
+    @Excel(name = "商品版本", width = 15)
+    private Integer goodsVersion;
 
     /**
      * 扩展字段

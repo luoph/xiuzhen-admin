@@ -33,6 +33,13 @@ public class GameRechargeGoods extends BaseEntity {
     private Long id;
 
     /**
+     * 商品版本
+     */
+    @ExcelProperty("商品版本")
+    @Excel(name = "商品版本", width = 15)
+    private Integer goodsVersion;
+
+    /**
      * 单价(创建订单实际价格)
      */
     @ExcelProperty("商品Id")

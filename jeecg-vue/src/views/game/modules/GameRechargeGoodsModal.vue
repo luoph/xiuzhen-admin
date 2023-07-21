@@ -6,6 +6,12 @@
         <a-form-item label="商品Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="isEdit" v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id" style="width: 100%" />
         </a-form-item>
+        <a-form-item label="商品版本" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select placeholder="选择商品版本" v-decorator="['goodsVersion', validatorRules.goodsVersion]" initialValue="1">
+            <a-select-option :value="1">普通版</a-select-option>
+            <a-select-option :value="2">0.1折</a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名称" />
         </a-form-item>
@@ -157,6 +163,7 @@ export default {
       },
       confirmLoading: false,
       validatorRules: {
+        goodsVersion: { rules: [{ required: true, message: '请选择商品版本!' }] },
         price: { rules: [{ required: true, message: '请输入单价!' }] },
         discount: { rules: [{ required: false, message: '请输入折扣价格!' }] },
         name: { rules: [{ required: true, message: '请输入商品名称!' }] },
@@ -200,6 +207,7 @@ export default {
           pick(
             this.model,
             'goodsId',
+            'goodsVersion',
             'sku',
             'price',
             'discount',
@@ -275,6 +283,7 @@ export default {
         pick(
           row,
           'goodsId',
+          'goodsVersion',
           'sku',
           'price',
           'discount',

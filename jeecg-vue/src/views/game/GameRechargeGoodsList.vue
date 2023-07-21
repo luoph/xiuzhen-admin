@@ -5,6 +5,14 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
+            <a-form-item label="商品版本">
+              <a-select placeholder="请选择商品版本" v-model="queryParam.goodsVersion">
+                <a-select-option :value="1">1-普通版</a-select-option>
+                <a-select-option :value="2">2-0.1折</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
             <a-form-item label="商品ID">
               <a-input placeholder="请输入商品ID" v-model="queryParam.goodsId" />
             </a-form-item>
@@ -258,6 +266,16 @@ export default {
         //   width: 80,
         //   dataIndex: 'id'
         // },
+        {
+          title: '商品版本',
+          align: 'center',
+          fixed: 'left',
+          width: 80,
+          dataIndex: 'goodsVersion',
+          customRender: (text) => {
+            return text === 1 ? '普通版' : text === 2 ? '0.1折' : 'N/A';
+          }
+        },
         {
           // title: '商品Id',
           align: 'center',

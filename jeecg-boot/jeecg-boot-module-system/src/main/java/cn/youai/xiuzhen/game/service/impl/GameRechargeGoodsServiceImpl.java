@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -51,24 +53,30 @@ public class GameRechargeGoodsServiceImpl extends ServiceImpl<GameRechargeGoodsM
 
     @Override
     public void refreshConfig() {
-        List<GameRechargeGoods> list = list();
+        Map<Integer, List<GameRechargeGoods>> version2GoodsMap = list().stream().collect(Collectors.groupingBy(GameRechargeGoods::getGoodsVersion));
         List<RechargeGoods> goodsList = new ArrayList<>();
-        for (GameRechargeGoods it : list) {
-            RechargeGoods copy = $.copy(it, RechargeGoods.class);
-            assert copy != null;
+        version2GoodsMap.forEach((goodsVersion, list) -> {
+            for (GameRechargeGoods it : list) {
+                RechargeGoods copy = $.copy(it, RechargeGoods.class);
+                assert copy != null;
 
-            // 适配前端的字段 items -> rewards, addition -> additions
-            if (StringUtils.isNotEmpty(it.getItems())) {
-                copy.setRewards(JSON.parseArray(it.getItems(), ItemVO.class));
+                // 适配前端的字段 items -> rewards, addition -> additions
+                if (StringUtils.isNotEmpty(it.getItems())) {
+                    copy.setRewards(JSON.parseArray(it.getItems(), ItemVO.class));
+                }
+                if (StringUtils.isNotEmpty(it.getAddition())) {
+                    copy.setAdditions(JSON.parseArray(it.getAddition(), ItemVO.class));
+                }
+                if (StringUtils.isNotEmpty(it.getBuyType())) {
+                    copy.setBuyType(StringUtils.split2Int(it.getBuyType()));
+                }
+                goodsList.add(copy);
             }
-            if (StringUtils.isNotEmpty(it.getAddition())) {
-                copy.setAdditions(JSON.parseArray(it.getAddition(), ItemVO.class));
+            if (goodsVersion == 1) {
+                JsonFileUtils.writeJsonFile(goodsList, jsonFolder, "recharge_goods");
             }
-            if (StringUtils.isNotEmpty(it.getBuyType())) {
-                copy.setBuyType(StringUtils.split2Int(it.getBuyType()));
-            }
-            goodsList.add(copy);
-        }
-        JsonFileUtils.writeJsonFile(goodsList, jsonFolder, "recharge_goods");
+            JsonFileUtils.writeJsonFile(goodsList, jsonFolder, "recharge_goods_" + goodsVersion);
+            goodsList.clear();
+        });
     }
 }

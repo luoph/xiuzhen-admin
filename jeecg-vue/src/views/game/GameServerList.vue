@@ -315,6 +315,14 @@ export default {
           }
         },
         {
+          title: '商品版本',
+          align: 'center',
+          dataIndex: 'goodsVersion',
+          customRender: (text) => {
+            return text === 1 ? '普通版' : text === 2 ? '0.1折' : 'N/A';
+          }
+        },
+        {
           title: '删档返还',
           align: 'center',
           dataIndex: 'stopServerRefund',

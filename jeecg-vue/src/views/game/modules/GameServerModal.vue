@@ -122,6 +122,12 @@
             <a-select-option :value="2">BT服</a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="商品版本">
+          <a-select v-decorator="['goodsVersion', validatorRules.goodsVersion]" placeholder="请选择商品版本">
+            <a-select-option :value="1">普通版</a-select-option>
+            <a-select-option :value="2">0.1折</a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="GM开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="" v-decorator="['gmStatus', validatorRules.gmStatus]" initialValue="0">
             <a-select-option :value="0">关闭</a-select-option>
@@ -218,7 +224,8 @@ export default {
         stopServerRefund: { rules: [{ required: true, message: '请设置删档返还开关!' }] },
         stopServerRefundChannel: { rules: [{ required: false, message: '请设置删档返还的渠道!' }] },
         stopServerRefundVersionType: { rules: [{ required: false, message: '请设置删档返还的区服版本!' }] },
-        versionType: { rules: [{ required: false, message: '请设置版本类型!' }] }
+        versionType: { rules: [{ required: false, message: '请设置版本类型!' }] },
+        goodsVersion: { rules: [{ required: true, message: '请选择商品版本!' }] }
       },
       url: {
         add: 'game/gameServer/add',
@@ -277,7 +284,8 @@ export default {
             'stopServerRefund',
             'stopServerRefundChannel',
             'stopServerRefundVersionType',
-            'versionType'
+            'versionType',
+            'goodsVersion'
           )
         );
 
@@ -378,7 +386,8 @@ export default {
           'stopServerRefund',
           'stopServerRefundChannel',
           'stopServerRefundVersionType',
-          'versionType'
+          'versionType',
+          'goodsVersion'
         )
       );
     }
