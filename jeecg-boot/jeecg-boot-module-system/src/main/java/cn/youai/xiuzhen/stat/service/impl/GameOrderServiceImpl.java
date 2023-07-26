@@ -102,8 +102,8 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
-    public IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, String sdkChannel, Integer serverId, Long playerId, DateRange dateRange) {
+    public IPage<GameRechargeRank> queryRechargeRankList(Page<?> page, GameRechargeRank entity, DateRange dateRange) {
         String configAuth = QueryGenerator.getAllConfigAuth();
-        return getBaseMapper().queryRechargeRankList(page, channel, sdkChannel, serverId, playerId, dateRange, configAuth);
+        return getBaseMapper().queryRechargeRankList(page, entity, dateRange, configAuth);
     }
 }

@@ -41,10 +41,25 @@
             <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
             <if test="entity != null">
                 <if test="entity.channel != null and entity.channel != ''">
-                    AND o.`channel` = #{entity.channel}
+                    AND o.`channel` IN
+                    <foreach item="item" index="index" collection="entity.channel.split(',')" open="(" separator=","
+                             close=")">
+                        #{item}
+                    </foreach>
                 </if>
-                <if test="entity.serverId != null and entity.serverId > 0">
-                    AND o.`server_id` = #{entity.serverId}
+                <if test="entity.serverIds != null and entity.serverIds != ''">
+                    AND o.`server_id` IN
+                    <foreach item="item" index="index" collection="entity.serverIds.split(',')" open="(" separator=","
+                             close=")">
+                        #{item}
+                    </foreach>
+                </if>
+                <if test="entity.sdkChannel != null and entity.sdkChannel != ''">
+                    AND p.`sdk_channel` IN
+                    <foreach item="item" index="index" collection="entity.sdkChannel.split(',')" open="(" separator=","
+                             close=")">
+                        #{item}
+                    </foreach>
                 </if>
                 <if test="entity.playerId != null and entity.playerId > 0">
                     AND o.`player_id` = #{entity.playerId}
@@ -76,10 +91,10 @@
 
     <select id="serverRangeAmount" resultType="cn.youai.xiuzhen.stat.entity.ServerBill">
         SELECT MIN(DATE(o.`create_date`)) AS startDate,
-            MAX(DATE(o.`create_date`)) AS endDate,
-            COUNT(DISTINCT(o.`server_id`)) AS serverNum,
-            COUNT(DISTINCT(o.`player_id`)) AS playerNum,
-            IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
+        MAX(DATE(o.`create_date`)) AS endDate,
+        COUNT(DISTINCT(o.`server_id`)) AS serverNum,
+        COUNT(DISTINCT(o.`player_id`)) AS playerNum,
+        IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o
         WHERE o.`server_id` = #{serverId}
         <if test="start != null"><![CDATA[ AND o.`create_date` >= DATE(#{start}) ]]></if>
@@ -88,10 +103,10 @@
 
     <select id="channelRangeAmount" resultType="cn.youai.xiuzhen.stat.entity.ServerBill">
         SELECT MIN(DATE(o.`create_date`)) AS startDate,
-            MAX(DATE(o.`create_date`)) AS endDate,
-            COUNT(DISTINCT(o.`server_id`)) AS serverNum,
-            COUNT(DISTINCT(o.`player_id`)) AS playerNum,
-            IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
+        MAX(DATE(o.`create_date`)) AS endDate,
+        COUNT(DISTINCT(o.`server_id`)) AS serverNum,
+        COUNT(DISTINCT(o.`player_id`)) AS playerNum,
+        IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         <where>
@@ -126,40 +141,40 @@
     <!-- 充值统计 -->
     <select id="queryOrderStatByRange" resultType="cn.youai.xiuzhen.stat.entity.GameStatOrder">
         SELECT DATE(#{startDate}) AS `start_date`,
-               DATE(#{endDate})   AS `end_date`,
-               -- 活跃用户数
-               (SELECT IFNULL(COUNT(DISTINCT(l.`player_id`)), 0)
-                FROM `log_account` l LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
-                <where>
-                    l.`type` = 2
-                    <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
-                    <if test="serverId != null and serverId > 0"><![CDATA[ AND l.`server_id` = #{serverId} ]]></if>
-                    <if test="startDate != null"><![CDATA[ AND l.`create_date` >= DATE(#{startDate}) ]]></if>
-                    <if test="endDate != null"><![CDATA[ AND l.`create_date` <= DATE(#{endDate}) ]]></if>
-                </where>
-                ) AS `active_num`,
+        DATE(#{endDate}) AS `end_date`,
+        -- 活跃用户数
+        (SELECT IFNULL(COUNT(DISTINCT(l.`player_id`)), 0)
+        FROM `log_account` l LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        <where>
+            l.`type` = 2
+            <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+            <if test="serverId != null and serverId > 0"><![CDATA[ AND l.`server_id` = #{serverId} ]]></if>
+            <if test="startDate != null"><![CDATA[ AND l.`create_date` >= DATE(#{startDate}) ]]></if>
+            <if test="endDate != null"><![CDATA[ AND l.`create_date` <= DATE(#{endDate}) ]]></if>
+        </where>
+        ) AS `active_num`,
 
-                -- 付费用户数
-                (SELECT IFNULL(COUNT(DISTINCT(o.`player_id`)), 0)
-                FROM `game_order` o LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-                <where>
-                    <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
-                    <if test="serverId != null and serverId > 0"><![CDATA[ AND o.`server_id` = #{serverId} ]]></if>
-                    <if test="startDate != null"><![CDATA[ AND o.`create_date` >= DATE(#{startDate}) ]]></if>
-                    <if test="endDate != null"><![CDATA[ AND o.`create_date` <= DATE(#{endDate}) ]]></if>
-                </where>
-                ) AS `pay_num`,
+        -- 付费用户数
+        (SELECT IFNULL(COUNT(DISTINCT(o.`player_id`)), 0)
+        FROM `game_order` o LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        <where>
+            <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+            <if test="serverId != null and serverId > 0"><![CDATA[ AND o.`server_id` = #{serverId} ]]></if>
+            <if test="startDate != null"><![CDATA[ AND o.`create_date` >= DATE(#{startDate}) ]]></if>
+            <if test="endDate != null"><![CDATA[ AND o.`create_date` <= DATE(#{endDate}) ]]></if>
+        </where>
+        ) AS `pay_num`,
 
-                -- 付费金额
-                (SELECT IFNULL(SUM(o.`pay_amount`), 0)
-                FROM `game_order` o LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-                <where>
-                    <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
-                    <if test="serverId != null and serverId > 0"><![CDATA[ AND o.`server_id` = #{serverId} ]]></if>
-                    <if test="startDate != null"><![CDATA[ AND o.`create_date` >= DATE(#{startDate}) ]]></if>
-                    <if test="endDate != null"><![CDATA[ AND o.`create_date` <= DATE(#{endDate}) ]]></if>
-                </where>
-                ) AS `pay_amount`;
+        -- 付费金额
+        (SELECT IFNULL(SUM(o.`pay_amount`), 0)
+        FROM `game_order` o LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        <where>
+            <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+            <if test="serverId != null and serverId > 0"><![CDATA[ AND o.`server_id` = #{serverId} ]]></if>
+            <if test="startDate != null"><![CDATA[ AND o.`create_date` >= DATE(#{startDate}) ]]></if>
+            <if test="endDate != null"><![CDATA[ AND o.`create_date` <= DATE(#{endDate}) ]]></if>
+        </where>
+        ) AS `pay_amount`;
     </select>
 
     <select id="getGameOrderRangeDate" resultType="cn.youai.xiuzhen.game.entity.MergeServerVO">
@@ -234,7 +249,7 @@
         GROUP BY p.`player_id`
     </select>
 
-    <select id="queryRechargeRankList" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeRank">
+    <select id="queryRechargeRankList" resultType="cn.youai.xiuzhen.stat.entity.GameRechargeRank">
         SELECT o.`player_id`,
         p.`nickname`,
         p.`level`,
@@ -253,9 +268,30 @@
         LEFT JOIN `game_vip` v ON o.`player_id` = v.`player_id`
         <where>
             <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
-            <if test="null != channel and channel != ''">AND p.`channel` = #{channel}</if>
-            <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
-            <if test="playerId != null and playerId > 0"><![CDATA[ AND p.`player_id` = #{playerId} ]]></if>
+            <if test="entity.channel != null and entity.channel != ''">
+                AND o.`channel` IN
+                <foreach item="item" index="index" collection="entity.channel.split(',')" open="(" separator=","
+                         close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="entity.serverIds != null and entity.serverIds != ''">
+                AND o.`server_id` IN
+                <foreach item="item" index="index" collection="entity.serverIds.split(',')" open="(" separator=","
+                         close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="entity.sdkChannel != null and entity.sdkChannel != ''">
+                AND p.`sdk_channel` IN
+                <foreach item="item" index="index" collection="entity.sdkChannel.split(',')" open="(" separator=","
+                         close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="entity.playerId != null and entity.playerId > 0">
+                AND o.`player_id` = #{entity.playerId}
+            </if>
             <if test="dateRange != null">
                 <if test="null != dateRange.start"><![CDATA[AND o.`create_date` >= #{dateRange.start}]]></if>
                 <if test="null != dateRange.end"><![CDATA[AND o.`create_date` <= #{dateRange.end}]]></if>

@@ -88,13 +88,10 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                                                  @Param("startDate") Date startDate,
                                                                  @Param("endDate") Date endDate);
 
-    IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page,
-                                                      @Param("channel") String channel,
-                                                      @Param("sdkChannel") String sdkChannel,
-                                                      @Param("serverId") Integer serverId,
-                                                      @Param("playerId") Long playerId,
-                                                      @Param("dateRange") DateRange dateRange,
-                                                      @Param("configAuth") String configAuth);
+    IPage<GameRechargeRank> queryRechargeRankList(Page<?> page,
+                                                  @Param("entity") GameRechargeRank entity,
+                                                  @Param("dateRange") DateRange dateRange,
+                                                  @Param("configAuth") String configAuth);
 
     List<GameOrder> sumAmountGroupByPlayerId(@Param("serverIds") Set<Integer> serverIds);
 

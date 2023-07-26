@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.stat.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -19,7 +20,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-public class GameStatRechargeRank implements Serializable {
+public class GameRechargeRank implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -84,5 +85,12 @@ public class GameStatRechargeRank implements Serializable {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private Date countDate;
 
+    @TableField(exist = false)
     private Long vipId;
+
+    /**
+     * 选中的区服id
+     */
+    @TableField(exist = false)
+    private String serverIds;
 }

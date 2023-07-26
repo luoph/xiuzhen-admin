@@ -2,7 +2,18 @@
   <a-row :gutter="24">
     <a-col :span="8">
       <a-form-item label="渠道" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
-        <a-select placeholder="请选择渠道" v-model="channel" @change="onSelectChannel" :filterOption="filterOption" showSearch allowClear style="width: 100%">
+        <a-select
+          :mode="multiChannel ? 'multiple' : 'default'"
+          placeholder="请选择渠道"
+          v-model="channel"
+          :maxTagCount="2"
+          :maxTagTextLength="24"
+          @change="onSelectChannel"
+          :filterOption="filterOption"
+          showSearch
+          allowClear
+          style="width: 100%"
+        >
           <a-select-option v-for="it in channelList" :key="it.name" :value="it.simpleName">
             {{ it.name + ' [' + it.simpleName + ']' }}
           </a-select-option>
@@ -11,7 +22,18 @@
     </a-col>
     <a-col :span="8" v-if="showSdkChannel">
       <a-form-item label="SDK渠道" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
-        <a-select placeholder="请选择SDK渠道" v-model="sdkChannel" @change="onSelectSdkChannel" :filterOption="filterOption" showSearch allowClear style="width: 100%">
+        <a-select
+          :mode="multiSdkChannel ? 'multiple' : 'default'"
+          placeholder="请选择SDK渠道"
+          v-model="sdkChannel"
+          :maxTagCount="2"
+          :maxTagTextLength="24"
+          @change="onSelectSdkChannel"
+          :filterOption="filterOption"
+          showSearch
+          allowClear
+          style="width: 100%"
+        >
           <a-select-option v-for="it in sdkChannelList" :key="it.name" :value="it.sdkChannel">
             {{ it.sdkChannel && it.name !== it.sdkChannel ? it.name + ' [' + it.sdkChannel + ']' : it.name }}
           </a-select-option>
@@ -21,9 +43,10 @@
     <a-col :span="8" v-if="showServer">
       <a-form-item label="区服" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-select
-          :mode="multiple ? 'multiple' : '-'"
+          :mode="multiServer ? 'multiple' : 'default'"
           placeholder="请选择区服"
           v-model="serverId"
+          :maxTagCount="2"
           :filterOption="filterOption"
           @change="onSelectServer"
           showSearch
@@ -71,7 +94,15 @@ export default {
     };
   },
   props: {
-    multiple: {
+    multiChannel: {
+      type: Boolean,
+      default: false
+    },
+    multiSdkChannel: {
+      type: Boolean,
+      default: false
+    },
+    multiServer: {
       type: Boolean,
       default: false
     },
@@ -82,10 +113,6 @@ export default {
     showServer: {
       type: Boolean,
       default: true
-    },
-    serverAll: {
-      type: Boolean,
-      default: true
     }
   },
   methods: {
@@ -94,9 +121,9 @@ export default {
         this.onChannelDataChanged(res.result);
       });
     },
-    findInArray(array, key, value) {
+    findInArray(array, key, other) {
       for (const item of array) {
-        if (item[key] === value) {
+        if (other.includes(item[key])) {
           return item;
         }
       }
@@ -113,28 +140,28 @@ export default {
     getSdkChannelList() {
       this.sdkChannelList = [];
       let tmpMap = {};
-      if (this.channel) {
-        const item = this.findInArray(this.channelList, 'simpleName', this.channel);
+      let selectedChannels = this.multiChannel ? this.channel : [this.channel];
+      if (selectedChannels.length > 0) {
+        const item = this.findInArray(this.channelList, 'simpleName', selectedChannels);
         for (const it of item.sdkChannelList) {
           tmpMap[it.sdkChannel] = it;
         }
       } else {
-        for (const iterator of this.channelList) {
-          for (const it of iterator.sdkChannelList) {
+        for (const item of this.channelList) {
+          for (const it of item.sdkChannelList) {
             tmpMap[it.sdkChannel] = it;
           }
         }
       }
 
       this.sdkChannelList = Object.values(tmpMap);
-      // 手动插入一条全部的记录
-      this.sdkChannelList.splice(0, 0, { sdkChannel: '', name: '全部' });
     },
     getChannelServerList() {
       this.serverList = [];
       let tmpMap = {};
-      if (this.channel) {
-        const item = this.findInArray(this.channelList, 'simpleName', this.channel);
+      let selectedChannels = this.multiChannel ? this.channel : [this.channel];
+      if (selectedChannels.length > 0) {
+        const item = this.findInArray(this.channelList, 'simpleName', selectedChannels);
         for (const it of item.serverList) {
           tmpMap[it.id] = it;
         }
@@ -146,32 +173,27 @@ export default {
         }
       }
       this.serverList = Object.values(tmpMap);
-      // 手动插入一条全部的记录
-      this.serverList.splice(0, 0, { id: 0, name: '全部' });
     },
     // select的事件绑定
     onSelectChannel(value) {
       // 触发父容器的 selectChannel 方法
-      this.$emit('onSelectChannel', value);
-      this.channel = value;
+      let result = this.multiChannel ? value.join(',') : value;
+      this.$emit('onSelectChannel', result);
     },
     onSelectSdkChannel(value) {
       // 触发父容器的 onSelectSdkChannel 方法
-      this.$emit('onSelectSdkChannel', value);
-      this.sdkChannel = value;
+      let result = this.multiSdkChannel ? value.join(',') : value;
+      this.$emit('onSelectSdkChannel', result);
     },
     onSelectServer(value) {
-      let result = value;
-      if (this.multiple) {
-        result = value.join(',');
-      }
+      let result = this.multiServer ? value.join(',') : value;
       // 触发父容器的 selectServer 方法
       this.$emit('onSelectServer', result);
     },
     reset() {
-      this.channel = null;
-      this.sdkChannel = null;
-      this.serverId = null;
+      this.channel = this.multiChannel ? [] : null;
+      this.sdkChannel = this.multiSdkChannel ? [] : null;
+      this.serverId = this.multiServer ? [] : null;
     }
   },
   watch: {
@@ -182,4 +204,5 @@ export default {
   }
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+</style>

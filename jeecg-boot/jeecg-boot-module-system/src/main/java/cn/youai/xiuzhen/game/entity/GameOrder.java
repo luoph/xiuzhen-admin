@@ -217,4 +217,10 @@ public class GameOrder implements Serializable {
     @TableField(exist = false)
     private BigDecimal totalPayAmount;
 
+    /**
+     * 选中的区服id
+     */
+    @TableField(exist = false)
+    private String serverIds;
+
 }

@@ -5,6 +5,9 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <channel-server-selector
           ref="channelServerSelector"
+          :multi-channel="true"
+          :multi-sdk-channel="true"
+          :multi-server="true"
           :show-sdk-channel="true"
           @onSelectChannel="onSelectChannel"
           @onSelectSdkChannel="onSelectSdkChannel"
@@ -357,7 +360,7 @@ export default {
       this.queryParam.sdkChannel = value;
     },
     onSelectServer: function (value) {
-      this.queryParam.serverId = value;
+      this.queryParam.serverIds = value;
     },
     onResetParams() {
       this.$refs.channelServerSelector.reset();
